@@ -12,7 +12,16 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        poppins: ["var(--font-poppins)"],
+      },
     },
+  },
+  screens: {
+    sm: "0px",
+    md: "768px",
+    lg: "1240px",
   },
   plugins: [],
 } satisfies Config;
