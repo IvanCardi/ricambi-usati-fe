@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Inter, Poppins } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import Navbar from "./navbar";
 
 const inter = Inter({
-  weight: "700",
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
@@ -17,7 +12,7 @@ const inter = Inter({
 const poppins = Poppins({
   weight: ["300", "400", "700"],
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
@@ -32,10 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${inter.variable} ${poppins.variable} antialiased`}
-      >
-        {children}
+      <body className={`${inter.variable} ${poppins.variable} antialiased`}>
+        <div className="flex flex-col w-full">
+          <Navbar />
+          {children}
+        </div>
       </body>
     </html>
   );

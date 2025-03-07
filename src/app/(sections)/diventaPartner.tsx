@@ -1,0 +1,44 @@
+import handShake from "../../../public/handshake.png";
+import Image from "next/image";
+import MainContainer from "../components/mainContainer";
+import { Button } from "@/components/ui/button";
+
+export default function DiventaPatner() {
+  return (
+    <div className="bg-[#353535] py-24">
+      <MainContainer>
+        <div className="flex flex-col border-[3px] pl-10 pb-12 border-white gap-12">
+          <div className="flex w-full items-center">
+            <div className="flex flex-col w-1/2 gap-6">
+              <span className="text-5xl font-poppins font-bold text-white">
+                Sei un professionista del settore automotive?
+              </span>
+              <span className="text-5xl font-poppins font-bold text-[#0BB489] underline">
+                DIVENTA NOSTRO PARTNER!
+              </span>
+            </div>
+            <Image
+              className="border-l-2 border-b-2 border-white"
+              src={handShake}
+              alt="handshake image"
+            />
+          </div>
+          <span className="text-4xl text-white font-poppins font-light">
+            Sei un meccanico, un elettrauto o il proprietario di un’officina?
+            Diventa nostro partner e scopri tutti i vantaggi e gli sconti che
+            abbiamo pensato per te!
+          </span>
+          <span className="text-4xl text-white font-poppins font-medium">
+            Registrati nella nostra area riservata e inizia subito ad usufruire
+            delle agevolazioni su misura per te!
+          </span>
+          <Button className="w-fit px-10 py-7 bg-[#0BB489] hover:bg-[#0BB489]/85">
+            <span className="text-3xl text-white font-inter font-extrabold">
+              REGISTRATI QUI!
+            </span>
+          </Button>
+        </div>
+      </MainContainer>
+    </div>
+  );
+}
