@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function DiventaPatner() {
   return (
-    <div className="bg-[#353535] py-24">
+    <div className="bg-[#353535] pt-24">
       <MainContainer>
         <div className="flex flex-col border-[3px] pl-10 pb-12 border-white gap-12">
           <div className="flex w-full items-center">

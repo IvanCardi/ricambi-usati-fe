@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./navbar";
+import Footer from "./footer/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
         <div className="flex flex-col w-full">
           <Navbar />
           {children}
+          <Footer />
         </div>
       </body>
     </html>
