@@ -7,8 +7,15 @@ export interface Item {
 
 export default function ItemCard(item: Item) {
   return (
-    <div className="flex flex-col justify-center items-center bg-white">
-      <Image src={item.image} alt="mechanical item" />
+    <div className="flex flex-col h-52 justify-center items-center bg-white rounded-[6px] cursor-pointer hover:scale-105">
+      <div>
+        <Image
+          src={item.image}
+          alt="mechanical item"
+          width={168}
+          height={170}
+        />
+      </div>
       <span className="text-sm text-black font-inter font-medium">
         {item.name}
       </span>

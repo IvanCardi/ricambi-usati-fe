@@ -13,12 +13,14 @@ import {
 export default function SelectHero({
   title,
   options,
+  onSelect,
 }: {
   title: string;
   options: string[];
+  onSelect?: (model: string) => void;
 }) {
   return (
-    <Select>
+    <Select onValueChange={onSelect}>
       <SelectTrigger className="w-56">
         <SelectValue placeholder={title} />
       </SelectTrigger>
