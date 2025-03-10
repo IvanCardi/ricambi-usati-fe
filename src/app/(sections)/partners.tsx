@@ -1,15 +1,43 @@
+"use client ";
 import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  CustomCarouselDots,
 } from "@/components/ui/carousel";
 import MainContainer from "../components/mainContainer";
 
 export default function Partners() {
   const partners: string[] = [
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
+    "/partner_alfa_logo.svg",
     "/partner_alfa_logo.svg",
     "/partner_alfa_logo.svg",
     "/partner_alfa_logo.svg",
@@ -45,8 +73,11 @@ export default function Partners() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious variant={"ghost"} />
-            <CarouselNext variant={"ghost"} />
+            <div className="pt-14">
+              <CustomCarouselDots
+                totalSlides={Math.ceil(partners.length / 8)}
+              />
+            </div>
           </Carousel>
         </div>
       </MainContainer>

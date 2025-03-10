@@ -249,6 +249,46 @@ const CarouselNext = React.forwardRef<
 });
 CarouselNext.displayName = "CarouselNext";
 
+const CustomCarouselDots = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button> & { totalSlides?: number }
+>(({ className, totalSlides = 5, ...props }, ref) => {
+  const { scrollNext, scrollPrev } = useCarousel();
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  function scrollTo(index: number) {
+    if (index === selectedIndex) return;
+
+    const difference = index - selectedIndex;
+    setSelectedIndex(index);
+
+    if (difference > 0) {
+      Array.from({ length: difference * 8 }).forEach(() => scrollNext());
+    } else {
+      Array.from({ length: Math.abs(difference * 8) }).forEach(() =>
+        scrollPrev()
+      );
+    }
+  }
+
+  return (
+    <div className="flex justify-center gap-6">
+      {Array.from({ length: totalSlides }).map((_, index) => (
+        <button
+          key={index}
+          ref={ref}
+          className={`h-6 w-6 rounded-full cursor-pointer ${
+            selectedIndex === index ? "bg-black" : "bg-[#D9D9D9]"
+          } ${className}`}
+          onClick={() => scrollTo(index)}
+          {...props}
+        />
+      ))}
+    </div>
+  );
+});
+CustomCarouselDots.displayName = "CustomCarouselDots";
+
 export {
   type CarouselApi,
   Carousel,
@@ -256,4 +296,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CustomCarouselDots,
 };
