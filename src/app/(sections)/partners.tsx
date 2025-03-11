@@ -62,7 +62,7 @@ export default function Partners() {
               {partners.map((partner, index) => (
                 <CarouselItem
                   key={index}
-                  className="flex sm:basis-1/3 lg:basis-[12.5%] justify-center items-center"
+                  className="flex sm:basis-1/4 lg:basis-[12.5%] justify-center items-center"
                 >
                   <Image
                     src={partner}

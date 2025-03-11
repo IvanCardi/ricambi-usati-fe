@@ -67,7 +67,7 @@ export function TrovaRicambi() {
 
   type CarBrand = keyof typeof cars;
   type CarModel<Brand extends CarBrand> = keyof (typeof cars)[Brand];
-  type CarTrim<
+  type CarSetUp<
     Brand extends CarBrand,
     Model extends CarModel<Brand>
   > = (typeof cars)[Brand][Model] extends string[]
@@ -77,7 +77,7 @@ export function TrovaRicambi() {
   const [selectedCar, setSelectedCar] = useState<{
     brand?: CarBrand;
     model?: CarModel<CarBrand>;
-    trim?: CarTrim<CarBrand, CarModel<CarBrand>>;
+    setUp?: CarSetUp<CarBrand, CarModel<CarBrand>>;
   }>({});
 
   return (
@@ -141,10 +141,10 @@ export function TrovaRicambi() {
                       ]
                     : []
                 }
-                onSelect={(trim) =>
+                onSelect={(setUp) =>
                   setSelectedCar((prev) => ({
                     ...prev,
-                    trim: trim as CarTrim<CarBrand, CarModel<CarBrand>>,
+                    setUp: setUp as CarSetUp<CarBrand, CarModel<CarBrand>>,
                   }))
                 }
               ></SelectHero>

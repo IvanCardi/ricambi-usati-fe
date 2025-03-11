@@ -1,7 +1,7 @@
 import Link from "next/link";
 import MainContainer from "../components/mainContainer";
 import Image from "next/image";
-import SiteMap from "./sitemap";
+import SiteMap from "./siteMap";
 import logo from "../../../public/logo.svg";
 
 export default function Footer() {

@@ -17,17 +17,17 @@ export default function SelectHero({
 }: {
   title: string;
   options: string[];
-  onSelect?: (model: string) => void;
+  onSelect?: (val: string) => void;
 }) {
   return (
-    <Select onValueChange={onSelect}>
-      <SelectTrigger className="w-56">
+    <Select onValueChange={onSelect} key={options[0]}>
+      <SelectTrigger className="max-w-56">
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{title}</SelectLabel>
-          {options.map((option) => (
+          {options?.map((option) => (
             <SelectItem key={option} value={option}>
               {option}
             </SelectItem>
