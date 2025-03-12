@@ -45,7 +45,7 @@ export default function SiteMap() {
   ];
 
   return (
-    <div className="flex w-full justify-center gap-24">
+    <div className="hidden md:flex md:flex-row w-full justify-center gap-24">
       {siteMapSections.map((section, index) => (
         <div key={index} className="flex flex-col items-center gap-5">
           <span className="text-2xl text-[#0BB489] font-inter font-bold">
@@ -54,7 +54,7 @@ export default function SiteMap() {
           <div className="flex flex-col justify-between items-center gap-3">
             {section.links.map((link, i) => (
               <Link key={i} href={link.url}>
-                <span className="text-2xl text-white font-inter font-light">
+                <span className="flex text-2xl text-center text-white font-inter font-light">
                   {link.label}
                 </span>
               </Link>

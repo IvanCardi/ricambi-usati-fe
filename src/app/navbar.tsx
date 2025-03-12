@@ -8,7 +8,7 @@ import cart from "../../public/cart_icon.svg";
 
 export default function Navbar() {
   return (
-    <div className="bg-black">
+    <div className="hidden md:block bg-black">
       <MainContainer>
         <div className="flex w-full justify-between items-start pt-4">
           <Link href={"/"}>

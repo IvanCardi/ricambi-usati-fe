@@ -62,7 +62,7 @@ export default function Partners() {
               {partners.map((partner, index) => (
                 <CarouselItem
                   key={index}
-                  className="flex sm:basis-1/4 lg:basis-[12.5%] justify-center items-center"
+                  className="flex basis-[12.5%] justify-center items-center"
                 >
                   <Image
                     src={partner}
@@ -73,7 +73,7 @@ export default function Partners() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="pt-14">
+            <div className="hidden md:block pt-14">
               <CustomCarouselDots
                 totalSlides={Math.ceil(partners.length / 8)}
               />

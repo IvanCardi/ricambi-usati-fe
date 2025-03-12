@@ -277,7 +277,7 @@ const CustomCarouselDots = React.forwardRef<
         <button
           key={index}
           ref={ref}
-          className={`h-6 w-6 rounded-full cursor-pointer ${
+          className={`h-3 w-3 md:w-6 md:h-6 rounded-full cursor-pointer ${
             selectedIndex === index ? "bg-black" : "bg-[#D9D9D9]"
           } ${className}`}
           onClick={() => scrollTo(index)}

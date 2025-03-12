@@ -52,7 +52,7 @@ export default function Recensioni() {
   function ReviewCard(review: Review) {
     return (
       <div className="flex flex-col w-80 h-52 border border-black p-5 gap-3">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center">
           <span className="text-xl font-inter font-semibold">
             {review.name}
           </span>
@@ -75,7 +75,7 @@ export default function Recensioni() {
             opts={{
               align: "start",
             }}
-            className="w-[90%]"
+            className="w-[80%] md:w-[90%]"
           >
             <CarouselContent>
               {reviews.map((review, index) => (
@@ -87,8 +87,8 @@ export default function Recensioni() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious variant={"ghost"} className="h-0 w-0" />
-            <CarouselNext variant={"ghost"} className="h-0 w-0" />
+            <CarouselPrevious variant={"ghost"} className="hidden  h-0 w-0" />
+            <CarouselNext variant={"ghost"} className="hidden  h-0 w-0" />
           </Carousel>
         </div>
       </MainContainer>

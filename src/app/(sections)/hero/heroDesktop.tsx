@@ -40,20 +40,20 @@ const distinctives: Distinctive[] = [
 export default function HeroDesktop() {
   return (
     <div className="flex flex-col gap-28">
-      <div className="flex flex-col gap-16">
-        <div className="flex w-full h-fit justify-between">
-          <div className="flex flex-col pt-3 justify-center gap-6">
-            <div className="flex flex-col gap-4">
-              <h1 className="text-5xl text-white font-inter font-bold">
+      <div className="flex flex-col gap-16 ">
+        <div className="flex w-full h-fit justify-center md:justify-between">
+          <div className="flex flex-col pt-3 justify-center items-center md:items-start gap-6">
+            <div className="flex flex-col gap-4 items-center md:items-start">
+              <h1 className="text-center md:text-left text-5xl text-white font-inter font-bold">
                 TROVA IL RICAMBIO <br></br> AUTO PERFETTO PER TE
               </h1>
-              <span className="text-2xl text-white font-poppins font-light">
+              <span className="text-center md:text-left text-2xl text-white font-poppins font-light">
                 Scegli ricambi auto di qualità <br></br> in modo facile e
                 veloce.
               </span>
             </div>
             <div className="flex w-[70%] items-center bg-white p-3 gap-2 border-2 border-[#0BB489] rounded-[100px]">
-              <Image src={searchIcon} alt="icon"></Image>
+              <Image src={searchIcon} alt="search icon"></Image>
               <input
                 id="search"
                 name="search"
@@ -63,25 +63,26 @@ export default function HeroDesktop() {
               />
             </div>
           </div>
-          <div className="w-fit">
+          <div className="hidden md:block w-fit">
             <Image
               aria-hidden
               src={mechanicalAccessories}
               alt="Mechanical accessories image"
+              className="object-contain"
             />
           </div>
         </div>
-        <div className="flex w-full justify-between">
+        <div className="grid grid-cols-2 gap-2 md:flex w-full justify-between">
           {distinctives.map((d) => (
             <div className="flex gap-5" key={d.title}>
-              <div className="pt-2">
+              <div className="min-w-8 pt-2">
                 <Image src={d.icon} alt="icon"></Image>
               </div>
               <div className="flex flex-col max-w-[200px]  gap-1">
-                <span className="text-xl/6 font-poppins font-bold text-white">
+                <span className="text-lg text-center md:text-left md:text-xl/6 font-poppins font-bold text-white">
                   {d.title}
                 </span>
-                <span className="text-base/4 font-poppins font-normal text-white">
+                <span className="text-sm text-center md:text-left md:text-base/4 font-poppins font-normal text-white">
                   {d.description}
                 </span>
               </div>

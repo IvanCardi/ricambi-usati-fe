@@ -8,7 +8,7 @@ export default function MainContainer(props: {
 }) {
   return (
     <div
-      className={`md:mx-[auto] lg:mx-[auto] sm:px-[24px] sm:w-full md:w-[740px] lg:w-[1300px] md:px-[0px] ${props.className}`}
+      className={`md:mx-[auto] lg:mx-[auto] sm:px-[24px] sm:w-full md:max-w-[740px] lg:max-w-[1300px] md:px-[0px] ${props.className}`}
     >
       {props.children}
     </div>

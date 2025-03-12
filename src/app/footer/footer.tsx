@@ -12,15 +12,20 @@ export default function Footer() {
           <SiteMap />
           <div className="flex w-full justify-between">
             <Link href={"/"}>
-              <Image src={logo} objectFit="contain" alt="ricambi usati logo" />
+              <Image
+                className="hidden md:block"
+                src={logo}
+                objectFit="contain"
+                alt="ricambi usati logo"
+              />
             </Link>
-            <span className="w-1/3 text-base text-center text-white font-inter font-extralight ">
+            <span className="w-full md:w-1/3 text-base text-center text-white font-inter font-extralight ">
               © 2025 Ricambiusati.it All Rights reserved.<br></br> P.IVA:
               IT01020320386 Uff. del Reg. delle Imprese di Milano N. REA:
               Mi-2071045 - R.A.E.E. IT19110P00005805 - Registro Pile e
               Accumulatori IT20070000012272
             </span>
-            <div className="grid grid-cols-4 gap-5 p-3">
+            <div className="hidden md:grid grid-cols-4 gap-5 p-3">
               {Array.from({ length: 8 }).map((_, index) => (
                 <div key={index} className="bg-white h-8 w-10"></div>
               ))}
