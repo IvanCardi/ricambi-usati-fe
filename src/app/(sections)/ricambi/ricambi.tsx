@@ -139,7 +139,7 @@ export default function Ricambi() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-[#353535] from-5% via-[#616161] via-[15%] to-[#DBD9D9] to-40% pt-24">
+    <div className="flex w-full bg-gradient-to-b from-[#353535] from-5% via-[#616161] via-[15%] to-[#DBD9D9] to-40% pt-24">
       <MainContainer>
         <div className="flex flex-col gap-14">
           {categories.map((category) => (

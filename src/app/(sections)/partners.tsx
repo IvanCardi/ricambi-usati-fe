@@ -49,7 +49,7 @@ export default function Partners() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-[#DBD9D9] to-[#939292] pt-24">
+    <div className="flex w-full bg-gradient-to-b from-[#DBD9D9] to-[#939292] pt-24">
       <MainContainer>
         <div className="flex justify-center items-center">
           <Carousel

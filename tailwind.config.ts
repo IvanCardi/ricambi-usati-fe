@@ -66,7 +66,7 @@ export default {
   screens: {
     sm: "0px",
     md: "768px",
-    lg: "1300px",
+    lg: "1240px",
   },
   plugins: [tailwindAnimate],
 } satisfies Config;

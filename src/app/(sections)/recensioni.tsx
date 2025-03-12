@@ -51,7 +51,7 @@ export default function Recensioni() {
 
   function ReviewCard(review: Review) {
     return (
-      <div className="flex flex-col w-80 h-52 border border-black p-5 gap-3">
+      <div className="flex flex-col max-w-80 max-h-52 border border-black p-5 gap-3">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <span className="text-xl font-inter font-semibold">
             {review.name}
@@ -68,9 +68,9 @@ export default function Recensioni() {
   }
 
   return (
-    <div className="bg-[#D9D9D9] pt-24">
+    <div className="flex w-full bg-[#D9D9D9] pt-24">
       <MainContainer>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center ">
           <Carousel
             opts={{
               align: "start",

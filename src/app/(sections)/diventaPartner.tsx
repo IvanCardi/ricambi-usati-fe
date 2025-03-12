@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 
 export default function DiventaPatner() {
   return (
-    <div className="bg-[#353535] pt-24">
+    <div className="flex w-full bg-[#353535] pt-24">
       <MainContainer>
         <div className="flex flex-col items-center md:items-start border-[3px] md:pl-10 pb-12 border-white gap-12">
-          <div className="flex w-full items-center">
+          <div className="flex items-center">
             <div className="flex flex-col md:w-1/2 gap-6">
               <span className="text-3xl md:text-5xl text-center md:text-left font-poppins font-bold text-white">
                 Sei un professionista del settore automotive?
