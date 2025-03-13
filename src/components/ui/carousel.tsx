@@ -207,7 +207,7 @@ const CarouselPrevious = React.forwardRef<
       className={cn(
         "absolute  h-8 w-8 rounded-full",
         orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
+          ? "-left-6 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -215,7 +215,9 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <span className="text-8xl font-inter font-extralight">{"<"}</span>
+      <span className="text-6xl md:text-8xl font-inter font-extralight">
+        {"<"}
+      </span>
     </Button>
   );
 });
@@ -235,7 +237,7 @@ const CarouselNext = React.forwardRef<
       className={cn(
         "absolute h-8 w-8 rounded-full",
         orientation === "horizontal"
-          ? "-right-12 top-1/2 -translate-y-1/2"
+          ? "-right-6 top-1/2 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -243,7 +245,9 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <span className="text-8xl font-inter font-extralight">{">"}</span>
+      <span className="text-6xl md:text-8xl font-inter font-extralight">
+        {">"}
+      </span>
     </Button>
   );
 });
@@ -251,8 +255,8 @@ CarouselNext.displayName = "CarouselNext";
 
 const CustomCarouselDots = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<typeof Button> & { totalSlides?: number }
->(({ className, totalSlides = 5, ...props }, ref) => {
+  React.ComponentProps<typeof Button> & { totalSlides?: number; show?: number }
+>(({ className, totalSlides = 5, show = 3, ...props }, ref) => {
   const { scrollNext, scrollPrev } = useCarousel();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
@@ -263,9 +267,9 @@ const CustomCarouselDots = React.forwardRef<
     setSelectedIndex(index);
 
     if (difference > 0) {
-      Array.from({ length: difference * 8 }).forEach(() => scrollNext());
+      Array.from({ length: difference * show }).forEach(() => scrollNext());
     } else {
-      Array.from({ length: Math.abs(difference * 8) }).forEach(() =>
+      Array.from({ length: Math.abs(difference * show) }).forEach(() =>
         scrollPrev()
       );
     }

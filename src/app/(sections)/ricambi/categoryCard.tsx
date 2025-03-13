@@ -15,7 +15,7 @@ export default function CategoryCard({ title, image, items }: Category) {
           {title}
         </span>
         <div className="flex w-full gap-16 justify-center md:justify-start ">
-          <div className="hidden md:block">
+          <div className="hidden md:block sm:w-[30%]">
             <Image
               className="object-contain"
               src={image}
@@ -26,7 +26,7 @@ export default function CategoryCard({ title, image, items }: Category) {
           </div>
           <div
             className={`grid grid-cols-2 ${
-              items.length > 4
+              items.length >= 4
                 ? "md:grid-cols-3 lg:grid-cols-4 gap-6"
                 : "md:flex items-center gap-6"
             }`}

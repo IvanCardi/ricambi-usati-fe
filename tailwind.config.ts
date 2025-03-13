@@ -62,11 +62,12 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
     },
+    screens: {
+      sm: "0px",
+      md: "768px",
+      lg: "1240px",
+    },
   },
-  screens: {
-    sm: "0px",
-    md: "768px",
-    lg: "1240px",
-  },
+
   plugins: [tailwindAnimate],
 } satisfies Config;

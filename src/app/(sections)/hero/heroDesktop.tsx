@@ -74,7 +74,7 @@ export default function HeroDesktop() {
         </div>
         <div className="grid grid-cols-2 gap-2 md:flex w-full justify-between">
           {distinctives.map((d) => (
-            <div className="flex gap-5" key={d.title}>
+            <div className="flex justify-center gap-5" key={d.title}>
               <div className="min-w-8 pt-2">
                 <Image src={d.icon} alt="icon"></Image>
               </div>

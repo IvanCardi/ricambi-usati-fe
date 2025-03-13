@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +10,7 @@ import {
 import MainContainer from "../components/mainContainer";
 import Image from "next/image";
 import star from "../../../public/star_icon.svg";
+import Device from "../components/device";
 
 interface Review {
   name: string;
@@ -51,7 +54,7 @@ export default function Recensioni() {
 
   function ReviewCard(review: Review) {
     return (
-      <div className="flex flex-col max-w-80 max-h-52 border border-black p-5 gap-3">
+      <div className="flex flex-col flex-shrink-0 w-80 h-52 border border-black p-5 gap-3">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <span className="text-xl font-inter font-semibold">
             {review.name}
@@ -68,30 +71,52 @@ export default function Recensioni() {
   }
 
   return (
-    <div className="flex w-full bg-[#D9D9D9] pt-24">
-      <MainContainer>
-        <div className="flex justify-center items-center ">
-          <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-[80%] md:w-[90%]"
-          >
-            <CarouselContent>
-              {reviews.map((review, index) => (
-                <CarouselItem
-                  key={index}
-                  className="flex lg:basis-1/3 justify-center"
+    <Device>
+      {({ isMobile }) =>
+        isMobile ? (
+          <div className="flex w-full bg-[#D9D9D9] pt-24">
+            <MainContainer>
+              <div className="flex flex-nowrap gap-3 overflow-x-auto">
+                {reviews.map((review, index) => (
+                  <ReviewCard key={index} {...review} />
+                ))}
+              </div>
+            </MainContainer>
+          </div>
+        ) : (
+          <div className="flex w-full justify-center bg-[#D9D9D9] pt-24">
+            <MainContainer>
+              <div className="flex w-full justify-center items-center ">
+                <Carousel
+                  opts={{
+                    align: "start",
+                  }}
+                  className="w-[80%] md:w-[90%]"
                 >
-                  <ReviewCard {...review} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious variant={"ghost"} className="hidden  h-0 w-0" />
-            <CarouselNext variant={"ghost"} className="hidden  h-0 w-0" />
-          </Carousel>
-        </div>
-      </MainContainer>
-    </div>
+                  <CarouselContent>
+                    {reviews.map((review, index) => (
+                      <CarouselItem
+                        key={index}
+                        className="flex lg:basis-1/3 justify-center"
+                      >
+                        <ReviewCard {...review} />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious
+                    variant={"ghost"}
+                    className="hidden md:flex h-0 w-0"
+                  />
+                  <CarouselNext
+                    variant={"ghost"}
+                    className="hidden md:flex h-0 w-0"
+                  />
+                </Carousel>
+              </div>
+            </MainContainer>
+          </div>
+        )
+      }
+    </Device>
   );
 }
