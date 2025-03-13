@@ -52,7 +52,7 @@ export default function HeroDesktop() {
                 veloce.
               </span>
             </div>
-            <div className="flex w-[70%] items-center bg-white p-3 gap-2 border-2 border-[#0BB489] rounded-[100px]">
+            <div className="flex w-[80%] items-center bg-white p-3 gap-2 border-2 border-[#0BB489] rounded-[100px]">
               <Image src={searchIcon} alt="search icon"></Image>
               <input
                 id="search"
