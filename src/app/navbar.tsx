@@ -85,7 +85,7 @@ export default function Navbar() {
           </DisclosureButton>
         </div>
       </div>
-      <DisclosurePanel className="md:hidden">
+      <DisclosurePanel className="flex justify-end md:hidden">
         <div className="flex flex-col justify-between items-end px-5 gap-3 bg-[#353535]">
           {navigation.map((item) => (
             <DisclosureButton

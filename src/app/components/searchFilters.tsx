@@ -3,7 +3,8 @@
 import { useState } from "react";
 import SelectHero from "./select_hero";
 import { Slider } from "@/components/ui/slider";
-import Articles from "../(sections)/shop/articles";
+import Items from "../(sections)/shop/items";
+import MainContainer from "./mainContainer";
 
 export default function SearchFilters({ shop = false }: { shop?: boolean }) {
   const cars = {
@@ -80,8 +81,8 @@ export default function SearchFilters({ shop = false }: { shop?: boolean }) {
   const [category, setCategory] = useState<PieceCategory | null>(null);
 
   return (
-    <>
-      <div className="grid grid-cols-2 w-full md:flex items-center gap-5">
+    <MainContainer>
+      <div className="grid grid-cols-2 w-full md:flex justify-center items-center gap-5">
         <SelectHero
           title="Marca"
           options={Object.keys(cars)}
@@ -128,7 +129,7 @@ export default function SearchFilters({ shop = false }: { shop?: boolean }) {
             onSelect={(cat) => setCategory(cat as PieceCategory)}
           ></SelectHero>
         )}
-        <div className="flex flex-col items-center max-w-56 gap-2">
+        <div className="flex flex-col items-center w-full gap-2">
           <span
             className={`text-sm text-center font-inter font-medium ${
               shop ? "text-[#3A3A3A]" : "text-white"
@@ -144,7 +145,7 @@ export default function SearchFilters({ shop = false }: { shop?: boolean }) {
             step={1}
           />
           <span
-            className={`text-sm text-center text-white font-inter font-medium ${
+            className={`text-sm text-center font-inter font-medium ${
               shop ? "text-[#3A3A3A]" : "text-white"
             }`}
           >
@@ -153,10 +154,10 @@ export default function SearchFilters({ shop = false }: { shop?: boolean }) {
         </div>
       </div>
       {shop && (
-        <div className="flex ">
-          <Articles />
+        <div className="flex pt-12">
+          <Items />
         </div>
       )}
-    </>
+    </MainContainer>
   );
 }

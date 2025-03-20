@@ -21,7 +21,7 @@ export default function SelectHero({
 }) {
   return (
     <Select onValueChange={onSelect} key={options[0]}>
-      <SelectTrigger className="max-w-56">
+      <SelectTrigger>
         <SelectValue placeholder={title} />
       </SelectTrigger>
       <SelectContent>
