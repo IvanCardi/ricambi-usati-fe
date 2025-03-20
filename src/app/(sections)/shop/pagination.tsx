@@ -1,17 +1,20 @@
 "use client";
 
-import { Item } from "./items";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import PaginationBar from "./paginationBar";
+import { useRouter } from "next/navigation";
+import { CarPart } from "./product/[id]/productPage";
 
 export interface Page {
   number: number;
-  items: Item[];
+  items: CarPart[];
 }
 
-export function ShopPagination({ items = [] }: { items: Item[] }) {
+export function ShopPagination({ items = [] }: { items: CarPart[] }) {
+  const router = useRouter();
+
   const pages: Page[] = useMemo(() => {
     return Array.from({ length: Math.ceil(items.length / 12) }).map(
       (_, index) => ({
@@ -27,13 +30,16 @@ export function ShopPagination({ items = [] }: { items: Item[] }) {
     setSelectedPage(pages[0]);
   }, [pages]);
 
-  function ItemCard(article: Item) {
+  function CarPartCard(carPart: CarPart) {
     return (
-      <div className="flex flex-col w-full gap-14">
+      <div
+        className="flex flex-col w-full gap-14"
+        onClick={() => router.push(`/shop/product/${carPart.id}`)}
+      >
         <div className="flex flex-col justify-between items-center w-full h-full border-[3px] border-[#0BB489]">
           <div className="flex w-full h-full justify-center border-[3px] border-[#0BB489]">
             <Image
-              src={article.image}
+              src={carPart.imageUrl}
               alt="mechanical article"
               width={200}
               height={200}
@@ -42,11 +48,11 @@ export function ShopPagination({ items = [] }: { items: Item[] }) {
           <div className="flex flex-col w-full items-center border border-t-2 border-[#0BB489] gap-2 py-2">
             <div className="flex flex-col items-center justify-center gap-2 w-full">
               <span className="text-base text-center font-inter font-semibold">
-                {article.name}
+                {carPart.name}
               </span>
               <div className="w-10 h-[1px] bg-black" />
               <span className="text-sm text-center font-inter font-semibold">
-                {article.price}€
+                {carPart.price}€
               </span>
             </div>
             <Button className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85">
@@ -73,7 +79,7 @@ export function ShopPagination({ items = [] }: { items: Item[] }) {
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-10">
             {selectedPage.items.map((item, index) => (
-              <ItemCard key={index} {...item} />
+              <CarPartCard key={index} {...item} />
             ))}
           </div>
         )}

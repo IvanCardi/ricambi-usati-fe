@@ -3,7 +3,7 @@
 import { useState } from "react";
 import SelectHero from "./select_hero";
 import { Slider } from "@/components/ui/slider";
-import Items from "../(sections)/shop/items";
+import CarPartsSection from "../(sections)/shop/carPartsSection";
 import MainContainer from "./mainContainer";
 
 export default function SearchFilters({ shop = false }: { shop?: boolean }) {
@@ -155,7 +155,7 @@ export default function SearchFilters({ shop = false }: { shop?: boolean }) {
       </div>
       {shop && (
         <div className="flex pt-12">
-          <Items />
+          <CarPartsSection />
         </div>
       )}
     </MainContainer>
