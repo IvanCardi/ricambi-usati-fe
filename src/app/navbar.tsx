@@ -25,7 +25,11 @@ export default function Navbar() {
   return (
     <Disclosure
       as="nav"
-      className={`${pathname.includes("/shop") ? "bg-white" : "bg-black"}`}
+      className={`${
+        pathname.includes("/shop") || pathname.includes("/login")
+          ? "bg-white"
+          : "bg-black"
+      }`}
     >
       <div className="flex w-full justify-between items-center md:items-start px-4 pt-4">
         <Link href="/">
@@ -47,7 +51,9 @@ export default function Navbar() {
         </div>
         <div className="hidden md:flex justify-between gap-5">
           <Image src={searchIcon} objectFit="contain" alt="search icon" />
-          <Image src={profile} objectFit="contain" alt="profile icon" />
+          <Link href="/login">
+            <Image src={profile} objectFit="contain" alt="profile icon" />
+          </Link>
           <Image src={cart} objectFit="contain" alt="cart icon" />
         </div>
         <div className="flex items-center md:hidden p-1 sticky top-0">
@@ -108,7 +114,7 @@ export default function Navbar() {
           <DisclosureButton
             key="Profile"
             as="a"
-            href=""
+            href="/login"
             className="text-l font-poppins font-light text text-[#0BB489]"
           >
             Profile
