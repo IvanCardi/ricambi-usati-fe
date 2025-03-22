@@ -13,6 +13,7 @@ export default {
       colors: {
         "primary-green": "#0BB489",
         "neutral-gray": "#F2F2F2",
+        "secondary-blue": "#4285F4",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
