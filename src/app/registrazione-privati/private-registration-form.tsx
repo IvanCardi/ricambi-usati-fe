@@ -12,6 +12,9 @@ import { z } from "zod";
 import Button from "../components/button";
 import FormPassInput from "../components/form-pass-input";
 import FormTextInput from "../components/form-text-input";
+import { useRouter } from "next/navigation";
+import { register } from "./actions";
+import { toast } from "sonner";
 
 const formSchema = z
   .object({
@@ -39,6 +42,7 @@ const formSchema = z
   });
 
 export default function PrivateRegistrationForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,7 +55,19 @@ export default function PrivateRegistrationForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    const result = await register(values);
+
+    if (result.status === "ok") {
+      router.push("/login");
+
+      toast("Utente registrato con successo!");
+    } else {
+      if (result.message === "DuplicatedUser") {
+        form.setError("email", { message: "Email già in uso" });
+      } else {
+        toast("Si è verificato un errore");
+      }
+    }
   };
 
   return (

@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./navbar";
 import Footer from "./footer/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
         <div className="flex flex-col w-full">
           <Navbar />
           {children}
+          <Toaster />
           <Footer />
         </div>
       </body>

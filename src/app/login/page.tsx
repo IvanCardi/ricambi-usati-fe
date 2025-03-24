@@ -17,12 +17,14 @@ export default async function Login() {
           <div className="md:h-[70px] sm:h-10"></div>
           <LoginForm></LoginForm>
           <div className="h-[97px]"></div>
-          <Button
-            type="button"
-            className="text-[#444444] font-bold text-[24px]/[24px] md:w-[60%] uppercase bg-white border-[#616161] border"
-          >
-            Registrati
-          </Button>
+          <Link href="/registrazione-privati" className="md:w-[60%]">
+            <Button
+              type="button"
+              className="text-[#444444] font-bold text-[24px]/[24px] uppercase bg-white border-[#616161] border"
+            >
+              Registrati
+            </Button>
+          </Link>
           <div className="h-[66px]"></div>
           <Button
             type="button"
