@@ -3,10 +3,9 @@
 import { useState } from "react";
 import SelectHero from "./select_hero";
 import { Slider } from "@/components/ui/slider";
-import CarPartsSection from "../(sections)/shop/carPartsSection";
 import MainContainer from "./mainContainer";
 
-export default function SearchFilters({ shop = false }: { shop?: boolean }) {
+export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
   const cars = {
     BMW: {
       "3 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M340i"],
@@ -153,11 +152,7 @@ export default function SearchFilters({ shop = false }: { shop?: boolean }) {
           </span>
         </div>
       </div>
-      {shop && (
-        <div className="flex pt-12">
-          <CarPartsSection />
-        </div>
-      )}
+      {shop && shop}
     </MainContainer>
   );
 }

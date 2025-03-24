@@ -1,6 +1,11 @@
-export default function Form() {
+export default function Form({ background = false }: { background?: boolean }) {
   return (
-    <div className="flex w-full bg-gradient-to-b from-white from-[60%] to-[#939292] pt-24 justify-center items-center p-24 pb-80">
+    <div
+      className={`${
+        background &&
+        "bg-gradient-to-b from-white from-[60%] to-[#939292] p-24 pb-80 "
+      } flex w-full justify-center items-center px-6`}
+    >
       <div className="flex items-center bg-[#0BB489] p-10">
         <span className="text-3xl/[60px] text-center text-white font-inter font-normal">
           Non trovi quello che stai cercando? <br></br> Compila il{" "}

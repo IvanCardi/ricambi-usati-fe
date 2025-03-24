@@ -1,32 +1,73 @@
-import Link from "next/link";
-import Image from "next/image";
-import { CarPart } from "./productPage";
+import { CarPart } from "../../carPartsSection";
+import Device from "../../../../components/device";
+import MainContainer from "@/app/components/mainContainer";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { CarPartCard } from "../../carPartCard";
 
 export default function RelatedProducts({ products }: { products: CarPart[] }) {
   return (
-    <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-4">Related Products</h2>
-      <div className="grid md:grid-cols-3 gap-4">
-        {products.slice(0, 3).map((product) => (
-          <div key={product.id} className="border p-4 rounded-lg shadow-md">
-            <Image
-              src={product.imageUrl}
-              alt={product.name}
-              width={200}
-              height={150}
-              className="rounded-md"
-            />
-            <h3 className="mt-2 text-lg font-semibold">{product.name}</h3>
-            <p className="text-green-600 font-bold">${product.price}</p>
-            <Link
-              href={`/product/${product.slug}`}
-              className="text-blue-600 hover:underline"
-            >
-              View Details
-            </Link>
+    <Device>
+      {({ isMobile }) =>
+        isMobile ? (
+          <div className="flex w-full bg-gradient-to-b from-white from-[60%] to-[#939292]">
+            <MainContainer>
+              <div className="flex flex-col gap-16">
+                <h2 className="text-[40px] text-center font-poppins font-semibold">
+                  PRODOTTI SIMILI
+                </h2>
+                <div className="flex flex-nowrap gap-3 overflow-x-auto">
+                  {products.map((product, index) => (
+                    <CarPartCard key={index} {...product} />
+                  ))}
+                </div>
+              </div>
+            </MainContainer>
           </div>
-        ))}
-      </div>
-    </div>
+        ) : (
+          <div className="flex w-full bg-gradient-to-b from-white from-[60%] to-[#939292]">
+            <MainContainer>
+              <div className="flex flex-col w-full items-center gap-16">
+                <h2 className="text-[40px] font-poppins font-semibold">
+                  PRODOTTI SIMILI
+                </h2>
+                <div className="flex w-full justify-center items-center ">
+                  <Carousel
+                    opts={{
+                      align: "start",
+                    }}
+                    className="w-[80%] md:w-[90%]"
+                  >
+                    <CarouselContent>
+                      {products.map((product, index) => (
+                        <CarouselItem
+                          key={index}
+                          className="flex sm:basis-1/2 md:basis-1/3  lg:basis-1/4 justify-center"
+                        >
+                          <CarPartCard {...product} />
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                    <CarouselPrevious
+                      variant={"ghost"}
+                      className="hidden md:flex h-0 w-0"
+                    />
+                    <CarouselNext
+                      variant={"ghost"}
+                      className="hidden md:flex h-0 w-0"
+                    />
+                  </Carousel>
+                </div>
+              </div>
+            </MainContainer>
+          </div>
+        )
+      }
+    </Device>
   );
 }
