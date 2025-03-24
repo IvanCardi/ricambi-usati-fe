@@ -26,7 +26,9 @@ export default function Navbar() {
     <Disclosure
       as="nav"
       className={`${
-        pathname.includes("/shop") || pathname.includes("/login")
+        pathname.includes("/shop") ||
+        pathname.includes("/login") ||
+        pathname.includes("/registrazione")
           ? "bg-white"
           : "bg-black"
       }`}
