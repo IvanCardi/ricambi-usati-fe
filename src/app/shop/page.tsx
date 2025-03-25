@@ -22,7 +22,7 @@ export default async function Shop() {
       <div className="flex w-full justify-center py-14">
         <span className="text-7xl font-inter font-bold">SHOP</span>
       </div>
-      <SearchFilters shop={<CarPartsSection />} />
+      <SearchFilters shop={<CarPartsSection carParts={products} />} />
       <FormCTA background />
     </main>
   );

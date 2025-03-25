@@ -36,19 +36,21 @@ export function ShopPagination({ items = [] }: { items: CarPart[] }) {
           </span>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-10">
-          {selectedPage.items.map((item, index) => (
-            <CarPartCard key={index} {...item} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-10">
+            {selectedPage.items.map((item, index) => (
+              <CarPartCard key={index} {...item} />
+            ))}
+          </div>
+          <div className="flex w-full justify-end">
+            <PaginationBar
+              pages={pages}
+              currentPage={selectedPage}
+              onSelectPage={(newPage: Page) => setSelectedPage(newPage)}
+            />
+          </div>
+        </>
       )}
-      <div className="flex w-full justify-end">
-        <PaginationBar
-          pages={pages}
-          currentPage={selectedPage}
-          onSelectPage={(newPage: Page) => setSelectedPage(newPage)}
-        />
-      </div>
     </div>
   );
 }
