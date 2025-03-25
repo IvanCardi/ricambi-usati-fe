@@ -1,5 +1,6 @@
 import SearchFilters from "@/app/components/searchFilters";
 import Form from "./form";
+import CarPartsSection from "./carPartsSection";
 
 export default function Shop() {
   return (
@@ -7,8 +8,8 @@ export default function Shop() {
       <div className="flex w-full justify-center py-14">
         <span className="text-7xl font-inter font-bold">SHOP</span>
       </div>
-      <SearchFilters shop />
-      <Form />
+      <SearchFilters shop={<CarPartsSection />} />
+      <Form background />
     </main>
   );
 }
