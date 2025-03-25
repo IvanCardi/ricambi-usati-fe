@@ -53,7 +53,7 @@ export default function Navbar() {
         </div>
         <div className="hidden md:flex justify-between gap-5">
           <Image src={searchIcon} objectFit="contain" alt="search icon" />
-          <Link href="/login">
+          <Link href="/profilo">
             <Image src={profile} objectFit="contain" alt="profile icon" />
           </Link>
           <Image src={cart} objectFit="contain" alt="cart icon" />
@@ -116,7 +116,7 @@ export default function Navbar() {
           <DisclosureButton
             key="Profile"
             as="a"
-            href="/login"
+            href="/profilo"
             className="text-l font-poppins font-light text text-[#0BB489]"
           >
             Profile

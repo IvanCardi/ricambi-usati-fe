@@ -11,25 +11,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Button from "../components/button";
 import FormTextInput from "../components/form-text-input";
+import FormPassInput from "../components/form-pass-input";
+import { login } from "./actions";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email("Inserire una mail corretta"),
-  password: z
-    .string()
-    .min(8, "La password deve essere lunga almeno 8 caratteri")
-    .regex(/[A-Z]/, "La password deve contenere almeno una lettera maiuscola")
-    .regex(/[a-z]/, "La password deve contenere almeno una lettera minuscola")
-    .regex(/\d/, "La password deve contenere almeno un numero")
-    .regex(
-      /[@$!%*?&]/,
-      "La password deve contenere almeno un carattere speciale (@$!%*?&)"
-    )
-    .refine((password) => !/\s/.test(password), {
-      message: "La password non può contenere spazi",
-    }),
+  password: z.string().nonempty("Inserisci la password"),
 });
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,15 +31,24 @@ export default function LoginForm() {
     },
   });
 
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const response = await login(values.email, values.password);
+
+    if (response.status === "ok") {
+      router.push("/");
+    } else {
+      if (response.message === "InvalidCredentials") {
+        toast("Nome utente o password errati");
+      } else {
+        toast("Si è verificato un errore");
+      }
+    }
+  };
+
   return (
     <Form {...form}>
       <form
-        // onSubmit={form.handleSubmit(onSubmit)}
-        // onKeyDown={(e) => {
-        //   if (e.key === "Enter") {
-        //     e.preventDefault();
-        //   }
-        // }}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-10 w-full m-auto"
       >
         <div className="flex flex-col gap-7">
@@ -68,7 +70,7 @@ export default function LoginForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <FormTextInput {...field} placeholder="Password" />
+                  <FormPassInput {...field} placeholder="Password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
