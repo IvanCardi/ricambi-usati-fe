@@ -1,5 +1,5 @@
 import { CarPart } from "../../carPartsSection";
-import Device from "../../../../components/device";
+import Device from "../../../components/device";
 import MainContainer from "@/app/components/mainContainer";
 import {
   Carousel,
