@@ -1,7 +1,7 @@
 import SearchFilters from "@/app/components/searchFilters";
-import Form from "./form";
 import CarPartsSection from "./carPartsSection";
 import { cookies } from "next/headers";
+import FormCTA from "@/app/form/formCTA";
 
 const getProducts = async () => {
   const token = (await cookies())?.get("access_token")?.value;
@@ -23,7 +23,7 @@ export default async function Shop() {
         <span className="text-7xl font-inter font-bold">SHOP</span>
       </div>
       <SearchFilters shop={<CarPartsSection />} />
-      <Form background />
+      <FormCTA background />
     </main>
   );
 }

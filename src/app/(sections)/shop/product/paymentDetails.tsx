@@ -12,16 +12,18 @@ export default function PaymentDetails({
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-6">
         {warranty && (
-          <h2 className="text-2xl text-[#0BB489] font-poppins font-medium">
+          <h2 className="text-lg md:text-2xl text-[#0BB489] font-poppins font-medium">
             {warranty} di garanzia
           </h2>
         )}
-        <span className="text-5xl font-poppins font-semibold">{price} €</span>
-        <span className="text-[15px] font-poppins font-semibold">
+        <span className="text-4xl md:text-5xl font-poppins font-semibold">
+          {price} €
+        </span>
+        <span className="text-xs md:text-[15px] font-poppins font-semibold">
           La spedizione e l&apos;IVA sono incluse nel prezzo.
         </span>
-        <Button className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85">
-          <span className="text-base text-white font-inter font-medium">
+        <Button className="w-full md:w-fit bg-[#0BB489] hover:bg-[#0BB489]/85">
+          <span className="text-sm md:text-base text-white font-inter font-medium">
             Aggiungi al carrello
           </span>
         </Button>
@@ -43,11 +45,17 @@ export default function PaymentDetails({
             width={24}
             height={24}
             alt="delivery track icon"
+            className="hidden md:flex"
           />
-          <span className="text-sm font-inter font-medium">
+          <span className="text-xs md:text-sm font-inter font-medium">
             La spedizione e l’IVA{" "}
-            <span className="text-sm font-inter font-normal">sono</span> incluse{" "}
-            <span className="text-sm font-inter font-normal">nel prezzo</span>
+            <span className="text-xs md:text-sm font-inter font-normal">
+              sono
+            </span>{" "}
+            incluse{" "}
+            <span className="text-xs md:text-sm font-inter font-normal">
+              nel prezzo
+            </span>
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -56,12 +64,15 @@ export default function PaymentDetails({
             width={24}
             height={24}
             alt="clock icon"
+            className="hidden md:flex"
           />
-          <span className="text-sm font-inter font-normal">
+          <span className="text-xs md:text-sm font-inter font-normal">
             Il tempo di {""}
-            <span className="text-sm font-inter font-medium">consegna</span> per
-            questo ricambio usato è di{" "}
-            <span className="text-sm font-inter font-medium">
+            <span className="text-xs md:text-sm font-inter font-medium">
+              consegna
+            </span>{" "}
+            per questo ricambio usato è di{" "}
+            <span className="text-xs md:text-sm font-inter font-medium">
               2 ai 4 giorni lavorativi
             </span>
           </span>
@@ -72,10 +83,11 @@ export default function PaymentDetails({
             width={24}
             height={24}
             alt="reply icon"
+            className="hidden md:flex"
           />
-          <span className="text-sm font-inter font-normal">
+          <span className="text-xs md:text-sm font-inter font-normal">
             Puoi effettuare il {""}
-            <span className="text-sm font-inter font-medium">
+            <span className="text-xs md:text-sm  font-inter font-medium">
               reso entro 14 giorni
             </span>
           </span>
