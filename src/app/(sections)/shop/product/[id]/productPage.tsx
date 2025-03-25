@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/accordion";
 import { CarPart } from "../../carPartsSection";
 import { InfoVeicolo, Veicolo } from "./infoVeicolo";
-import Form from "../../form";
 import PaymentDetails from "../paymentDetails";
+import FormCTA from "@/app/form/formCTA";
 
 export interface CarPartDetailed extends CarPart {
   images: string[];
@@ -82,8 +82,8 @@ export default function ProductPage({
       <main>
         <MainContainer>
           <div className="flex flex-col gap-28 pt-14">
-            <div className="flex w-full gap-7">
-              <div className="flex flex-col w-[30%] gap-8">
+            <div className="flex w-full gap-4 md:gap-7">
+              <div className="flex flex-col w-[30%] gap-8 px-[2px]">
                 <div className="flex flex-col gap-[10px]">
                   <div className="flex items-center justify-center w-full border-2 border-[#0BB489] rounded-sm">
                     <Image
@@ -153,7 +153,7 @@ export default function ProductPage({
                   </Accordion>
                 </div>
                 <div className="flex flex-col gap-4">
-                  <h2 className="text-2xl font-poppins font-semibold">
+                  <h2 className="text-lg md:text-2xl font-poppins font-semibold">
                     Vorresti più informazioni?
                   </h2>
                   <div className="flex items-center gap-[1px]">
@@ -163,39 +163,39 @@ export default function ProductPage({
                       height={20}
                       alt="Phone Icon"
                     />
-                    <p className="text-xl font-poppins font-light">
+                    <p className="text-base md:text-xl font-poppins font-light">
                       Chiamaci al{" "}
-                      <span className="text-xl font-poppins font-medium">
+                      <span className="text-base md:text-xl font-poppins font-medium">
                         +39 0444 636259
                       </span>
                     </p>
                   </div>
-                  <p className="text-xl font-poppins font-normal">
+                  <p className="text-base md:text-xl font-poppins font-normal">
                     Orario: lunedì - venerdì
                     <br /> dalle 08:00 - 12:00 e 14:00 - 19:00
                     <br /> sabato dalle 08:00 - 12:00
                   </p>
                 </div>
               </div>
-              <div className="flex w-[44%]">
+              <div className="flex w-[44%] px-[2px]">
                 <div className="flex flex-col w-full  gap-11">
                   <div className="flex flex-col gap-8">
                     <h1 className="text-3xl font-inter font-bold">
                       {product.name}
                     </h1>
                     <div className="flex bg-[#0BB489] w-fit rounded-sm px-4 py-1">
-                      <h2 className="text-2xl text-white font-poppins font-light">
+                      <h2 className="text-xs md:text-2xl text-white font-poppins font-light">
                         {product.id}
                       </h2>
                     </div>
                   </div>
                   <InfoVeicolo {...product.car} />
                 </div>
-                <div className="h-full pt-14">
+                <div className="hidden md:flex h-full pt-14">
                   <div className="h-1/2 w-[1px] bg-black"></div>
                 </div>
               </div>
-              <div className="flex w-[26%] pt-14">
+              <div className="flex w-[26%] pt-14 px-[2px]">
                 <PaymentDetails
                   price={product.price}
                   warranty={product.warranty}
@@ -207,7 +207,7 @@ export default function ProductPage({
                 <h2 className="text-[27px] text-center text-[#0BB489] font-poppins font-semibold">
                   Informazioni sul ricambio
                 </h2>
-                <p className="text-xl font-poppins font-normal">
+                <p className="text-base md:text-xl font-poppins font-normal">
                   {product.description}
                 </p>
               </div>
@@ -228,11 +228,11 @@ export default function ProductPage({
         <div className="flex flex-col gap-28">
           {relatedProducts ? (
             <>
-              <Form />
+              <FormCTA />
               <RelatedProducts products={relatedProducts} />
             </>
           ) : (
-            <Form background />
+            <FormCTA background />
           )}
         </div>
       </main>

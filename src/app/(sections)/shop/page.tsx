@@ -1,6 +1,6 @@
 import SearchFilters from "@/app/components/searchFilters";
-import Form from "./form";
 import CarPartsSection from "./carPartsSection";
+import FormCTA from "@/app/form/formCTA";
 
 export default function Shop() {
   return (
@@ -9,7 +9,7 @@ export default function Shop() {
         <span className="text-7xl font-inter font-bold">SHOP</span>
       </div>
       <SearchFilters shop={<CarPartsSection />} />
-      <Form background />
+      <FormCTA background />
     </main>
   );
 }

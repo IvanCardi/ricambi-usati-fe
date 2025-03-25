@@ -27,6 +27,7 @@ export default function Navbar() {
       as="nav"
       className={`${
         pathname.includes("/shop") ||
+        pathname.includes("/form") ||
         pathname.includes("/login") ||
         pathname.includes("/registrazione")
           ? "bg-white"
