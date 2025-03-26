@@ -44,20 +44,32 @@ export default function Ricambi() {
     },
     {
       title: "Carrozzeria",
-      image: "/meccanica.png",
+      image: "/carrozzeria.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
-        { name: "Collettore", image: "/collettore.png" },
+        { name: "Aste Ammortizzanti", image: "/aste_ammortizzanti.png" },
+        { name: "Lamierati", image: "/lamierati.png" },
+        { name: "Maniglie", image: "/maniglie.png" },
         {
-          name: "Motorino Avviamento",
-          image: "/motorino.png",
+          name: "Paraurti Anteriore",
+          image: "/paraurti_anteriore.png",
+        },
+        {
+          name: "Paraurti Posteriore",
+          image: "/paraurti_posteriore.png",
+        },
+        {
+          name: "Specchietti Retrovisori",
+          image: "/specchietti_retrovisori.png",
+        },
+        {
+          name: "Vetri Scendenti",
+          image: "/vetri_scendenti.png",
         },
       ],
     },
     {
-      title: "Fanaleria",
-      image: "/meccanica.png",
+      title: "Paraurti Anteriore",
+      image: "/paraurti_anteriore.png",
       items: [
         { name: "Alternatore", image: "/alternatore.png" },
         { name: "Cambio", image: "/cambio.png" },
