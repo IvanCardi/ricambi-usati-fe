@@ -1,13 +1,34 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import SearchFilters from "@/app/components/searchFilters";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function TrovaRicambi() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [searchType, setSearchType] = useState<"VEICOLO" | "N. DI SERIE">(
     "VEICOLO"
   );
+
+  const [params, setParams] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    setParams({});
+  }, [searchType]);
+
+  const onSearchButtonClick = () => {
+    const query = new URLSearchParams(searchParams.toString());
+
+    for (const param in params) {
+      query.set(param, params[param]);
+    }
+
+    query.set("page", "1");
+
+    router.push(`/shop?${query.toString()}`);
+  };
 
   return (
     <div className="flex w-full justify-center">
@@ -38,7 +59,11 @@ export function TrovaRicambi() {
 
         <div className="flex flex-col justify-center md:h-56 gap-5 w-full p-2 md:p-10 border-[#0BB489] border-4">
           {searchType === "VEICOLO" ? (
-            <SearchFilters />
+            <SearchFilters
+              onFilterSelection={(name, value) => {
+                setParams((curr) => ({ ...curr, [name]: value }));
+              }}
+            />
           ) : (
             <div className="flex flex-col gap-2">
               <span className="text-xl text-white font-inter font-semibold">
@@ -51,12 +76,16 @@ export function TrovaRicambi() {
                   type="text"
                   placeholder="Per esempio: 9643777980, 0265216..."
                   className="w-full text-lg text-gray-900 placeholder:text-[#637381] focus:outline-none sm:text-sm/6"
+                  onChange={(e) => setParams({ number: e.target.value })}
                 />
               </div>
             </div>
           )}
           <div className="flex w-full justify-center md:justify-start">
-            <Button className="w-fit md:w-56 bg-[#0BB489] hover:bg-[#0BB489]/85">
+            <Button
+              className="w-fit md:w-56 bg-[#0BB489] hover:bg-[#0BB489]/85"
+              onClick={onSearchButtonClick}
+            >
               <span className="text-xl text-white font-inter font-extrabold">
                 TROVA RICAMBIO
               </span>

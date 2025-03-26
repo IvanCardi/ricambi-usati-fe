@@ -5,6 +5,9 @@ import { Slider } from "@/components/ui/slider";
 import MainContainer from "./mainContainer";
 
 const cars = {
+  Ford: {
+    Focus: ["1.8 Diesel 115CV"],
+  },
   BMW: {
     "3 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M340i"],
     "5 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M550i"],
@@ -41,9 +44,6 @@ const cars = {
     "Land Cruiser": ["Active", "Lounge", "Executive", "Invincible", "GR Sport"],
   },
 };
-const categories = ["Meccanica", "Motori", "Carrozzeria"] as const;
-
-type PieceCategory = (typeof categories)[number];
 
 type CarBrand = keyof typeof cars;
 type CarModel<Brand extends CarBrand> = keyof (typeof cars)[Brand];
@@ -54,7 +54,11 @@ type CarSetUp<
   ? (typeof cars)[Brand][Model][number]
   : never;
 
-export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
+export default function SearchFilters({
+  onFilterSelection,
+}: {
+  onFilterSelection: (name: string, value: string) => void;
+}) {
   const [selectedCar, setSelectedCar] = useState<{
     brand?: CarBrand;
     model?: CarModel<CarBrand>;
@@ -64,7 +68,6 @@ export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
     2000,
     new Date().getFullYear(),
   ]);
-  const [category, setCategory] = useState<PieceCategory | null>(null);
 
   return (
     <MainContainer>
@@ -72,11 +75,12 @@ export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
         <SelectHero
           title="Marca"
           options={Object.keys(cars)}
-          onSelect={(brand) =>
+          onSelect={(brand) => {
             setSelectedCar({
               brand: brand as CarBrand,
-            })
-          }
+            });
+            onFilterSelection("brand", brand);
+          }}
         ></SelectHero>
         <SelectHero
           title="Modello"
@@ -85,12 +89,13 @@ export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
               ? Object.keys(cars[selectedCar.brand as CarBrand])
               : []
           }
-          onSelect={(model) =>
+          onSelect={(model) => {
             setSelectedCar((prev) => ({
               ...prev,
               model: model as CarModel<CarBrand>,
-            }))
-          }
+            }));
+            onFilterSelection("model", model);
+          }}
         ></SelectHero>
         <SelectHero
           title="Allestimento"
@@ -101,45 +106,38 @@ export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
                 ]
               : []
           }
-          onSelect={(setUp) =>
+          onSelect={(setUp) => {
             setSelectedCar((prev) => ({
               ...prev,
               setUp: setUp as CarSetUp<CarBrand, CarModel<CarBrand>>,
-            }))
-          }
+            }));
+            onFilterSelection("setup", setUp);
+          }}
         ></SelectHero>
-        {shop && (
-          <SelectHero
-            title="Categorie"
-            options={[...categories]}
-            onSelect={(cat) => setCategory(cat as PieceCategory)}
-          ></SelectHero>
-        )}
         <div className="flex flex-col items-center w-full gap-2">
           <span
-            className={`text-sm text-center font-inter font-medium ${
-              shop ? "text-[#3A3A3A]" : "text-white"
-            }`}
+            className={`text-sm text-center font-inter font-medium text-white`}
           >
             Anno di produzione
           </span>
           <Slider
             value={range}
-            onValueChange={(newRange) => setRange(newRange)}
+            onValueChange={(newRange) => {
+              setRange(newRange);
+              onFilterSelection("startYear", newRange[0].toString());
+              onFilterSelection("endYear", newRange[1].toString());
+            }}
             max={new Date().getFullYear()}
             min={2000}
             step={1}
           />
           <span
-            className={`text-sm text-center font-inter font-medium ${
-              shop ? "text-[#3A3A3A]" : "text-white"
-            }`}
+            className={`text-sm text-center font-inter font-medium text-white`}
           >
             {range[0]} - {range[1]}
           </span>
         </div>
       </div>
-      {shop && shop}
     </MainContainer>
   );
 }
