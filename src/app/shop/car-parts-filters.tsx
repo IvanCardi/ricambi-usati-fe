@@ -446,11 +446,6 @@ export default function CarPartsFilters({
           categories={[...categories]}
           onSelect={(cat) => setCategory(cat)}
         />
-        {/* <SelectHero
-          title="Categorie"
-          options={[...categories]}
-          onSelect={(cat) => setCategory(cat as PieceCategory)}
-        ></SelectHero> */}
         <div className="flex flex-col items-center w-full gap-2">
           <span
             className={`text-sm text-center font-inter font-medium text-[#3A3A3A]`}
