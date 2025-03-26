@@ -117,21 +117,11 @@ export default function Ricambi() {
     },
     {
       title: "Cerchi",
-      image: "/meccanica.png",
+      image: "/cerchi.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
+        { name: "Cerchio Ruota", image: "/cerchio_ruota.png" },
+        { name: "Copricerchi", image: "/copricerchi.png" },
         { name: "Collettore", image: "/collettore.png" },
-        {
-          name: "Motorino Avviamento",
-          image: "/motorino.png",
-        },
-        { name: "Pastiglie Freno", image: "/pastiglie.png" },
-        {
-          name: "Piantone Servosterzo",
-          image: "/piantone.png",
-        },
-        { name: "Pinza Freno", image: "/pastiglie.png" },
       ],
     },
     {
