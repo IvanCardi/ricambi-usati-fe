@@ -104,10 +104,15 @@ export default function Ricambi() {
     },
     {
       title: "Sicurezza",
-      image: "/meccanica.png",
+      image: "/sicurezza.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
+        { name: "Airbag", image: "/airbag.png" },
+        { name: "Attacchi cintura", image: "/attacchi_cintura.png" },
+        { name: "Centralina Airbag", image: "/centralina.png" },
+        { name: "Cintura di sicurezza", image: "/cintura_sicurezza.png" },
+        { name: "Sensore", image: "/sensore.png" },
+        { name: "Contatto Spiralato", image: "/contatto_spiralato.png" },
+        { name: "Sensori Airbag", image: "/sensori_airbag.png" },
       ],
     },
     {
