@@ -78,19 +78,27 @@ export default function Ricambi() {
     },
     {
       title: "Interni",
-      image: "/meccanica.png",
+      image: "/interni.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
-        { name: "Collettore", image: "/collettore.png" },
+        { name: "Aletta Parasole", image: "/aletta_parasole.png" },
+        { name: "Autoradio", image: "/autoradio.png" },
+        { name: "Blocchetto Accensione", image: "/blocchetto_accensione.png" },
         {
-          name: "Motorino Avviamento",
-          image: "/motorino.png",
+          name: "Bocchette Aria",
+          image: "/bocchette_aria.png",
         },
-        { name: "Pastiglie Freno", image: "/pastiglie.png" },
+        { name: "Interruttori", image: "/interruttori.png" },
         {
-          name: "Piantone Servosterzo",
-          image: "/piantone.png",
+          name: "Pannelli Porte",
+          image: "/pannelli_porte.png",
+        },
+        {
+          name: "Pedaliere",
+          image: "/pedaliere.png",
+        },
+        {
+          name: "Sedili",
+          image: "/sedili.png",
         },
       ],
     },
