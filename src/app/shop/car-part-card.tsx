@@ -15,20 +15,22 @@ export function CarPartCard(carPart: CarPart) {
       onClick={() => router.push(`/shop/product/${carPart.id}`)}
     >
       <div className="flex flex-col justify-between items-center w-full h-full border-[3px] border-[#0BB489]">
-        <div className="flex w-full h-full justify-center border-[3px] border-[#0BB489]">
+        <div className="flex w-full h-[205px] justify-center border-[3px] border-[#0BB489]">
           {carPart.imageUrl ? (
             <Image
+              className="w-full object-cover"
               src={carPart.imageUrl}
               alt="mechanical article"
-              width={200}
-              height={200}
+              height={205}
+              width={205}
             />
           ) : (
             <Image
+              className="w-full object-cover"
               src={noImagePlaceholder.src}
               alt={`No image placeholder`}
-              width={200}
-              height={200}
+              height={205}
+              width={205}
               // className="max-w-full max-h-full object-contain"
             />
           )}

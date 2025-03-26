@@ -1,11 +1,10 @@
 "use client";
+import { Slider } from "@/components/ui/slider";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { Category } from "../(sections)/ricambi/categoryCard";
 import MainContainer from "../components/mainContainer";
 import SelectHero from "../components/select_hero";
-import { Slider } from "@/components/ui/slider";
-import Button from "../components/button";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Category } from "../(sections)/ricambi/categoryCard";
 import SelectCategory from "./select-category";
 
 const categories: Category[] = [
@@ -466,13 +465,12 @@ export default function CarPartsFilters({
             {range[0]} - {range[1]}
           </span>
         </div>
-        <Button
-          type="button"
+        <div
           onClick={onFilterApply}
-          className="bg-primary-green px-[20px] py-[5px] w-[200px] h-fit text-white font-semibold uppercase"
+          className="bg-primary-green px-[20px] py-[5px] w-fit rounded-md cursor-pointer h-fit text-white font-semibold uppercase"
         >
           Applica
-        </Button>
+        </div>
       </div>
     </MainContainer>
   );
