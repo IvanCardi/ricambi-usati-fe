@@ -68,12 +68,12 @@ export default function Ricambi() {
       ],
     },
     {
-      title: "Paraurti Anteriore",
-      image: "/paraurti_anteriore.png",
+      title: "Fanaleria",
+      image: "/fanaleria.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
-        { name: "Collettore", image: "/collettore.png" },
+        { name: "Fanaleria Anteriore", image: "/fanaleria_anteriore.png" },
+        { name: "Fanaleria Posteriore", image: "/fanaleria_posteriore.png" },
+        { name: "Frecce", image: "/frecce.png" },
       ],
     },
     {
