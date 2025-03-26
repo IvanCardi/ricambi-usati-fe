@@ -3,6 +3,8 @@ import { useState } from "react";
 import MainContainer from "../components/mainContainer";
 import SelectHero from "../components/select_hero";
 import { Slider } from "@/components/ui/slider";
+import Button from "../components/button";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const cars = {
   Ford: {
@@ -57,24 +59,71 @@ type CarSetUp<
   ? (typeof cars)[Brand][Model][number]
   : never;
 
-export default function CarPartsFilters() {
+export default function CarPartsFilters({
+  initialBrand,
+  initialModel,
+  initialSetup,
+  endYear,
+  startYear,
+}: {
+  initialBrand?: string;
+  initialModel?: string;
+  initialSetup?: string;
+  startYear?: number;
+  endYear?: number;
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [selectedCar, setSelectedCar] = useState<{
     brand?: CarBrand;
     model?: CarModel<CarBrand>;
-    setUp?: CarSetUp<CarBrand, CarModel<CarBrand>>;
-  }>({});
+    setup?: CarSetUp<CarBrand, CarModel<CarBrand>>;
+  }>({
+    brand: initialBrand ? (initialBrand as CarBrand) : undefined,
+    model: initialModel ? (initialModel as CarModel<CarBrand>) : undefined,
+    setup: initialSetup
+      ? (initialSetup as CarSetUp<CarBrand, CarModel<CarBrand>>)
+      : undefined,
+  });
   const [range, setRange] = useState<number[]>([
-    2000,
-    new Date().getFullYear(),
+    startYear ?? 2000,
+    endYear ?? new Date().getFullYear(),
   ]);
   const [category, setCategory] = useState<PieceCategory | null>(null);
 
+  const onFilterApply = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (selectedCar && selectedCar.brand) {
+      params.set("brand", selectedCar.brand);
+    }
+
+    if (selectedCar && selectedCar.model) {
+      params.set("model", selectedCar.model);
+    }
+
+    if (selectedCar && selectedCar.setup) {
+      params.set("setup", selectedCar.setup);
+    }
+
+    params.set("startYear", range[0].toString());
+    params.set("endYear", range[1].toString());
+
+    params.set("page", "1");
+
+    router.push(`/shop?${params.toString()}`, { scroll: false });
+  };
+
   return (
     <MainContainer>
-      <div className="grid grid-cols-2 w-full md:flex justify-center items-center gap-5">
+      <div
+        id="list"
+        className="grid grid-cols-2 w-full md:flex justify-center items-center gap-5"
+      >
         <SelectHero
-          title="Marca"
+          title={"Marca"}
           options={Object.keys(cars)}
+          value={selectedCar.brand}
           onSelect={(brand) =>
             setSelectedCar({
               brand: brand as CarBrand,
@@ -85,9 +134,10 @@ export default function CarPartsFilters() {
           title="Modello"
           options={
             selectedCar.brand
-              ? Object.keys(cars[selectedCar.brand as CarBrand])
+              ? Object.keys(cars[selectedCar.brand as CarBrand] ?? [])
               : []
           }
+          value={selectedCar.model}
           onSelect={(model) =>
             setSelectedCar((prev) => ({
               ...prev,
@@ -104,10 +154,11 @@ export default function CarPartsFilters() {
                 ]
               : []
           }
+          value={selectedCar.setup}
           onSelect={(setUp) =>
             setSelectedCar((prev) => ({
               ...prev,
-              setUp: setUp as CarSetUp<CarBrand, CarModel<CarBrand>>,
+              setup: setUp as CarSetUp<CarBrand, CarModel<CarBrand>>,
             }))
           }
         ></SelectHero>
@@ -133,6 +184,13 @@ export default function CarPartsFilters() {
             {range[0]} - {range[1]}
           </span>
         </div>
+        <Button
+          type="button"
+          onClick={onFilterApply}
+          className="bg-primary-green px-[20px] py-[5px] w-[200px] h-fit text-white font-semibold uppercase"
+        >
+          Applica
+        </Button>
       </div>
     </MainContainer>
   );

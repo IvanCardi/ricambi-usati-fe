@@ -13,21 +13,30 @@ export type CarPart = {
   price: number;
 };
 
-const getProducts = async (query: { page?: string }) => {
+const getProducts = async (params: {
+  [key: string]: string | string[] | undefined;
+}) => {
   const token = (await cookies())?.get("access_token")?.value;
 
-  let params = "";
+  let queryParams = "";
 
-  if (query.page) {
-    if (params !== "") {
-      params += `&page=${query.page}`;
+  for (let i = 0; i < Object.keys(params).length; i++) {
+    const paramName = Object.keys(params)[i];
+    const paramValue = params[paramName];
+
+    if (i === Object.keys(params).length - 1) {
+      queryParams += `${paramName}=${paramValue as string}`;
     } else {
-      params += `page=${query.page}`;
+      queryParams += `${paramName}=${paramValue as string}&`;
     }
   }
 
+  if (!params["page"]) {
+    queryParams += `${Object.keys(params).length > 0 ? "&" : ""}page=1`;
+  }
+
   const products = await fetch(
-    `${process.env.BE_BASE_URL}/carParts?${params}`,
+    `${process.env.BE_BASE_URL}/carParts?${queryParams}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -39,22 +48,34 @@ const getProducts = async (query: { page?: string }) => {
 };
 
 export default async function Shop({ searchParams }: PageProps) {
-  const { page } = await searchParams;
-  const { carParts, totalPages } = await getProducts({ page: page as string });
+  const params = await searchParams;
+  const { carParts, totalPages } = await getProducts(params);
 
   return (
     <main className="flex flex-col w-full justify-center items-center">
       <div className="flex w-full justify-center py-14">
         <span className="text-7xl font-inter font-bold">SHOP</span>
       </div>
-      <CarPartsFilters />
+      <CarPartsFilters
+        initialBrand={params.brand as string}
+        initialModel={params.model as string}
+        initialSetup={params.setup as string}
+        startYear={
+          params.startYear ? parseFloat(params.startYear as string) : undefined
+        }
+        endYear={
+          params.endYear ? parseFloat(params.endYear as string) : undefined
+        }
+      />
       <div className="h-[30px]" />
-      <CarPartsOrderers />
+      <CarPartsOrderers initialOrder={params.order as string} />
       <div className="h-[60px]" />
       <CarPartsList carParts={carParts} />
       <div className="h-[30px]" />
       <CarPartsPaginationBar
-        currentPage={page ? parseFloat(page as string) : undefined}
+        currentPage={
+          params.page ? parseFloat(params.page as string) : undefined
+        }
         totalPages={totalPages}
       ></CarPartsPaginationBar>
       <FormCTA background />

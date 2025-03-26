@@ -6,7 +6,7 @@ import { CarPart } from "./page";
 export default function CarPartsList({ carParts }: { carParts: CarPart[] }) {
   return (
     <MainContainer>
-      <div id="list" className="flex flex-col gap-16">
+      <div className="flex flex-col gap-16">
         {carParts.length === 0 ? (
           <div className="flex w-fit m-auto text-3xl text-center font-inter font-normal italic">
             <span>
