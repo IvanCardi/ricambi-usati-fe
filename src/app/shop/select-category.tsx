@@ -15,21 +15,25 @@ export default function SelectCategory({
   title,
   categories,
   onSelect,
+  value,
 }: {
   title: string;
   categories: Category[];
   onSelect?: (val: string) => void;
+  value?: string;
 }) {
   return (
-    <Select onValueChange={onSelect} key={categories[0].name}>
+    <Select onValueChange={onSelect} key={categories[0].name} value={value}>
       <SelectTrigger>
-        <SelectValue placeholder={title} />
+        <SelectValue placeholder={title} className="font-normal" />
       </SelectTrigger>
       <SelectContent>
         {categories.map((category) => (
           <SelectGroup key={category.value}>
             <SelectItem value={category.value}>
-              <SelectLabel className="p-0">{category.name}</SelectLabel>
+              <SelectLabel className="p-0 font-normal">
+                {category.name}
+              </SelectLabel>
             </SelectItem>
             {category.subCategories?.map((subCategory) => (
               <div

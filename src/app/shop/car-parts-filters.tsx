@@ -6,7 +6,7 @@ import { Slider } from "@/components/ui/slider";
 import Button from "../components/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Category } from "../(sections)/ricambi/categoryCard";
-import SelectCategory from "./selectCategory";
+import SelectCategory from "./select-category";
 
 const categories: Category[] = [
   {
@@ -338,14 +338,16 @@ export default function CarPartsFilters({
   initialBrand,
   initialModel,
   initialSetup,
-  endYear,
-  startYear,
+  initialEndYear,
+  initialStartYear,
+  initialCategory,
 }: {
   initialBrand?: string;
   initialModel?: string;
   initialSetup?: string;
-  startYear?: number;
-  endYear?: number;
+  initialStartYear?: number;
+  initialEndYear?: number;
+  initialCategory?: string;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -362,10 +364,10 @@ export default function CarPartsFilters({
       : undefined,
   });
   const [range, setRange] = useState<number[]>([
-    startYear ?? 2000,
-    endYear ?? new Date().getFullYear(),
+    initialStartYear ?? 2000,
+    initialEndYear ?? new Date().getFullYear(),
   ]);
-  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [category, setCategory] = useState<string | undefined>(initialCategory);
 
   const onFilterApply = () => {
     const params = new URLSearchParams(searchParams.toString());
@@ -445,6 +447,7 @@ export default function CarPartsFilters({
           title="Categorie"
           categories={[...categories]}
           onSelect={(cat) => setCategory(cat)}
+          value={category}
         />
         <div className="flex flex-col items-center w-full gap-2">
           <span

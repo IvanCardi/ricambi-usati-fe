@@ -60,12 +60,13 @@ export default async function Shop({ searchParams }: PageProps) {
         initialBrand={params.brand as string}
         initialModel={params.model as string}
         initialSetup={params.setup as string}
-        startYear={
+        initialStartYear={
           params.startYear ? parseFloat(params.startYear as string) : undefined
         }
-        endYear={
+        initialEndYear={
           params.endYear ? parseFloat(params.endYear as string) : undefined
         }
+        initialCategory={params.category as string}
       />
       <div className="h-[30px]" />
       <CarPartsOrderers initialOrder={params.order as string} />
