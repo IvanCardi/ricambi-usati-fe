@@ -25,21 +25,21 @@ export default function Ricambi() {
     },
     {
       title: "Motori",
-      image: "/meccanica.png",
+      image: "/motore.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
-        { name: "Collettore", image: "/collettore.png" },
+        { name: "Centralina Motore", image: "/centralina.png" },
+        { name: "Coperchio Motore", image: "/coperchio.png" },
+        { name: "Flauto Iniettori", image: "/flauto_iniettori.png" },
         {
-          name: "Motorino Avviamento",
-          image: "/motorino.png",
+          name: "Iniettori",
+          image: "/iniettori.png",
         },
-        { name: "Pastiglie Freno", image: "/pastiglie.png" },
+        { name: "Motore Semi Completo", image: "/motore_semi_completo.png" },
         {
-          name: "Piantone Servosterzo",
-          image: "/piantone.png",
+          name: "Pompa Iniezione",
+          image: "/pompa.png",
         },
-        { name: "Pinza Freno", image: "/pastiglie.png" },
+        { name: "Turbina", image: "/turbina.png" },
       ],
     },
     {
