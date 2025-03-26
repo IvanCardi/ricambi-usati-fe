@@ -7,7 +7,7 @@ export async function login(
   password: string
 ): Promise<ServerActionResponse> {
   try {
-    const url = `${process.env.NEXT_PUBLIC_BE_BASE_URL}/login`;
+    const url = `${process.env.BE_BASE_URL}/login`;
 
     const result = await fetch(url, {
       method: "POST",
