@@ -569,7 +569,7 @@ export default function CompanyRegistrationForm() {
         <div className="h-[12px]"></div>
         <div className="w-full h-[120px] border border-black"></div>
         <div className="h-[61px]"></div>
-        <div>
+        <div className="w-[400px]">
           <Button
             className="bg-secondary-blue text-white font-bold text-[32px]/[32px] uppercase w-[500px]"
             type="submit"

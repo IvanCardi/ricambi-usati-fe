@@ -49,6 +49,7 @@ export async function register(data: {
         state: data.isSameAddress ? data.billingState : data.shippingState,
         number: data.isSameAddress ? data.billingNumber : data.shippingNumber,
       },
+      isAutomotive: data.isAutomotive,
     };
     const result = await fetch(`${process.env.BE_BASE_URL}/register`, {
       method: "POST",
