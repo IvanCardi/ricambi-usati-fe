@@ -29,6 +29,7 @@ export default async function ProductDetailsPage({}: {
         imageUrl: "/kit_alfa.png",
         brand: "Alfa Romeo Giulietta",
         category: "Security",
+        compatibileVehicles: ["Tesla", "BYD"],
         description:
           "Il serbatoio di espansione è un contenitore di plastica, costituito da due ingressi, uno per un fluido e l'altro per un gas.La sua funzione principale è quella di compensare l'aumento di volume dell'acqua causato dall'aumento della temperatura. È un dispositivo che viene aggiunto da un sistema a circuito chiuso. Questo componente si trova nel vano motore, sopra il radiatore. Serbatoio di espansione NISSAN QASHQAI II SUV (J11, J11_) 1.5 dCi è un unico pezzo originale usato con il riferimento sem ref visivel e con l'id dell'articolo BP5012299C120",
         slug: "this is a slug",
