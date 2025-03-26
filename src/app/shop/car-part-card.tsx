@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { CarPart } from "./carPartsSection";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import noImagePlaceholder from "../../../public/no-image-placeholder.jpg";
+import { CarPart } from "./page";
 
 export function CarPartCard(carPart: CarPart) {
   const router = useRouter();
@@ -15,12 +16,22 @@ export function CarPartCard(carPart: CarPart) {
     >
       <div className="flex flex-col justify-between items-center w-full h-full border-[3px] border-[#0BB489]">
         <div className="flex w-full h-full justify-center border-[3px] border-[#0BB489]">
-          <Image
-            src={carPart.imageUrl}
-            alt="mechanical article"
-            width={200}
-            height={200}
-          />
+          {carPart.imageUrl ? (
+            <Image
+              src={carPart.imageUrl}
+              alt="mechanical article"
+              width={200}
+              height={200}
+            />
+          ) : (
+            <Image
+              src={noImagePlaceholder.src}
+              alt={`No image placeholder`}
+              width={200}
+              height={200}
+              // className="max-w-full max-h-full object-contain"
+            />
+          )}
         </div>
         <div className="flex flex-col w-full items-center border border-t-2 border-[#0BB489] gap-2 py-2">
           <div className="flex flex-col items-center justify-center gap-2 w-full">

@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
-import SelectHero from "./select_hero";
+import MainContainer from "../components/mainContainer";
+import SelectHero from "../components/select_hero";
 import { Slider } from "@/components/ui/slider";
-import MainContainer from "./mainContainer";
 
 const cars = {
+  Ford: {
+    Focus: ["1.8 Diesel 115CV"],
+  },
   BMW: {
     "3 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M340i"],
     "5 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M550i"],
@@ -54,7 +57,7 @@ type CarSetUp<
   ? (typeof cars)[Brand][Model][number]
   : never;
 
-export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
+export default function CarPartsFilters() {
   const [selectedCar, setSelectedCar] = useState<{
     brand?: CarBrand;
     model?: CarModel<CarBrand>;
@@ -108,18 +111,14 @@ export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
             }))
           }
         ></SelectHero>
-        {shop && (
-          <SelectHero
-            title="Categorie"
-            options={[...categories]}
-            onSelect={(cat) => setCategory(cat as PieceCategory)}
-          ></SelectHero>
-        )}
+        <SelectHero
+          title="Categorie"
+          options={[...categories]}
+          onSelect={(cat) => setCategory(cat as PieceCategory)}
+        ></SelectHero>
         <div className="flex flex-col items-center w-full gap-2">
           <span
-            className={`text-sm text-center font-inter font-medium ${
-              shop ? "text-[#3A3A3A]" : "text-white"
-            }`}
+            className={`text-sm text-center font-inter font-medium text-[#3A3A3A]`}
           >
             Anno di produzione
           </span>
@@ -130,16 +129,11 @@ export default function SearchFilters({ shop }: { shop?: React.ReactNode }) {
             min={2000}
             step={1}
           />
-          <span
-            className={`text-sm text-center font-inter font-medium ${
-              shop ? "text-[#3A3A3A]" : "text-white"
-            }`}
-          >
+          <span className={`text-sm text-center font-inter font-medium `}>
             {range[0]} - {range[1]}
           </span>
         </div>
       </div>
-      {shop && shop}
     </MainContainer>
   );
 }

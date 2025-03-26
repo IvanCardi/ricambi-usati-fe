@@ -11,7 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { CarPart } from "../../carPartsSection";
+import { CarPart } from "../../car-parts-list";
 import { InfoVeicolo, Veicolo } from "./infoVeicolo";
 import PaymentDetails from "../paymentDetails";
 import FormCTA from "@/app/form/formCTA";
