@@ -140,14 +140,22 @@ export default function Ricambi() {
     },
     {
       title: "Moto",
-      image: "/meccanica.png",
+      image: "/moto.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
-        { name: "Collettore", image: "/collettore.png" },
+        { name: "Carrozzeria Moto", image: "/carrozzeria_moto.png" },
+        { name: "Fanaleria Moro", image: "/fanaleria_moto.png" },
+        { name: "Meccanica Moto", image: "/meccanica_moto.png" },
         {
-          name: "Motorino Avviamento",
-          image: "/motorino.png",
+          name: "Parti Elettriche",
+          image: "/parti_elettriche.png",
+        },
+        {
+          name: "Pneumatici Moto",
+          image: "/pneumatici_moto.png",
+        },
+        {
+          name: "Telaio Mot",
+          image: "/telaio_moto.png",
         },
       ],
     },
