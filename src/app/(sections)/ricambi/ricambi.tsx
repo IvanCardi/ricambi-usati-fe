@@ -126,16 +126,16 @@ export default function Ricambi() {
     },
     {
       title: "Pneumatici",
-      image: "/meccanica.png",
+      image: "/pneumatici.png",
       items: [
-        { name: "Alternatore", image: "/alternatore.png" },
-        { name: "Cambio", image: "/cambio.png" },
-        { name: "Collettore", image: "/collettore.png" },
+        { name: "Kit Ruota di Scorta", image: "/kit_scorta.png" },
+        { name: "Ruota di Scorta", image: "/ruota_scorta.png" },
+        { name: "Invernali", image: "/invernali.png" },
         {
-          name: "Motorino Avviamento",
-          image: "/motorino.png",
+          name: "Quattro Stagioni",
+          image: "/quattro_stagioni.png",
         },
-        { name: "Pastiglie Freno", image: "/pastiglie.png" },
+        { name: "Estivi", image: "/estivi.png" },
       ],
     },
     {
