@@ -1,14 +1,28 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export interface SubCategory {
   name: string;
   image: string;
-  value: string;
+  slug: string;
 }
 
-export default function SubCategoryCard(subCategory: SubCategory) {
+export default function SubCategoryCard({
+  subCategory,
+  categorySlug,
+}: {
+  subCategory: SubCategory;
+  categorySlug: string;
+}) {
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col md:h-52 justify-center items-center bg-white rounded-[6px] cursor-pointer hover:scale-105">
+    <div
+      className="flex flex-col md:h-52 justify-center items-center bg-white rounded-[6px] cursor-pointer hover:scale-105"
+      onClick={() => router.push(`/shop/${categorySlug}/${subCategory.slug}`)}
+    >
       <Image
         className="object-contain"
         src={subCategory.image}
