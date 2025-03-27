@@ -31,32 +31,8 @@ const CartContext = createContext<CartContextType>({
 
 const CART_KEY = "my_cart";
 
-const dddd: CartItem[] = [
-  {
-    id: "1",
-    name: "Serbatoio di espansione NISSAN QASHQAI II SUV (J11, J11_) 1.5 dCi sem ref visivel",
-    imageUrl: "/cambio.png",
-    price: 46.12,
-    quantity: 1,
-  },
-  {
-    id: "2",
-    name: "Fanale anteriore dx Audi A3 8V",
-    imageUrl: "/fanaleria_anteriore.png",
-    price: 130,
-    quantity: 1,
-  },
-  {
-    id: "3",
-    name: "Specchietto retrovisore esterno",
-    imageUrl: "/specchietti_retrovisori.png",
-    price: 35,
-    quantity: 1,
-  },
-];
-
 export const CartProvider = (props: PropsWithChildren) => {
-  const [cart, setCart] = useState<CartItem[]>(dddd);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   // Load cart from localStorage on first render
   useEffect(() => {
@@ -65,6 +41,7 @@ export const CartProvider = (props: PropsWithChildren) => {
       setCart(JSON.parse(storedCart));
     }
   }, []);
+
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
   }, [cart]);
