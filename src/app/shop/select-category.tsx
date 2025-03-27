@@ -31,7 +31,9 @@ export default function SelectCategory({
         {categories.map((category) => (
           <SelectGroup key={category.slug}>
             <SelectItem value={category.slug}>
-              <SelectLabel className="p-0">{category.name}</SelectLabel>
+              <SelectLabel className="p-0 font-normal">
+                {category.name}
+              </SelectLabel>
             </SelectItem>
             {category.subCategories?.map((subCategory) => (
               <div

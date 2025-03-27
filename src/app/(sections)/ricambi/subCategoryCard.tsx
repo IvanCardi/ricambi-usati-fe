@@ -21,7 +21,9 @@ export default function SubCategoryCard({
   return (
     <div
       className="flex flex-col md:h-52 justify-center items-center bg-white rounded-[6px] cursor-pointer hover:scale-105"
-      onClick={() => router.push(`/shop/${categorySlug}/${subCategory.slug}`)}
+      onClick={() =>
+        router.push(`/shop?category=${categorySlug}/${subCategory.slug}`)
+      }
     >
       <Image
         className="object-contain"

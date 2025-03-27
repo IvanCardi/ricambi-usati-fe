@@ -53,7 +53,7 @@ export default function CategoryCard({
         </div>
       </div>
       <div className="flex w-full justify-end cursor-pointer">
-        <button onClick={() => router.push(`/shop/${slug}`)}>
+        <button onClick={() => router.push(`/shop?category=${slug}`)}>
           <span className="text-base text-black font-inter font-medium italic underline ">
             Vedi tutto {">"}
           </span>
