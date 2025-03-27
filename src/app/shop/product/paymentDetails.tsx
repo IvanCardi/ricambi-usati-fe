@@ -6,14 +6,14 @@ export default function PaymentDetails({
   warranty,
 }: {
   price: number;
-  warranty?: string;
+  warranty?: number;
 }) {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-6">
         {warranty && (
           <h2 className="text-lg md:text-2xl text-[#0BB489] font-poppins font-medium">
-            {warranty} di garanzia
+            {warranty} mesi di garanzia
           </h2>
         )}
         <span className="text-4xl md:text-5xl font-poppins font-semibold">

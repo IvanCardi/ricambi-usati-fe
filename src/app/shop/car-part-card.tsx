@@ -10,12 +10,12 @@ export function CarPartCard(carPart: CarPart) {
   const router = useRouter();
 
   return (
-    <div
-      className="flex flex-col w-full gap-14 bg-white"
-      onClick={() => router.push(`/shop/product/${carPart.id}`)}
-    >
+    <div className="flex flex-col w-full gap-14 bg-white">
       <div className="flex flex-col justify-between items-center w-full h-full border-[3px] border-[#0BB489]">
-        <div className="flex w-full h-[205px] justify-center border-[3px] border-[#0BB489]">
+        <div
+          onClick={() => router.push(`/shop/product/${carPart.id}`)}
+          className="cursor-pointer flex w-full h-[205px] justify-center border-[3px] border-[#0BB489]"
+        >
           {carPart.imageUrl ? (
             <Image
               className="w-full object-cover"
@@ -37,7 +37,10 @@ export function CarPartCard(carPart: CarPart) {
         </div>
         <div className="flex flex-col w-full items-center border border-t-2 border-[#0BB489] gap-2 py-2">
           <div className="flex flex-col items-center justify-center gap-2 w-full">
-            <span className="text-base text-center font-inter font-semibold">
+            <span
+              onClick={() => router.push(`/shop/product/${carPart.id}`)}
+              className="cursor-pointer text-base text-center font-inter font-semibold"
+            >
               {carPart.name}
             </span>
             <div className="w-10 h-[1px] bg-black" />

@@ -23,7 +23,7 @@ export interface CarPartDetailed extends CarPart {
   category: string;
   compatibileVehicles: string[];
   brand: string;
-  warranty: string;
+  warranty: number;
   slug: string;
   car: Veicolo;
 }

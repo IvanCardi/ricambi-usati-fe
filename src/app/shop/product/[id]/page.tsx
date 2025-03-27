@@ -1,5 +1,7 @@
+import { cookies } from "next/headers";
 import { Veicolo } from "./infoVeicolo";
 import ProductPage, { CarPartDetailed } from "./productPage";
+import { PageProps } from "@/lib/pageProps";
 
 /* // **Fetching product data dynamically (SSR)**
 async function getServerSideProps(productId: string) {
@@ -17,41 +19,42 @@ async function getServerSideProps(productId: string) {
   };
 } */
 
-export default async function ProductDetailsPage({}: {
-  params: { id: string };
-}) {
+const getCarPart = async (id: string) => {
+  const token = (await cookies())?.get("access_token")?.value;
+
+  const products = await fetch(`${process.env.BE_BASE_URL}/carParts/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return products.json();
+};
+
+export default async function ProductDetailsPage({ params }: PageProps) {
+  const { id } = await params;
+
+  const product = await getCarPart(id);
+
   const res = {
     props: {
       product: {
-        id: "BP5012299C120",
-        name: "Kit Airbag Alfa Romeo Giulietta",
-        price: 800,
-        imageUrl: "/kit_alfa.png",
-        brand: "Alfa Romeo Giulietta",
-        category: "Security",
-        compatibileVehicles: ["Tesla", "BYD"],
-        description:
-          "Il serbatoio di espansione è un contenitore di plastica, costituito da due ingressi, uno per un fluido e l'altro per un gas.La sua funzione principale è quella di compensare l'aumento di volume dell'acqua causato dall'aumento della temperatura. È un dispositivo che viene aggiunto da un sistema a circuito chiuso. Questo componente si trova nel vano motore, sopra il radiatore. Serbatoio di espansione NISSAN QASHQAI II SUV (J11, J11_) 1.5 dCi è un unico pezzo originale usato con il riferimento sem ref visivel e con l'id dell'articolo BP5012299C120",
+        id: product.numbers[0],
+        name: product.name,
+        price: product.price,
+        imageUrl: product.photos[0],
+        brand: product.carBrand,
+        category: product.category,
+        compatibileVehicles: product.compatibleCars,
+        description: product.description,
         slug: "this is a slug",
-        images: ["/kit_alfa.png", "/kit_alfa.png"],
-        warranty: "12 mesi",
+        images: product.photos,
+        warranty: product.warranty,
         car: {
-          name: "NISSAN QASHQAI II SUV (J11, J11_) 1.5 dCi [2013-2025] (5 Porte)",
+          name: `${product.carBrand} ${product.carModel} ${product.carSetup} ${product.carYear}`,
           image: "/car.png",
-          details: {
-            riferimento: "Sem ref visivel",
-          },
-          technicalInfos: {
-            trazione: "anteriore",
-            carburante: "Diesel",
-            potenza: "110 hp/81 kw",
-            cilindri: 4,
-            spostamento: 1461,
-            valvole: 4,
-            carrozzeria: "SUV",
-            motore: "Diesel",
-            catalizzatore: "Diesel (Oxi-Kat)",
-          },
+          details: {},
+          technicalInfos: {},
         } as Veicolo,
       } as CarPartDetailed,
       relatedProducts: [
