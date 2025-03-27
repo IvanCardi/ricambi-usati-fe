@@ -1,6 +1,6 @@
 import MainContainer from "@/app/components/mainContainer";
 import CategoryCard from "./categoryCard";
-import { categories } from "./categoriesList";
+import { categories } from "./categoryList";
 
 export default function Ricambi() {
   return (

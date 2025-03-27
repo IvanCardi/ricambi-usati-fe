@@ -16,7 +16,7 @@ export const categories: Category[] = [
       {
         name: "Motorino Avviamento",
         image: "/motorino.png",
-        slug: "",
+        slug: "motorino",
       },
       {
         name: "Pastiglie Freno",
@@ -39,7 +39,7 @@ export const categories: Category[] = [
   {
     name: "Motori",
     image: "/motore.png",
-    slug: "",
+    slug: "motori",
     subCategories: [
       {
         name: "Centralina Motore",

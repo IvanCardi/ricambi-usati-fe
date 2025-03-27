@@ -5,7 +5,7 @@ import MainContainer from "../components/mainContainer";
 import SelectHero from "../components/select_hero";
 import { Slider } from "@/components/ui/slider";
 
-import { categories } from "../(sections)/ricambi/categoriesList";
+import { categories } from "../(sections)/ricambi/categoryList";
 import SelectCategory from "./select-category";
 
 const cars = {
@@ -171,6 +171,7 @@ export default function CarPartsFilters({
           title="Categorie"
           categories={[...categories]}
           onSelect={(cat) => setCategory(cat)}
+          value={category}
         />
         <div className="flex flex-col items-center w-full gap-2">
           <span
