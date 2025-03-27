@@ -42,7 +42,7 @@ export default async function ProductDetailsPage({ params }: PageProps) {
         id: product.numbers[0],
         name: product.name,
         price: product.price,
-        imageUrl: product.photos[0],
+        imageUrl: product.imageUrl,
         brand: product.carBrand,
         category: product.category,
         compatibileVehicles: product.compatibleCars,
