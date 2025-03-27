@@ -1,0 +1,37 @@
+"use client";
+
+import MainContainer from "../components/mainContainer";
+import { useCart } from "./cartContext";
+import ItemCard from "./cart-summary-item-card";
+
+export default function CartSummary() {
+  const { items } = useCart();
+
+  return (
+    <MainContainer>
+      <div className="flex flex-col w-full md:w-[70%] lg:w-[55%] border rounded-[9px]">
+        <div className="bg-[#F9F9F9] rounded-t-[9px] py-[18px] px-7">
+          <span className="text-base font-inter font-medium">
+            Articoli del carrello {`(${items.length})`}
+          </span>
+        </div>
+        {items.length === 0 ? (
+          <div className="h-44" />
+        ) : (
+          <>
+            {items.map((item, index) => (
+              <div
+                key={item.id}
+                className={`flex justify-between px-7 py-3 gap-16 ${
+                  index !== items.length - 1 ? "border-b" : ""
+                }`}
+              >
+                <ItemCard {...item} />
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </MainContainer>
+  );
+}

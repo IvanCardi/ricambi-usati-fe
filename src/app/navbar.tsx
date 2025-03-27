@@ -57,7 +57,9 @@ export default function Navbar() {
           <Link href="/profilo">
             <Image src={profile} objectFit="contain" alt="profile icon" />
           </Link>
-          <Image src={cart} objectFit="contain" alt="cart icon" />
+          <Link href={"/cart"}>
+            <Image src={cart} objectFit="contain" alt="cart icon" />
+          </Link>
         </div>
         <div className="flex items-center md:hidden p-1 sticky top-0">
           {/* Mobile menu button*/}

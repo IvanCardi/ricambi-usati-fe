@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import noImagePlaceholder from "../../../public/no-image-placeholder.jpg";
 import { CarPart } from "./page";
+import { useCart } from "../cart/cartContext";
 
 export function CarPartCard(carPart: CarPart) {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   return (
     <div className="flex flex-col w-full gap-14 bg-white">
@@ -48,7 +50,10 @@ export function CarPartCard(carPart: CarPart) {
               {carPart.price}€
             </span>
           </div>
-          <Button className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85">
+          <Button
+            className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
+            onClick={() => addToCart(carPart)}
+          >
             <span className="text-[9px] text-white font-inter font-medium">
               Aggiungi al carrello
             </span>

@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function PaymentDetails({
+  onAddToCart,
   price,
   warranty,
 }: {
+  onAddToCart: () => void;
   price: number;
   warranty?: number;
 }) {
@@ -22,7 +24,10 @@ export default function PaymentDetails({
         <span className="text-xs md:text-[15px] font-poppins font-semibold">
           La spedizione e l&apos;IVA sono incluse nel prezzo.
         </span>
-        <Button className="w-full md:w-fit bg-[#0BB489] hover:bg-[#0BB489]/85">
+        <Button
+          className="w-full md:w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
+          onClick={onAddToCart}
+        >
           <span className="text-sm md:text-base text-white font-inter font-medium">
             Aggiungi al carrello
           </span>

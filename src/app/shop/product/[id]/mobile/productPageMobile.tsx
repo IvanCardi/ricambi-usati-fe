@@ -1,3 +1,5 @@
+"use client";
+
 import MainContainer from "@/app/components/mainContainer";
 import Image from "next/image";
 import { CarPartDetailed } from "../productPage";
@@ -12,17 +14,19 @@ import PaymentDetails from "../../paymentDetails";
 import FormCTA from "@/app/form/formCTA";
 import RelatedProducts from "../relatedProducts";
 import { CarPart } from "@/app/shop/page";
+import { useCart } from "@/app/cart/cartContext";
 
-export default function productPageMobile({
+export default function ProductPageMobile({
   product,
   relatedProducts,
 }: {
   product: CarPartDetailed;
   relatedProducts?: CarPart[];
 }) {
+  const { addToCart } = useCart();
+
   return (
     <>
-      {" "}
       <MainContainer>
         <div className="flex flex-col gap-28 pt-14">
           <div className="flex w-full gap-4 md:gap-7">
@@ -136,6 +140,14 @@ export default function productPageMobile({
             </div>
             <div className="flex w-[26%] pt-14 px-[2px]">
               <PaymentDetails
+                onAddToCart={() =>
+                  addToCart({
+                    id: product.id,
+                    imageUrl: product.imageUrl,
+                    name: product.name,
+                    price: product.price,
+                  })
+                }
                 price={product.price}
                 warranty={product.warranty}
               />
