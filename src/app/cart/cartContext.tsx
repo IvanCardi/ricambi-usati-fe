@@ -32,15 +32,13 @@ const CartContext = createContext<CartContextType>({
 const CART_KEY = "my_cart";
 
 export const CartProvider = (props: PropsWithChildren) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    console.log("Running expensive calculation...");
+    const savedCart = localStorage.getItem(CART_KEY);
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
   // Load cart from localStorage on first render
-  useEffect(() => {
-    const storedCart = localStorage.getItem(CART_KEY);
-    if (storedCart) {
-      setCart(JSON.parse(storedCart));
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
