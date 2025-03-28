@@ -37,8 +37,6 @@ export const CartProvider = (props: PropsWithChildren) => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Load cart from localStorage on first render
-
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
   }, [cart]);
