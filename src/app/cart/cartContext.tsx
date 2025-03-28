@@ -33,7 +33,6 @@ const CART_KEY = "my_cart";
 
 export const CartProvider = (props: PropsWithChildren) => {
   const [cart, setCart] = useState<CartItem[]>(() => {
-    console.log("Running expensive calculation...");
     const savedCart = localStorage.getItem(CART_KEY);
     return savedCart ? JSON.parse(savedCart) : [];
   });
