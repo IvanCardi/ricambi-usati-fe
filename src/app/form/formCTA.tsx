@@ -20,7 +20,7 @@ export default function FormCTA({
         <span className="text-3xl/[60px] text-center text-white font-inter font-normal">
           Non trovi quello che stai cercando? <br></br> Compila il{" "}
           <span
-            className="text-3xl text-white font-inter font-semibold underline"
+            className="text-3xl text-white font-inter font-semibold cursor-pointer underline"
             onClick={() => router.push("/form")}
           >
             form

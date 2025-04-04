@@ -6,6 +6,8 @@ export default function FormTextInput(
     HTMLInputElement
   >
 ) {
+  const { className, ...restProps } = props;
+
   return (
     <div>
       <input
@@ -13,9 +15,9 @@ export default function FormTextInput(
           boxShadow: "0px 2px 2.67px 0px #00000040",
         }}
         className={`w-full py-[26px] px-[36px] bg-neutral-gray rounded-[9px] ${
-          props.disabled ? "text-gray-400" : "text-black"
-        }`}
-        {...props}
+          className ?? ""
+        } ${props.disabled ? "text-gray-400" : " text-black"} `}
+        {...restProps}
       />
     </div>
   );
