@@ -33,8 +33,12 @@ const CART_KEY = "my_cart";
 
 export const CartProvider = (props: PropsWithChildren) => {
   const [cart, setCart] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem(CART_KEY);
-    return savedCart ? JSON.parse(savedCart) : [];
+    if (typeof window !== "undefined") {
+      // We are in the browser
+      const savedCart = localStorage.getItem(CART_KEY);
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+    return [];
   });
 
   useEffect(() => {

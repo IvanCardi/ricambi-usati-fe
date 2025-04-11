@@ -11,7 +11,6 @@ import UserDetalForm from "./user-details-form";
 import PrivacyForm from "./privacy-form";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 export interface FormVehicle {
   brand: string;
@@ -59,6 +58,12 @@ const formSchema = z.object({
     .refine((val) => val === undefined || val.length === 11, {
       message: "Inserire una P.IVA corretta",
     }),
+  privacy: z
+    .boolean()
+    .refine(
+      (val) => val === true,
+      "Devi aver letto l'informativa sulla privacy per inviare la richiesta"
+    ),
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
@@ -95,10 +100,12 @@ export default function FormPage({
       year: 0,
       fuelType: "",
       email: "",
+      privacy: false,
     },
     mode: "onChange",
   });
-  const [termsAccepted, setTermsAccepted] = useState(false);
+
+  const termsAccepted = form.watch("privacy");
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values, form, form.formState.errors);
@@ -129,9 +136,10 @@ export default function FormPage({
                 form={form}
               />
               <UserDetalForm form={form} />
+              <div className="h-[12px]" />
+              <PrivacyForm form={form} />
             </form>
           </Form>
-          <PrivacyForm onTermsAccepted={(val) => setTermsAccepted(val)} />
           <ReCAPTCHA sitekey={"process.env.REACT_APP_SITE_KEY"} />
           <Button
             className="md:w-80 md:py-8 bg-[#0BB489] hover:bg-[#0BB489]/85"
