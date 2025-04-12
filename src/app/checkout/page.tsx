@@ -1,6 +1,7 @@
 import { CartProvider } from "../cart/cartContext";
 import MainContainer from "../components/mainContainer";
 import DeliveryForm from "./delivery-form";
+import PurchaseSummary from "./purchase-summary";
 
 async function getProvinceList() {
   try {
@@ -36,15 +37,22 @@ export default async function CheckOutPage() {
   return (
     <CartProvider>
       <MainContainer>
-        <div className="flex flex-col md:flex-row w-full">
+        <div className="flex flex-col md:flex-row w-full gap-14">
           <div className="flex flex-col md:w-[60%] gap-12">
             <h1 className="text-[40px] font-inter font-bold"> Checkout</h1>
             <div className="flex flex-col gap-8">
               <div className="text-2xl font-inter font-semibold">
                 Informazioni di spedizione
               </div>
+
               <DeliveryForm provinceList={provinceList} />
             </div>
+          </div>
+          <div className="flex flex-col md:w-[40%] gap-8">
+            <div className="text-2xl font-inter font-semibold">
+              Riepilogo acquisti
+            </div>
+            <PurchaseSummary />
           </div>
         </div>
       </MainContainer>

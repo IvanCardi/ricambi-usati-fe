@@ -8,6 +8,7 @@ import React, {
   PropsWithChildren,
 } from "react";
 import { CarPart } from "../shop/page";
+import { toast } from "sonner";
 
 export interface CartItem extends CarPart {
   quantity: number;
@@ -59,10 +60,34 @@ export const CartProvider = (props: PropsWithChildren) => {
         return [...prev, { ...carPart, quantity: 1 }];
       }
     });
+
+    toast("L'articolo è stato aggiunto al carrello", {
+      action: {
+        label: "Undo",
+        onClick: () => removeFromCart(carPart.id),
+      },
+    });
   };
 
   const removeFromCart = (id: string) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+    const cartItem = cart.find((item) => item.id === id);
+
+    if (cartItem) {
+      setCart((prev) =>
+        cartItem.quantity > 1
+          ? prev.map((item) =>
+              item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+            )
+          : prev.filter((item) => item.id !== id)
+      );
+
+      toast("L'articolo è stato rimosso dal carrello", {
+        action: {
+          label: "Undo",
+          onClick: () => addToCart(cartItem),
+        },
+      });
+    }
   };
 
   const decrementItem = (id: string) => {
