@@ -5,7 +5,11 @@ import { useCart } from "./cartContext";
 import ItemCard from "./cart-summary-item-card";
 
 export default function CartSummary() {
-  const { items } = useCart();
+  const { items, isLoading } = useCart();
+
+  if (isLoading) {
+    return <p>Loading your cart...</p>;
+  }
 
   return (
     <MainContainer>

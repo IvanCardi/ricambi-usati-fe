@@ -20,6 +20,7 @@ type CartContextType = {
   removeFromCart: (id: string) => void;
   decrementItem: (id: string) => void;
   clearCart: () => void;
+  isLoading: boolean;
 };
 
 const CartContext = createContext<CartContextType>({
@@ -28,12 +29,14 @@ const CartContext = createContext<CartContextType>({
   removeFromCart: () => {},
   decrementItem: () => {},
   clearCart: () => {},
+  isLoading: true,
 });
 
 const CART_KEY = "my_cart";
 
 export const CartProvider = (props: PropsWithChildren) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -43,6 +46,7 @@ export const CartProvider = (props: PropsWithChildren) => {
     }
 
     setIsHydrated(true);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -74,7 +78,7 @@ export const CartProvider = (props: PropsWithChildren) => {
     if (cartItem) {
       setCart((prev) => prev.filter((item) => item.id !== id));
 
-      toast("L'articolo è stato rimosso dal carrello", {
+      toast("L'articolo è stato completamente rimosso dal carrello", {
         action: {
           label: "Undo",
           onClick: () => addToCart(cartItem),
@@ -117,6 +121,7 @@ export const CartProvider = (props: PropsWithChildren) => {
         removeFromCart,
         decrementItem,
         clearCart,
+        isLoading,
       }}
     >
       {props.children}

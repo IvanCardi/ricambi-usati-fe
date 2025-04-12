@@ -44,7 +44,6 @@ export default async function CheckOutPage() {
               <div className="text-2xl font-inter font-semibold">
                 Informazioni di spedizione
               </div>
-
               <DeliveryForm provinceList={provinceList} />
             </div>
           </div>
