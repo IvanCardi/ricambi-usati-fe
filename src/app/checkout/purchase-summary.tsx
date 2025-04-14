@@ -12,7 +12,7 @@ export default function PurchaseSummary() {
       {isLoading ? (
         <CartSkeleton />
       ) : (
-        <div className="flex flex-col w-full border rounded-t-[9px]">
+        <div className="flex flex-col w-full border rounded-[9px]">
           <div className="flex w-full justify-between bg-[#F9F9F9] rounded-t-[9px] py-[18px] px-8">
             <span className="text-base font-inter font-medium">Articoli</span>
             <span className="text-base font-inter font-medium">Totale</span>
@@ -21,12 +21,10 @@ export default function PurchaseSummary() {
             <div className="h-44" />
           ) : (
             <>
-              {items.map((item, index) => (
+              {items.map((item) => (
                 <div
                   key={item.id}
-                  className={`flex justify-between px-7 py-3 gap-16 ${
-                    index !== items.length - 1 ? "border-b" : ""
-                  }`}
+                  className={`flex justify-between px-7 py-3 gap-16 border-b `}
                 >
                   <div className="flex w-full justify-between items-center">
                     <div className="flex w-[20%] justify-between items-center">
@@ -51,6 +49,28 @@ export default function PurchaseSummary() {
                   </div>
                 </div>
               ))}
+              <div className="flex flex-col px-7 py-3 gap-4">
+                <div className="flex justify-between">
+                  <span className="text-base font-inter font-normal">
+                    Totale
+                  </span>
+                  <span className="text-base font-inter font-semibold">
+                    {items.reduce(
+                      (sum, item) => sum + item.price * item.quantity,
+                      0
+                    )}
+                    €
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-base font-inter font-normal">
+                    Costi di spedizione
+                  </span>
+                  <span className="text-base font-inter font-semibold">
+                    Gratuito
+                  </span>
+                </div>
+              </div>
             </>
           )}
         </div>

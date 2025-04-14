@@ -25,6 +25,8 @@ export function DefaultForm({
   form: UseFormReturn<FormSchema>;
   provinceList: Provincia[];
 }) {
+  const hasProvinces = Array.isArray(provinceList) && provinceList.length > 0;
+
   return (
     <div className="flex w-full justify-between">
       <FormField
@@ -33,28 +35,36 @@ export function DefaultForm({
         render={({ field }) => (
           <FormItem className="w-[36%]">
             <FormControl>
-              <Select
-                onValueChange={(value) => {
-                  field.onChange(value);
-                }}
-                key={provinceList[0].codice}
-              >
-                <SelectTrigger className="border border-input py-[26px] px-[36px] rounded-[9px]">
-                  <SelectValue
-                    placeholder={"Seleziona una provincia*"}
-                    className="placeholder:text-2xl"
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {provinceList.map((province, i) => (
-                      <SelectItem key={i} value={province.nome}>
-                        {province.nome}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              {hasProvinces ? (
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  key={provinceList[0].codice}
+                >
+                  <SelectTrigger className="border border-input py-[26px] px-[36px] rounded-[9px]">
+                    <SelectValue
+                      placeholder={"Seleziona una provincia*"}
+                      className="placeholder:text-2xl"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {provinceList.map((province, i) => (
+                        <SelectItem key={i} value={province.nome}>
+                          {province.nome}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              ) : (
+                <Input
+                  {...field}
+                  placeholder="Provincia*"
+                  className="py-[26px] px-[36px] rounded-[9px] "
+                />
+              )}
             </FormControl>
             <FormMessage />
           </FormItem>
