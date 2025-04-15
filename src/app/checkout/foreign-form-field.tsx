@@ -2,7 +2,7 @@ import { UseFormReturn } from "react-hook-form";
 import countryAddressDetails, {
   CountryCodes,
 } from "postal-address-field-names";
-import { FormSchema } from "./delivery-form";
+
 import {
   FormControl,
   FormField,
@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { FormSchema } from "./checkout-body";
 
 function getFieldNames(countryCode: CountryCodes) {
   const country = countryAddressDetails.find(
@@ -29,9 +30,11 @@ function getFieldNames(countryCode: CountryCodes) {
 export default function ForeignFormField({
   countryCode,
   form,
+  disabled,
 }: {
   countryCode?: CountryCodes;
   form: UseFormReturn<FormSchema>;
+  disabled: boolean;
 }) {
   const fields = countryCode ? getFieldNames(countryCode) : undefined;
 
@@ -51,6 +54,7 @@ export default function ForeignFormField({
                       {...field}
                       placeholder={fieldValue}
                       className="py-[26px] px-[36px] rounded-[9px] "
+                      disabled={disabled}
                     />
                   </FormControl>
                   <FormMessage />

@@ -8,7 +8,10 @@ export default function PurchaseSummary() {
   const { items, isLoading } = useCart();
 
   return (
-    <>
+    <div className="flex flex-col w-full gap-8">
+      <div className="text-2xl font-inter font-semibold">
+        Riepilogo acquisti
+      </div>
       {isLoading ? (
         <CartSkeleton />
       ) : (
@@ -24,24 +27,24 @@ export default function PurchaseSummary() {
               {items.map((item) => (
                 <div
                   key={item.id}
-                  className={`flex justify-between px-7 py-3 gap-16 border-b `}
+                  className={`flex min-h-20 justify-between px-7 py-3 gap-16 border-b `}
                 >
                   <div className="flex w-full justify-between items-center">
-                    <div className="flex w-[20%] justify-between items-center">
+                    <div className="flex w-[20%] justify-start items-center">
                       <Image
-                        className="contain"
+                        className="object-cover"
                         src={item.imageUrl}
                         alt="mechanical article"
                         height={48}
                         width={48}
                       />
                     </div>
-                    <div className="flex w-[60%] justify-between items-center">
-                      <span className="text-base font-inter font-medium">
+                    <div className="flex w-[60%] justify-center items-center">
+                      <span className="text-base text-center font-inter font-medium">
                         {item.name}
                       </span>
                     </div>
-                    <div className="flex w-[20%] justify-center items-center">
+                    <div className="flex w-[20%] justify-end items-center">
                       <span className="text-base font-inter font-semibold">
                         {Math.round(item.price * item.quantity * 100) / 100}€
                       </span>
@@ -75,6 +78,6 @@ export default function PurchaseSummary() {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }

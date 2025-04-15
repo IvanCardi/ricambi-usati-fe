@@ -15,18 +15,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
-import { FormSchema } from "./delivery-form";
-import { Provincia } from "./page";
+import { Provincia } from "./provinceList";
+import { FormSchema } from "./checkout-body";
 
 export function DefaultForm({
   form,
   provinceList,
+  disabled,
 }: {
   form: UseFormReturn<FormSchema>;
   provinceList: Provincia[];
+  disabled: boolean;
 }) {
-  const hasProvinces = Array.isArray(provinceList) && provinceList.length > 0;
-
   return (
     <div className="flex w-full justify-between">
       <FormField
@@ -35,36 +35,23 @@ export function DefaultForm({
         render={({ field }) => (
           <FormItem className="w-[36%]">
             <FormControl>
-              {hasProvinces ? (
-                <Select
-                  onValueChange={(value) => {
-                    field.onChange(value);
-                  }}
-                  key={provinceList[0].codice}
-                >
-                  <SelectTrigger className="border border-input py-[26px] px-[36px] rounded-[9px]">
-                    <SelectValue
-                      placeholder={"Seleziona una provincia*"}
-                      className="placeholder:text-2xl"
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {provinceList.map((province, i) => (
-                        <SelectItem key={i} value={province.nome}>
-                          {province.nome}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              ) : (
-                <Input
-                  {...field}
-                  placeholder="Provincia*"
-                  className="py-[26px] px-[36px] rounded-[9px] "
-                />
-              )}
+              <Select onValueChange={field.onChange} disabled={disabled}>
+                <SelectTrigger className="border border-input py-[26px] px-[36px] rounded-[9px]">
+                  <SelectValue
+                    placeholder={"Seleziona una provincia*"}
+                    className="placeholder:text-2xl"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {provinceList.map((province, i) => (
+                      <SelectItem key={i} value={province.nome}>
+                        {province.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -80,6 +67,7 @@ export function DefaultForm({
                 {...field}
                 placeholder="Città*"
                 className="py-[26px] px-[36px] rounded-[9px] "
+                disabled={disabled}
               />
             </FormControl>
             <FormMessage />
@@ -97,6 +85,7 @@ export function DefaultForm({
                   {...field}
                   placeholder="CAP*"
                   className="py-[26px] px-[36px] rounded-[9px] "
+                  disabled={disabled}
                 />
               </FormControl>
               <FormMessage />
