@@ -26,7 +26,7 @@ export default function CartSummary() {
             {items.map((item, index) => (
               <div
                 key={item.id}
-                className={`flex justify-between px-7 py-3 gap-16 ${
+                className={`px-7 py-3 gap-16 ${
                   index !== items.length - 1 ? "border-b" : ""
                 }`}
               >
