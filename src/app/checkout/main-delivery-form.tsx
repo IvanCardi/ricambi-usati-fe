@@ -29,7 +29,7 @@ import { useState } from "react";
 
 countries.registerLocale(it);
 
-export default function DeliveryForm({
+export default function MainDeliveryForm({
   form,
 }: {
   form: UseFormReturn<FormSchema>;

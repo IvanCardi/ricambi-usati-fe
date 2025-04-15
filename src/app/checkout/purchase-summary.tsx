@@ -3,15 +3,25 @@
 import Image from "next/image";
 import { useCart } from "../cart/cartContext";
 import CartSkeleton from "./cart-skeleton";
+import { UseFormReturn, useWatch } from "react-hook-form";
+import { FormSchema } from "./checkout-body";
 
-export default function PurchaseSummary() {
+export default function PurchaseSummary({
+  form,
+}: {
+  form: UseFormReturn<FormSchema>;
+}) {
   const { items, isLoading } = useCart();
+  const deliveryMethod = useWatch({
+    control: form.control,
+    name: "deliveryMethod",
+  });
 
   return (
     <div className="flex flex-col w-full gap-8">
-      <div className="text-2xl font-inter font-semibold">
+      <span className="text-2xl font-inter font-semibold">
         Riepilogo acquisti
-      </div>
+      </span>
       {isLoading ? (
         <CartSkeleton />
       ) : (
@@ -70,7 +80,11 @@ export default function PurchaseSummary() {
                     Costi di spedizione
                   </span>
                   <span className="text-base font-inter font-semibold">
-                    Gratuito
+                    {deliveryMethod === "Ritiro di persona" ? (
+                      "Gratuito"
+                    ) : (
+                      <>Gratuito</> // TODO: calculate delivery costs
+                    )}
                   </span>
                 </div>
               </div>

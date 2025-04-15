@@ -2,12 +2,24 @@
 
 import { CartProvider } from "../cart/cartContext";
 import MainContainer from "../components/mainContainer";
-import DeliveryForm from "./delivery-form";
+import MainDeliveryForm from "./main-delivery-form";
 import PurchaseSummary from "./purchase-summary";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
+import DeliveryOptions from "./delivery-options";
+
+export const deliveryOptions = [
+  "Corriere espresso",
+  "Ritiro di persona",
+] as const;
+
+export const paymentMethods = [
+  "Paga con carte",
+  "Paypal",
+  "Pagamento alla consegna",
+] as const;
 
 const formSchema = z
   .object({
@@ -23,6 +35,8 @@ const formSchema = z
     postalCode: z.string().optional(),
     email: z.string().email(),
     details: z.string().optional(),
+    deliveryMethod: z.enum(deliveryOptions),
+    paymentMethod: z.enum(paymentMethods),
   })
   .superRefine((data, ctx) => {
     if (data.country === "Italia") {
@@ -68,6 +82,8 @@ export default function CheckOutPage() {
       province: "",
       postalCode: "",
       email: "",
+      deliveryMethod: "Corriere espresso",
+      paymentMethod: "Paga con carte",
     },
   });
 
@@ -80,11 +96,12 @@ export default function CheckOutPage() {
               <div className="flex flex-col md:w-[60%] gap-12">
                 <h1 className="text-[40px] font-inter font-bold"> Checkout</h1>
                 <div className="flex flex-col gap-8">
-                  <DeliveryForm form={form} />
+                  <MainDeliveryForm form={form} />
                 </div>
               </div>
               <div className="flex flex-col md:w-[40%] gap-8">
-                <PurchaseSummary />
+                <PurchaseSummary form={form} />
+                <DeliveryOptions form={form} />
               </div>
             </div>
           </form>
