@@ -19,33 +19,67 @@ import {
 import countries from "i18n-iso-countries";
 import it from "i18n-iso-countries/langs/it.json";
 import { Button } from "@/components/ui/button";
-import { DefaultForm } from "./default-form-fields";
+import { ItalianForm } from "./italian-form-fields";
 import { Textarea } from "@/components/ui/textarea";
 import ForeignFormField from "./foreign-form-field";
 import { CountryCodes } from "postal-address-field-names";
 import { provinceList } from "./provinceList";
 import { FormSchema } from "./checkout-body";
-import { useState } from "react";
 
 countries.registerLocale(it);
 
 export default function MainDeliveryForm({
   form,
+  deliveryInfosConfirmed,
+  onConfirmed,
 }: {
   form: UseFormReturn<FormSchema>;
+  deliveryInfosConfirmed: boolean;
+  onConfirmed: () => void;
 }) {
-  const [deliveryInfosConfirmed, setDeliveryInfosConfirmed] = useState(false);
   const countriesOptions = countries.getNames("it", { select: "official" });
+  const sortedCountries = Object.entries(countriesOptions).sort(
+    ([, a], [, b]) => a.localeCompare(b)
+  );
   const selectedCountry = useWatch({ control: form.control, name: "country" });
   const detailsText =
     useWatch({ control: form.control, name: "details" }) || "";
+  const italianFormFields: (keyof FormSchema)[] = [
+    "firstName",
+    "lastName",
+    "email",
+    "country",
+    "streetName",
+    "province",
+    "city",
+    "postalCode",
+  ];
+
+  const foreignFormFields: (keyof FormSchema)[] = [
+    "firstName",
+    "lastName",
+    "email",
+    "country",
+    "streetName",
+  ];
+
+  async function onConfirm() {
+    const fieldsToValidate: (keyof FormSchema)[] =
+      selectedCountry === "Italia" ? italianFormFields : foreignFormFields;
+
+    const valid = await form.trigger(fieldsToValidate);
+
+    if (valid) {
+      onConfirmed();
+    }
+  }
 
   return (
     <div className="flex flex-col gap-8">
       <div className="text-2xl font-inter font-semibold">
         Informazioni di spedizione
       </div>
-      <div className="flex gap-7">
+      <div className="flex flex-col md:flex-row gap-7">
         <FormField
           control={form.control}
           name="firstName"
@@ -90,7 +124,7 @@ export default function MainDeliveryForm({
               <Input
                 {...field}
                 placeholder="Email*"
-                className="w-2/3 py-[26px] px-[36px] rounded-[9px]"
+                className="w-full md:w-2/3 py-[26px] px-[36px] rounded-[9px]"
                 type="email"
                 disabled={deliveryInfosConfirmed}
               />
@@ -110,7 +144,7 @@ export default function MainDeliveryForm({
                 value={field.value}
                 disabled={deliveryInfosConfirmed}
               >
-                <SelectTrigger className="w-[60%] border border-input py-[26px] px-[36px] rounded-[9px]">
+                <SelectTrigger className="w-full md:w-[60%] border border-input py-[26px] px-[36px] rounded-[9px]">
                   <SelectValue
                     placeholder={"Seleziona un paese"}
                     className="placeholder:text-2xl"
@@ -118,15 +152,11 @@ export default function MainDeliveryForm({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {Object.entries(countriesOptions)
-                      .sort(([, nameA], [, nameB]) =>
-                        nameA.localeCompare(nameB)
-                      )
-                      .map(([countryCode, name]) => (
-                        <SelectItem key={countryCode} value={name}>
-                          {name}
-                        </SelectItem>
-                      ))}
+                    {sortedCountries.map(([countryCode, name]) => (
+                      <SelectItem key={countryCode} value={name}>
+                        {name}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -137,7 +167,7 @@ export default function MainDeliveryForm({
       />
       {selectedCountry && (
         <>
-          <div className="flex gap-7">
+          <div className="flex flex-col md:flex-row gap-7">
             <FormField
               control={form.control}
               name="streetName"
@@ -174,7 +204,7 @@ export default function MainDeliveryForm({
             />
           </div>
           {selectedCountry === "Italia" ? (
-            <DefaultForm
+            <ItalianForm
               form={form}
               provinceList={provinceList}
               disabled={deliveryInfosConfirmed}
@@ -218,7 +248,7 @@ export default function MainDeliveryForm({
       <Button
         type="button"
         className="md:w-80 md:py-8 bg-[#0BB489] hover:bg-[#0BB489]/85"
-        onClick={() => setDeliveryInfosConfirmed(!deliveryInfosConfirmed)}
+        onClick={() => onConfirm()}
       >
         <span className="text-2xl font-inter font-bold">
           {deliveryInfosConfirmed ? "MODIFICA" : "CONFERMA"}

@@ -1,5 +1,5 @@
 import { UseFormReturn } from "react-hook-form";
-import { deliveryOptions, FormSchema } from "./checkout-body";
+import { FormSchema, paymentMethods } from "./checkout-body";
 import {
   FormControl,
   FormField,
@@ -7,22 +7,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-export default function DeliveryOptions({
+export default function PaymentMethod({
   form,
 }: {
   form: UseFormReturn<FormSchema>;
 }) {
   return (
-    <div className="flex flex-col w-full bg-white border rounded-[9px]">
+    <div className="flex flex-col w-full bg-white items-center border rounded-[9px]">
       <div className="flex w-full bg-[#F9F9F9] rounded-t-[9px] py-[18px] px-8">
-        <span className="text-2xl font-inter font-semibold">Spedizione</span>
+        <span className="text-2xl font-inter font-semibold">Pagamento</span>
       </div>
-      <div className="flex flex-col gap-4 p-8">
-        {deliveryOptions.map((option, i) => (
+      <div className="flex flex-col w-full gap-4 p-8">
+        {paymentMethods.map((option, i) => (
           <FormField
             key={i}
             control={form.control}
-            name="deliveryMethod"
+            name="paymentMethod"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
@@ -35,16 +35,7 @@ export default function DeliveryOptions({
                       defaultChecked={option === field.value}
                     />
                     <span className="text-base font-inter font-normal">
-                      {option === "Corriere espresso" ? (
-                        <>
-                          {option}{" "}
-                          <span className="text-base font-inter font-semibold">
-                            (2-4 giorni lavorativi)
-                          </span>
-                        </>
-                      ) : (
-                        option
-                      )}
+                      {option}
                     </span>
                   </div>
                 </FormControl>
@@ -54,7 +45,6 @@ export default function DeliveryOptions({
           />
         ))}
       </div>
-      <div className="flex flex-col px-8"></div>
     </div>
   );
 }

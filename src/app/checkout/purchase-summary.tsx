@@ -56,7 +56,7 @@ export default function PurchaseSummary({
                     </div>
                     <div className="flex w-[20%] justify-end items-center">
                       <span className="text-base font-inter font-semibold">
-                        {Math.round(item.price * item.quantity * 100) / 100}€
+                        {(item.price * item.quantity).toFixed(2)}€
                       </span>
                     </div>
                   </div>
@@ -68,10 +68,12 @@ export default function PurchaseSummary({
                     Totale
                   </span>
                   <span className="text-base font-inter font-semibold">
-                    {items.reduce(
-                      (sum, item) => sum + item.price * item.quantity,
-                      0
-                    )}
+                    {items
+                      .reduce(
+                        (sum, item) => sum + item.price * item.quantity,
+                        0
+                      )
+                      .toFixed(2)}
                     €
                   </span>
                 </div>

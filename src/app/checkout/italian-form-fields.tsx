@@ -18,7 +18,7 @@ import { UseFormReturn } from "react-hook-form";
 import { Provincia } from "./provinceList";
 import { FormSchema } from "./checkout-body";
 
-export function DefaultForm({
+export function ItalianForm({
   form,
   provinceList,
   disabled,
@@ -28,12 +28,12 @@ export function DefaultForm({
   disabled: boolean;
 }) {
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex flex-col gap-8 md:flex-row md:gap-0 w-full justify-between">
       <FormField
         control={form.control}
         name="province"
         render={({ field }) => (
-          <FormItem className="w-[36%]">
+          <FormItem className="w-full md:w-[36%]">
             <FormControl>
               <Select onValueChange={field.onChange} disabled={disabled}>
                 <SelectTrigger className="border border-input py-[26px] px-[36px] rounded-[9px]">
@@ -61,7 +61,7 @@ export function DefaultForm({
         control={form.control}
         name="city"
         render={({ field }) => (
-          <FormItem className="w-[36%]">
+          <FormItem className="w-full md:w-[36%]">
             <FormControl>
               <Input
                 {...field}
@@ -74,7 +74,7 @@ export function DefaultForm({
           </FormItem>
         )}
       />
-      <div className="w-1/5">
+      <div className="w-2/3 md:w-1/5">
         <FormField
           control={form.control}
           name="postalCode"

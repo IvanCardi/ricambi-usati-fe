@@ -9,6 +9,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import DeliveryOptions from "./delivery-options";
+import PaymentMethod from "./payment-methods";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export const deliveryOptions = [
   "Corriere espresso",
@@ -23,9 +26,9 @@ export const paymentMethods = [
 
 const formSchema = z
   .object({
-    firstName: z.string().nonempty(),
-    lastName: z.string().nonempty(),
-    streetName: z.string().nonempty(),
+    firstName: z.string().nonempty({ message: "inserire un nome" }),
+    lastName: z.string().nonempty({ message: "inserire un cognome" }),
+    streetName: z.string().nonempty({ message: "inserire un indirizzo" }),
     streetName2: z.string().optional(),
     country: z.string().nonempty(),
     city: z.string().optional(),
@@ -33,7 +36,7 @@ const formSchema = z
     administrativeArea: z.string().optional(),
     dependentLocality: z.string().optional(),
     postalCode: z.string().optional(),
-    email: z.string().email(),
+    email: z.string().email({ message: "inserire un indirizzo mail valido" }),
     details: z.string().optional(),
     deliveryMethod: z.enum(deliveryOptions),
     paymentMethod: z.enum(paymentMethods),
@@ -86,22 +89,48 @@ export default function CheckOutPage() {
       paymentMethod: "Paga con carte",
     },
   });
+  const [deliveryFormFilled, setDeliveryFormFilled] = useState(false);
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
 
   return (
     <CartProvider>
       <MainContainer>
+        <div className="h-20" />
         <Form {...form}>
-          <form className="flex flex-col w-full gap-8">
+          <form
+            className="flex flex-col w-full gap-8"
+            onChange={() => form.clearErrors()}
+          >
             <div className="flex flex-col md:flex-row w-full gap-14">
               <div className="flex flex-col md:w-[60%] gap-12">
                 <h1 className="text-[40px] font-inter font-bold"> Checkout</h1>
                 <div className="flex flex-col gap-8">
-                  <MainDeliveryForm form={form} />
+                  <MainDeliveryForm
+                    form={form}
+                    deliveryInfosConfirmed={deliveryFormFilled}
+                    onConfirmed={() =>
+                      setDeliveryFormFilled(!deliveryFormFilled)
+                    }
+                  />
                 </div>
               </div>
-              <div className="flex flex-col md:w-[40%] gap-8">
+              <div className="flex flex-col items-center md:w-[40%] gap-8">
                 <PurchaseSummary form={form} />
                 <DeliveryOptions form={form} />
+                <PaymentMethod form={form} />
+                <Button
+                  type="button"
+                  className="md:w-80 md:py-8 bg-[#0BB489] hover:bg-[#0BB489]/85"
+                  onClick={() => form.handleSubmit(onSubmit)}
+                  disabled={!deliveryFormFilled}
+                >
+                  <span className="text-2xl font-inter font-bold">
+                    COMPLETA L&apos;ORDINE
+                  </span>
+                </Button>
               </div>
             </div>
           </form>
