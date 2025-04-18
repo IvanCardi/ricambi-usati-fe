@@ -38,10 +38,10 @@ export function CarPartCard(carPart: CarPart) {
           )}
         </div>
         <div className="flex flex-col h-[40%] w-full items-center justify-between border border-t-2 border-[#0BB489] gap-2 py-2">
-          <div className="flex h-full items-center justify-center">
+          <div className="flex max-h-[50%] py-2 justify-center overflow-y-scroll">
             <span
               onClick={() => router.push(`/shop/product/${carPart.id}`)}
-              className="cursor-pointer text-base text-center font-inter font-semibold"
+              className="cursor-pointer text-wrap text-base text-center font-inter font-semibold"
             >
               {carPart.name}
             </span>
