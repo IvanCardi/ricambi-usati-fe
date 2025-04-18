@@ -41,7 +41,7 @@ export default function ForeignFormField({
   return (
     <>
       {fields ? (
-        <div className="grid grid-cols-2 md:flex md:flex-col w-full gap-8">
+        <div className="flex flex-col md:grid md:grid-cols-2 w-full gap-8">
           {fields.map(([fieldKey, fieldValue], i) => (
             <FormField
               key={i}

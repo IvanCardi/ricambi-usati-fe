@@ -28,12 +28,12 @@ export function ItalianForm({
   disabled: boolean;
 }) {
   return (
-    <div className="flex flex-col gap-8 md:flex-row md:gap-0 w-full justify-between">
+    <div className="flex flex-col gap-8 md:grid md:grid-cols-2 lg:flex-row lg:gap-8 w-full justify-between">
       <FormField
         control={form.control}
         name="province"
         render={({ field }) => (
-          <FormItem className="w-full md:w-[36%]">
+          <FormItem className="w-full">
             <FormControl>
               <Select onValueChange={field.onChange} disabled={disabled}>
                 <SelectTrigger className="border border-input py-[26px] px-[36px] rounded-[9px]">
@@ -61,7 +61,7 @@ export function ItalianForm({
         control={form.control}
         name="city"
         render={({ field }) => (
-          <FormItem className="w-full md:w-[36%]">
+          <FormItem className="w-full">
             <FormControl>
               <Input
                 {...field}
@@ -74,7 +74,7 @@ export function ItalianForm({
           </FormItem>
         )}
       />
-      <div className="w-2/3 md:w-1/5">
+      <div className="w-full">
         <FormField
           control={form.control}
           name="postalCode"

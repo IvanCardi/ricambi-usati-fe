@@ -167,7 +167,7 @@ export default function MainDeliveryForm({
       />
       {selectedCountry && (
         <>
-          <div className="flex flex-col md:flex-row gap-7">
+          <div className="flex flex-col lg:flex-row gap-7">
             <FormField
               control={form.control}
               name="streetName"
