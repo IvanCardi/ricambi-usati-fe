@@ -16,6 +16,7 @@ import PaymentDetails from "../paymentDetails";
 import FormCTA from "@/app/form/formCTA";
 import Device from "@/app/components/device";
 import { CarPart } from "../../page";
+import { useCart } from "@/app/cart/cartContext";
 
 export interface CarPartDetailed extends CarPart {
   images: string[];
@@ -58,6 +59,7 @@ export default function ProductPage({
     script.innerHTML = JSON.stringify(jsonLd);
     document.head.appendChild(script);
   }, [product]);
+  const { addToCart } = useCart();
 
   return (
     <Device>
@@ -202,6 +204,14 @@ export default function ProductPage({
                     </div>
                     <div className="flex w-[26%] pt-14 px-[2px]">
                       <PaymentDetails
+                        onAddToCart={() =>
+                          addToCart({
+                            id: product.id,
+                            imageUrl: product.imageUrl,
+                            name: product.name,
+                            price: product.price,
+                          })
+                        }
                         price={product.price}
                         warranty={product.warranty}
                       />
