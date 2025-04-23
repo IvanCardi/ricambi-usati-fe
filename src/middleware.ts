@@ -64,7 +64,7 @@ async function refresh(refreshToken: string): Promise<string | undefined> {
       method: "POST",
       credentials: "include",
       headers: {
-        Authorization: `bearer ${refreshToken}`,
+        Authorization: `Bearer ${refreshToken}`,
       }, // Ensures cookies are sent with the request
     });
 
