@@ -34,7 +34,7 @@ const CartContext = createContext<CartContextType>({
 
 const CART_KEY = "my_cart";
 
-export const CartProvider = (props: PropsWithChildren) => {
+export function CartProvider(props: PropsWithChildren) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isHydrated, setIsHydrated] = useState(false);
@@ -127,6 +127,6 @@ export const CartProvider = (props: PropsWithChildren) => {
       {props.children}
     </CartContext.Provider>
   );
-};
+}
 
 export const useCart = () => useContext(CartContext);

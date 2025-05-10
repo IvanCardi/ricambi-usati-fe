@@ -1,6 +1,6 @@
 "use client";
 
-import { CartProvider } from "../cart/cartContext";
+import { CartProvider, useCart } from "../cart/cartContext";
 import MainContainer from "../components/mainContainer";
 import MainDeliveryForm from "./main-delivery-form";
 import PurchaseSummary from "./purchase-summary";
@@ -12,6 +12,7 @@ import DeliveryOptions from "./delivery-options";
 import PaymentMethod from "./payment-methods";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { submitForm } from "./actions";
 
 export const deliveryOptions = [
   "Corriere espresso",
@@ -80,6 +81,7 @@ export default function CheckOutPage() {
       firstName: "",
       lastName: "",
       streetName: "",
+      streetName2: "",
       country: "Italia",
       city: "",
       province: "",
@@ -90,9 +92,19 @@ export default function CheckOutPage() {
     },
   });
   const [deliveryFormFilled, setDeliveryFormFilled] = useState(false);
+  const { items } = useCart();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const itemIds = items.map((i) => i.id);
+
+    const response = await submitForm(values, itemIds);
+
+    if (response.status === "ok" && response.data.checkoutPaymentUrl) {
+      window.location.href = response.data.checkoutPaymentUrl;
+    }
+    if (response.status === "error") {
+      console.error(response.message);
+    }
   }
 
   return (
@@ -103,6 +115,7 @@ export default function CheckOutPage() {
           <form
             className="flex flex-col w-full gap-8"
             onChange={() => form.clearErrors()}
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             <div className="flex flex-col md:flex-row w-full gap-14">
               <div className="flex flex-col md:w-[60%] gap-12">
@@ -122,9 +135,8 @@ export default function CheckOutPage() {
                 <DeliveryOptions form={form} />
                 <PaymentMethod form={form} />
                 <Button
-                  type="button"
+                  type="submit"
                   className="md:w-80 md:py-8 bg-[#0BB489] hover:bg-[#0BB489]/85"
-                  onClick={() => form.handleSubmit(onSubmit)}
                   disabled={!deliveryFormFilled}
                 >
                   <span className="text-2xl font-inter font-bold">

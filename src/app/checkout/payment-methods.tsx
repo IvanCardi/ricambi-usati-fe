@@ -1,3 +1,5 @@
+"use client";
+
 import { UseFormReturn } from "react-hook-form";
 import { FormSchema, paymentMethods } from "./checkout-body";
 import {
@@ -18,7 +20,7 @@ export default function PaymentMethod({
         <span className="text-2xl font-inter font-semibold">Pagamento</span>
       </div>
       <div className="flex flex-col w-full gap-4 p-8">
-        {paymentMethods.map((option, i) => (
+        {paymentMethods.map((method, i) => (
           <FormField
             key={i}
             control={form.control}
@@ -29,13 +31,13 @@ export default function PaymentMethod({
                   <div className="flex items-center gap-3">
                     <input
                       {...field}
-                      value={option}
+                      value={method}
                       type="radio"
                       className="scale-150"
-                      defaultChecked={option === field.value}
+                      defaultChecked={method === field.value}
                     />
                     <span className="text-base font-inter font-normal">
-                      {option}
+                      {method}
                     </span>
                   </div>
                 </FormControl>
