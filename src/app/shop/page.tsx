@@ -5,7 +5,6 @@ import CarPartsList from "./car-parts-list";
 import CarPartsOrderers from "./car-part-orderers";
 import { PageProps } from "@/lib/pageProps";
 import CarPartsPaginationBar from "./car-parts-pagination-bar";
-import { CartProvider } from "../cart/cartContext";
 
 export type CarPart = {
   id: string;
@@ -53,38 +52,34 @@ export default async function Shop({ searchParams }: PageProps) {
   const { carParts, totalPages } = await getProducts(params);
 
   return (
-    <CartProvider>
-      <main className="flex flex-col w-full justify-center items-center">
-        <div className="flex w-full justify-center py-14">
-          <span className="text-7xl font-inter font-bold">SHOP</span>
-        </div>
-        <CarPartsFilters
-          initialBrand={params.brand as string}
-          initialModel={params.model as string}
-          initialSetup={params.setup as string}
-          initialStartYear={
-            params.startYear
-              ? parseFloat(params.startYear as string)
-              : undefined
-          }
-          initialEndYear={
-            params.endYear ? parseFloat(params.endYear as string) : undefined
-          }
-          initialCategory={params.category as string}
-        />
-        <div className="h-[30px]" />
-        <CarPartsOrderers initialOrder={params.order as string} />
-        <div className="h-[60px]" />
-        <CarPartsList carParts={carParts} />
-        <div className="h-[30px]" />
-        <CarPartsPaginationBar
-          currentPage={
-            params.page ? parseFloat(params.page as string) : undefined
-          }
-          totalPages={totalPages}
-        ></CarPartsPaginationBar>
-        <FormCTA background />
-      </main>
-    </CartProvider>
+    <main className="flex flex-col w-full justify-center items-center">
+      <div className="flex w-full justify-center py-14">
+        <span className="text-7xl font-inter font-bold">SHOP</span>
+      </div>
+      <CarPartsFilters
+        initialBrand={params.brand as string}
+        initialModel={params.model as string}
+        initialSetup={params.setup as string}
+        initialStartYear={
+          params.startYear ? parseFloat(params.startYear as string) : undefined
+        }
+        initialEndYear={
+          params.endYear ? parseFloat(params.endYear as string) : undefined
+        }
+        initialCategory={params.category as string}
+      />
+      <div className="h-[30px]" />
+      <CarPartsOrderers initialOrder={params.order as string} />
+      <div className="h-[60px]" />
+      <CarPartsList carParts={carParts} />
+      <div className="h-[30px]" />
+      <CarPartsPaginationBar
+        currentPage={
+          params.page ? parseFloat(params.page as string) : undefined
+        }
+        totalPages={totalPages}
+      ></CarPartsPaginationBar>
+      <FormCTA background />
+    </main>
   );
 }

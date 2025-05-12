@@ -26,29 +26,20 @@ export default function ProcessingPaymentPage() {
     if (paymentStatus === "paid") {
       setIsProcessing(false);
       setStatus("Pagamento completato");
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     }
     if (paymentStatus === "pending" || paymentStatus === "open") {
-      setTimeout(async () => {
-        await checkPayment();
-      }, 2000);
+      setTimeout(checkPayment, 2000);
     }
     if (paymentStatus === "failed" || paymentStatus === "expired") {
     }
   }
 
   useEffect(() => {
-    setTimeout(async () => {
-      await checkPayment();
-    }, 1);
+    checkPayment();
   }, []);
-
-  useEffect(() => {
-    if (status === "Pagamento completato") {
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-    }
-  }, [status]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

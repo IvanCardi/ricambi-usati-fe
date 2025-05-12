@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { CartItem, useCart } from "./cartContext";
+import { useCart } from "./cartContext";
+import { CarPart } from "../shop/page";
 
-export default function MobileItemCard(item: CartItem) {
+export default function MobileItemCard(item: CarPart) {
   const { removeFromCart } = useCart();
 
   return (
@@ -29,7 +30,7 @@ export default function MobileItemCard(item: CartItem) {
         />
         <div className="flex justify-center items-center">
           <span className="text-base font-inter font-semibold">
-            {(item.price * item.quantity).toFixed(2)}€
+            {item.price.toFixed(2)}€
           </span>
         </div>
       </div>

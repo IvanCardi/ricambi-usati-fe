@@ -52,13 +52,15 @@ export default function PurchaseSummary({
                         />
                       </div>
                     ) : (
-                      <Image
-                        className="w-full object-cover"
-                        src={noImagePlaceholder.src}
-                        alt={`No image placeholder`}
-                        height={48}
-                        width={48}
-                      />
+                      <div className="flex w-[20%] justify-start items-center">
+                        <Image
+                          className="w-full object-cover"
+                          src={noImagePlaceholder.src}
+                          alt={`No image placeholder`}
+                          height={48}
+                          width={48}
+                        />
+                      </div>
                     )}
                     <div className="flex w-[60%] justify-center items-center">
                       <span className="text-base text-center font-inter font-medium">
@@ -67,7 +69,7 @@ export default function PurchaseSummary({
                     </div>
                     <div className="flex w-[20%] justify-end items-center">
                       <span className="text-base font-inter font-semibold">
-                        {(item.price * item.quantity).toFixed(2)}€
+                        {item.price.toFixed(2)}€
                       </span>
                     </div>
                   </div>
@@ -80,10 +82,7 @@ export default function PurchaseSummary({
                   </span>
                   <span className="text-base font-inter font-semibold">
                     {items
-                      .reduce(
-                        (sum, item) => sum + item.price * item.quantity,
-                        0
-                      )
+                      .reduce((sum, item) => sum + item.price, 0)
                       .toFixed(2)}
                     €
                   </span>

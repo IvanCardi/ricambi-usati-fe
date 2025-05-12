@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./navbar";
 import Footer from "./footer/footer";
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "./cart/cartContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,10 +32,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${poppins.variable} antialiased`}>
         <div className="flex flex-col w-full">
-          <Navbar />
-          {children}
-          <Toaster />
-          <Footer />
+          <CartProvider>
+            <Navbar />
+            {children}
+            <Toaster />
+            <Footer />
+          </CartProvider>
         </div>
       </body>
     </html>

@@ -6,7 +6,7 @@ import logo from "../../public/logo.svg";
 import searchIcon from "../../public/search_nav_icon.svg";
 import searchIconBlack from "../../public/search_icon_black.svg";
 import profile from "../../public/profile_icon.svg";
-import cart from "../../public/cart_icon.svg";
+import cartIcon from "../../public/cart_icon.svg";
 import {
   Dialog,
   DialogPanel,
@@ -17,6 +17,7 @@ import {
 } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useCart } from "./cart/cartContext";
 
 export default function Navbar() {
   const navigation = [
@@ -27,6 +28,7 @@ export default function Navbar() {
 
   const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { items } = useCart();
 
   return (
     <>
@@ -71,9 +73,18 @@ export default function Navbar() {
             <Link href="/profilo">
               <Image src={profile} objectFit="contain" alt="profile icon" />
             </Link>
-            <Link href={"/cart"}>
-              <Image src={cart} objectFit="contain" alt="cart icon" />
-            </Link>
+            <div className="relative">
+              <Link href={"/cart"}>
+                <Image src={cartIcon} objectFit="contain" alt="cart icon" />
+              </Link>
+              {items.length > 0 && (
+                <div className="absolute flex items-center justify-center bg-red-500 w-4 h-4 -top-1 -right-1 rounded-full">
+                  <span className="text-white text-xs font-inter font-bold">
+                    {items.length}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex items-center md:hidden p-1 sticky top-0">
             {/* Mobile menu button*/}

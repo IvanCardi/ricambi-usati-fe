@@ -1,10 +1,11 @@
 import Image from "next/image";
 import noImagePlaceholder from "../../../public/no-image-placeholder.jpg";
-import { CartItem, useCart } from "./cartContext";
+import { useCart } from "./cartContext";
 import Device from "../components/device";
 import MobileItemCard from "./mobile-item-card";
+import { CarPart } from "../shop/page";
 
-export default function ItemCard(item: CartItem) {
+export default function ItemCard(item: CarPart) {
   const { removeFromCart } = useCart();
 
   return (
@@ -40,7 +41,7 @@ export default function ItemCard(item: CartItem) {
             </div>
             <div className="flex w-[20%] justify-center items-center">
               <span className="text-base font-inter font-semibold">
-                {(item.price * item.quantity).toFixed(2)}€
+                {item.price.toFixed(2)}€
               </span>
             </div>
             <Image
