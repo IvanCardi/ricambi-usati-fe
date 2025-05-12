@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import RelatedProducts from "./relatedProducts";
 import MainContainer from "@/app/components/mainContainer";
 import Image from "next/image";
+import noImagePlaceholder from "../../../../../public/no-image-placeholder.jpg";
 import {
   Accordion,
   AccordionContent,
@@ -47,7 +48,7 @@ export default function ProductPage({
       brand: { "@type": "Brand", name: product.brand },
       offers: {
         "@type": "Offer",
-        priceCurrency: "USD",
+        priceCurrency: "EUR",
         price: product.price,
         itemCondition: "https://schema.org/UsedCondition",
         availability: "https://schema.org/InStock",
@@ -69,7 +70,7 @@ export default function ProductPage({
         ) : (
           <>
             <Head>
-              <title>{product.name} | Best Price for Used Car Parts</title>
+              <title>{product.name} | Ricambi Usati</title>
               <meta name="description" content={product.description} />
               <meta
                 name="keywords"
@@ -82,7 +83,7 @@ export default function ProductPage({
               <meta name="robots" content="index, follow" />
               <link
                 rel="canonical"
-                href={`https://yourwebsite.com/product/${product.slug}`}
+                href={`https://ricambiusati.it/product/${product.slug}`}
               />
             </Head>
 
@@ -93,13 +94,23 @@ export default function ProductPage({
                     <div className="flex flex-col w-[30%] gap-8 px-[2px]">
                       <div className="flex flex-col gap-[10px]">
                         <div className="flex items-center justify-center w-full border-2 border-[#0BB489] rounded-sm">
-                          <Image
-                            src={product.imageUrl}
-                            alt={product.name}
-                            width={200}
-                            height={200}
-                            priority
-                          />
+                          {product.imageUrl ? (
+                            <Image
+                              src={product.imageUrl}
+                              alt={product.name}
+                              width={200}
+                              height={200}
+                              priority
+                            />
+                          ) : (
+                            <Image
+                              className="w-full object-cover"
+                              src={noImagePlaceholder.src}
+                              alt={`No image placeholder`}
+                              height={200}
+                              width={200}
+                            />
+                          )}
                         </div>
                         <div className="grid grid-cols-3 items-center gap-4">
                           {product.images.map((image, i) => (

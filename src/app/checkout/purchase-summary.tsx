@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import noImagePlaceholder from "../../../public/no-image-placeholder.jpg";
 import { useCart } from "../cart/cartContext";
 import CartSkeleton from "./cart-skeleton";
 import { UseFormReturn, useWatch } from "react-hook-form";
@@ -40,15 +41,27 @@ export default function PurchaseSummary({
                   className={`flex min-h-20 justify-between px-7 py-3 gap-16 border-b `}
                 >
                   <div className="flex w-full justify-between items-center">
-                    <div className="flex w-[20%] justify-start items-center">
-                      <Image
-                        className="object-cover"
-                        src={item.imageUrl}
-                        alt="mechanical article"
-                        height={48}
-                        width={48}
-                      />
-                    </div>
+                    {item.imageUrl ? (
+                      <div className="flex w-[20%] justify-start items-center">
+                        <Image
+                          className="object-cover"
+                          src={item.imageUrl}
+                          alt="mechanical article"
+                          height={48}
+                          width={48}
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex w-[20%] justify-start items-center">
+                        <Image
+                          className="w-full object-cover"
+                          src={noImagePlaceholder.src}
+                          alt={`No image placeholder`}
+                          height={48}
+                          width={48}
+                        />
+                      </div>
+                    )}
                     <div className="flex w-[60%] justify-center items-center">
                       <span className="text-base text-center font-inter font-medium">
                         {item.name}
@@ -56,7 +69,7 @@ export default function PurchaseSummary({
                     </div>
                     <div className="flex w-[20%] justify-end items-center">
                       <span className="text-base font-inter font-semibold">
-                        {(item.price * item.quantity).toFixed(2)}€
+                        {item.price.toFixed(2)}€
                       </span>
                     </div>
                   </div>
@@ -69,10 +82,7 @@ export default function PurchaseSummary({
                   </span>
                   <span className="text-base font-inter font-semibold">
                     {items
-                      .reduce(
-                        (sum, item) => sum + item.price * item.quantity,
-                        0
-                      )
+                      .reduce((sum, item) => sum + item.price, 0)
                       .toFixed(2)}
                     €
                   </span>

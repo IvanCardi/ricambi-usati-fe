@@ -10,15 +10,10 @@ import React, {
 import { CarPart } from "../shop/page";
 import { toast } from "sonner";
 
-export interface CartItem extends CarPart {
-  quantity: number;
-}
-
 type CartContextType = {
-  items: CartItem[];
+  items: CarPart[];
   addToCart: (carPart: CarPart) => void;
   removeFromCart: (id: string) => void;
-  decrementItem: (id: string) => void;
   clearCart: () => void;
   isLoading: boolean;
 };
@@ -27,7 +22,6 @@ const CartContext = createContext<CartContextType>({
   items: [],
   addToCart: () => {},
   removeFromCart: () => {},
-  decrementItem: () => {},
   clearCart: () => {},
   isLoading: true,
 });
@@ -35,7 +29,7 @@ const CartContext = createContext<CartContextType>({
 const CART_KEY = "my_cart";
 
 export function CartProvider(props: PropsWithChildren) {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CarPart[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -55,21 +49,13 @@ export function CartProvider(props: PropsWithChildren) {
   }, [cart, isHydrated]);
 
   const addToCart = (carPart: CarPart) => {
-    setCart((prev) => {
-      const existing = prev.find((item) => item.id === carPart.id);
+    const cartItem = cart.find((item) => item.id === carPart.id);
 
-      if (existing) {
-        return prev.map((item) =>
-          item.id === carPart.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prev, { ...carPart, quantity: 1 }];
-      }
-    });
+    if (!cartItem) {
+      setCart((prev) => [...prev, carPart]);
 
-    toast("L'articolo è stato aggiunto al carrello");
+      toast("L'articolo è stato aggiunto al carrello");
+    }
   };
 
   const removeFromCart = (id: string) => {
@@ -77,28 +63,6 @@ export function CartProvider(props: PropsWithChildren) {
 
     if (cartItem) {
       setCart((prev) => prev.filter((item) => item.id !== id));
-
-      toast("L'articolo è stato completamente rimosso dal carrello", {
-        action: {
-          label: "Undo",
-          onClick: () => addToCart(cartItem),
-        },
-      });
-    }
-  };
-
-  const decrementItem = (id: string) => {
-    const cartItem = cart.find((item) => item.id === id);
-
-    if (cartItem) {
-      setCart((prev) => {
-        return prev.map((item) => {
-          if (item.id === id && item.quantity > 1) {
-            return { ...item, quantity: item.quantity - 1 };
-          }
-          return item;
-        });
-      });
 
       toast("L'articolo è stato rimosso dal carrello", {
         action: {
@@ -119,7 +83,6 @@ export function CartProvider(props: PropsWithChildren) {
         items: cart,
         addToCart,
         removeFromCart,
-        decrementItem,
         clearCart,
         isLoading,
       }}
