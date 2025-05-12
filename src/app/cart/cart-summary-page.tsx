@@ -5,6 +5,8 @@ import { useCart } from "./cartContext";
 import ItemCard from "./item-card";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { createOrUpadteOrderDraft } from "./actions";
+import { toast } from "sonner";
 
 export default function CartSummary() {
   const { items, isLoading } = useCart();
@@ -13,6 +15,20 @@ export default function CartSummary() {
   if (isLoading) {
     return <p>Loading your cart...</p>;
   }
+
+  const onCheckoutClick = async () => {
+    const result = await createOrUpadteOrderDraft(
+      items.map((i) => i.id),
+      localStorage.getItem("orderId") as string | undefined
+    );
+
+    if (result.status === "error") {
+      toast(result.message);
+    } else {
+      localStorage.setItem("orderId", result.data?.id);
+      router.push(`/checkout?orderId=${result.data?.id}`);
+    }
+  };
 
   return (
     <MainContainer>
@@ -45,7 +61,7 @@ export default function CartSummary() {
             <Button
               type="button"
               className="w-full bg-[#0BB489] hover:bg-[#0BB489]/85 py-8 cursor-pointer"
-              onClick={() => router.push("/checkout")}
+              onClick={onCheckoutClick}
             >
               <span className="text-2xl font-inter font-bold">
                 VAI AL CHECKOUT
