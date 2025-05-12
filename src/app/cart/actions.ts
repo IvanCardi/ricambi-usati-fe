@@ -32,6 +32,15 @@ export async function createOrUpadteOrderDraft(
     });
 
     if (result.status !== 200) {
+      const body = await result.json();
+
+      if (body.message === "UnavailableProducts") {
+        return {
+          status: "error",
+          message: "Alcuni prodotti non sono più disponibili",
+          data: { unavailableProducts: body.soldProducts },
+        };
+      }
       return {
         status: "error",
         message: (await result.json()).message,

@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createOrUpadteOrderDraft } from "./actions";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function CartSummary() {
   const { items, isLoading } = useCart();
   const router = useRouter();
+  const [unavailableProducts, setUnavailableProducts] = useState([]);
 
   if (isLoading) {
     return <p>Loading your cart...</p>;
@@ -24,6 +26,10 @@ export default function CartSummary() {
 
     if (result.status === "error") {
       toast(result.message);
+
+      if (result.data) {
+        setUnavailableProducts(result.data.unavailableProducts);
+      }
     } else {
       localStorage.setItem("orderId", result.data?.id);
       router.push(`/checkout?orderId=${result.data?.id}`);
@@ -46,11 +52,17 @@ export default function CartSummary() {
               {items.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`px-2 md:px-7 py-3 gap-16 ${
+                  className={`gap-16 ${
                     index !== items.length - 1 ? "border-b" : ""
                   }`}
                 >
-                  <ItemCard {...item} />
+                  <ItemCard
+                    {...item}
+                    disabled={
+                      unavailableProducts.find((p) => p === item.id) !==
+                      undefined
+                    }
+                  />
                 </div>
               ))}
             </>

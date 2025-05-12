@@ -5,7 +5,7 @@ import Device from "../components/device";
 import MobileItemCard from "./mobile-item-card";
 import { CarPart } from "../shop/page";
 
-export default function ItemCard(item: CarPart) {
+export default function ItemCard(item: CarPart & { disabled: boolean }) {
   const { removeFromCart } = useCart();
 
   return (
@@ -14,7 +14,11 @@ export default function ItemCard(item: CarPart) {
         isMobile ? (
           <MobileItemCard {...item} />
         ) : (
-          <div className="flex w-full min-h-16 justify-between items-center">
+          <div
+            className={`px-2 md:px-7 py-3 flex w-full min-h-16 justify-between items-center ${
+              item.disabled && "bg-gray-50 border border-red-500"
+            }`}
+          >
             <div className="flex w-[75%] items-center gap-8">
               {item.imageUrl ? (
                 <Image
