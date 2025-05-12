@@ -1,6 +1,11 @@
 "use server";
 
 import { ServerActionResponse } from "@/lib/serverActionResponse";
+import createMollieClient, { PaymentStatus } from "@mollie/api-client";
+
+const mollie = createMollieClient({
+  apiKey: process.env.MOLLIE_TEST_KEY ?? "Test API key",
+});
 
 export async function submitForm(
   data: {
@@ -57,11 +62,35 @@ export async function submitForm(
 
     return {
       status: "ok",
-      data: { checkoutPaymentUrl: body.checkoutPaymentUrl },
+      data: {
+        checkoutPaymentUrl: body.checkoutPaymentUrl,
+        orderId: body.orderId,
+      },
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: unknown) {
     return { status: "error", message: "" };
+  }
+}
+
+export async function checkPaymentStatus(
+  orderId: string
+): Promise<PaymentStatus | undefined> {
+  try {
+    const payments = mollie.payments.iterate();
+
+    const payment = await payments.find(
+      (p) => (p.metadata as { orderId?: string }).orderId === orderId
+    );
+
+    if (payment) {
+      return (await mollie.payments.get(payment.id)).status;
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error("Error retrieving payment:", error);
+    return undefined;
   }
 }

@@ -100,6 +100,7 @@ export default function CheckOutPage() {
     const response = await submitForm(values, itemIds);
 
     if (response.status === "ok" && response.data.checkoutPaymentUrl) {
+      sessionStorage.setItem("orderId", response.data.orderId);
       window.location.href = response.data.checkoutPaymentUrl;
     }
     if (response.status === "error") {
