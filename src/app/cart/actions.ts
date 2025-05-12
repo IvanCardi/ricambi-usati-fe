@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use server";
 
+import { getAccessToken } from "@/lib/getAccessToken";
 import { getLoggedUser } from "@/lib/getLoggedUser";
 import { ServerActionResponse } from "@/lib/serverActionResponse";
 
@@ -9,18 +10,23 @@ export async function createOrUpadteOrderDraft(
   orderId?: string
 ): Promise<ServerActionResponse> {
   try {
-    const user = await getLoggedUser();
+    const token = await getAccessToken();
+
+    const headers: HeadersInit = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
 
     const result = await fetch(`${process.env.BE_BASE_URL}/orderDrafts`, {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify({
         products,
         orderId,
-        userId: user?.userId,
       }),
       credentials: "include",
     });
