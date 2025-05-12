@@ -13,6 +13,7 @@ import PaymentMethod from "./payment-methods";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { submitForm } from "./actions";
+import { OrderDraft } from "@/lib/models/orderDraft";
 
 export const deliveryOptions = [
   "Corriere espresso",
@@ -74,7 +75,11 @@ const formSchema = z
 
 export type FormSchema = z.infer<typeof formSchema>;
 
-export default function CheckOutPage() {
+export default function CheckOutPage({
+  orderDraft,
+}: {
+  orderDraft: OrderDraft;
+}) {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -129,7 +134,7 @@ export default function CheckOutPage() {
               </div>
             </div>
             <div className="flex flex-col items-center md:w-[40%] gap-8">
-              <PurchaseSummary form={form} />
+              <PurchaseSummary form={form} orderDraft={orderDraft} />
               <DeliveryOptions form={form} />
               <PaymentMethod form={form} />
               <Button
