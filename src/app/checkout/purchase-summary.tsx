@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import noImagePlaceholder from "../../../public/no-image-placeholder.jpg";
 import { useCart } from "../cart/cartContext";
 import CartSkeleton from "./cart-skeleton";
 import { UseFormReturn, useWatch } from "react-hook-form";
@@ -40,15 +41,25 @@ export default function PurchaseSummary({
                   className={`flex min-h-20 justify-between px-7 py-3 gap-16 border-b `}
                 >
                   <div className="flex w-full justify-between items-center">
-                    <div className="flex w-[20%] justify-start items-center">
+                    {item.imageUrl ? (
+                      <div className="flex w-[20%] justify-start items-center">
+                        <Image
+                          className="object-cover"
+                          src={item.imageUrl}
+                          alt="mechanical article"
+                          height={48}
+                          width={48}
+                        />
+                      </div>
+                    ) : (
                       <Image
-                        className="object-cover"
-                        src={item.imageUrl}
-                        alt="mechanical article"
+                        className="w-full object-cover"
+                        src={noImagePlaceholder.src}
+                        alt={`No image placeholder`}
                         height={48}
                         width={48}
                       />
-                    </div>
+                    )}
                     <div className="flex w-[60%] justify-center items-center">
                       <span className="text-base text-center font-inter font-medium">
                         {item.name}

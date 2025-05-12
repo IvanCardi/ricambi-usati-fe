@@ -1,4 +1,5 @@
 import Image from "next/image";
+import noImagePlaceholder from "../../../public/no-image-placeholder.jpg";
 import { CartItem, useCart } from "./cartContext";
 import Device from "../components/device";
 import MobileItemCard from "./mobile-item-card";
@@ -14,13 +15,23 @@ export default function ItemCard(item: CartItem) {
         ) : (
           <div className="flex w-full min-h-16 justify-between items-center">
             <div className="flex w-1/2 items-center gap-4">
-              <Image
-                className="object-cover"
-                src={item.imageUrl}
-                alt="mechanical article"
-                height={48}
-                width={48}
-              />
+              {item.imageUrl ? (
+                <Image
+                  className="object-cover"
+                  src={item.imageUrl}
+                  alt="mechanical article"
+                  height={48}
+                  width={48}
+                />
+              ) : (
+                <Image
+                  className="w-full object-cover"
+                  src={noImagePlaceholder.src}
+                  alt={`No image placeholder`}
+                  height={48}
+                  width={48}
+                />
+              )}
               <div className="flex w-full justify-center items-center">
                 <span className="text-base text-center font-inter font-medium">
                   {item.name}
