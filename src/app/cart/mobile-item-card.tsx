@@ -2,7 +2,7 @@ import Image from "next/image";
 import { CartItem, useCart } from "./cartContext";
 
 export default function MobileItemCard(item: CartItem) {
-  const { addToCart, decrementItem, removeFromCart } = useCart();
+  const { removeFromCart } = useCart();
 
   return (
     <div className="flex w-full min-h-16 justify-between items-center">
@@ -27,26 +27,6 @@ export default function MobileItemCard(item: CartItem) {
           width={24}
           onClick={() => removeFromCart(item.id)}
         />
-        <div className="flex justify-center items-center h-fit px-2 border border-black rounded-sm gap-2">
-          <button
-            className="flex items-center"
-            onClick={() => {
-              addToCart(item);
-            }}
-          >
-            <span className="text-sm font-inter font-medium">+</span>
-          </button>
-          <span className="text-base font-inter font-medium">
-            {item.quantity}
-          </span>
-          <button
-            className="flex items-center"
-            onClick={() => decrementItem(item.id)}
-            disabled={item.quantity === 1}
-          >
-            <span className="text-sm font-inter font-medium">-</span>
-          </button>
-        </div>
         <div className="flex justify-center items-center">
           <span className="text-base font-inter font-semibold">
             {(item.price * item.quantity).toFixed(2)}€

@@ -5,7 +5,7 @@ import Device from "../components/device";
 import MobileItemCard from "./mobile-item-card";
 
 export default function ItemCard(item: CartItem) {
-  const { addToCart, decrementItem, removeFromCart } = useCart();
+  const { removeFromCart } = useCart();
 
   return (
     <Device>
@@ -14,7 +14,7 @@ export default function ItemCard(item: CartItem) {
           <MobileItemCard {...item} />
         ) : (
           <div className="flex w-full min-h-16 justify-between items-center">
-            <div className="flex w-1/2 items-center gap-4">
+            <div className="flex w-[75%] items-center gap-8">
               {item.imageUrl ? (
                 <Image
                   className="object-cover"
@@ -37,26 +37,6 @@ export default function ItemCard(item: CartItem) {
                   {item.name}
                 </span>
               </div>
-            </div>
-            <div className="flex w-[15%] justify-center items-center h-fit px-2 border border-black rounded-sm gap-4">
-              <button
-                className="flex items-center"
-                onClick={() => {
-                  addToCart(item);
-                }}
-              >
-                <span className="text-sm font-inter font-medium">+</span>
-              </button>
-              <span className="text-base font-inter font-medium">
-                {item.quantity}
-              </span>
-              <button
-                className="flex items-center"
-                onClick={() => decrementItem(item.id)}
-                disabled={item.quantity === 1}
-              >
-                <span className="text-sm font-inter font-medium">-</span>
-              </button>
             </div>
             <div className="flex w-[20%] justify-center items-center">
               <span className="text-base font-inter font-semibold">
