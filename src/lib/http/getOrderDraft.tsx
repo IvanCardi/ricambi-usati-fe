@@ -7,7 +7,7 @@ export async function getOrderDraft(id: string): Promise<OrderDraft> {
   const orderDraft = await fetch(
     `${process.env.BE_BASE_URL}/orderDrafts/${id}`,
     {
-      next: { revalidate: 0 },
+      next: { revalidate: 0, tags: ["order-draft"] },
       headers: {
         Authorization: `Bearer ${token}`,
       },

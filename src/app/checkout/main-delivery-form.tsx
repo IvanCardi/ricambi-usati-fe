@@ -1,6 +1,5 @@
 "use client";
-
-import { UseFormReturn, useWatch } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
   FormControl,
   FormField,
@@ -16,15 +15,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import countries from "i18n-iso-countries";
 import it from "i18n-iso-countries/langs/it.json";
-import { Button } from "@/components/ui/button";
-import { ItalianForm } from "./italian-form-fields";
-import { Textarea } from "@/components/ui/textarea";
-import ForeignFormField from "./foreign-form-field";
 import { CountryCodes } from "postal-address-field-names";
-import { provinceList } from "./provinceList";
+import { UseFormReturn, useWatch } from "react-hook-form";
+import { CarPart } from "../shop/page";
+import { updateOrderDraft } from "./actions";
 import { FormSchema } from "./checkout-body";
+import ForeignFormField from "./foreign-form-field";
+import { ItalianForm } from "./italian-form-fields";
+import { provinceList } from "./provinceList";
+import { toast } from "sonner";
 
 countries.registerLocale(it);
 
@@ -32,7 +34,11 @@ export default function MainDeliveryForm({
   form,
   deliveryInfosConfirmed,
   onConfirmed,
+  items,
+  orderDraftId,
 }: {
+  items: CarPart[];
+  orderDraftId: string;
   form: UseFormReturn<FormSchema>;
   deliveryInfosConfirmed: boolean;
   onConfirmed: () => void;
@@ -64,13 +70,27 @@ export default function MainDeliveryForm({
   ];
 
   async function onConfirm() {
-    const fieldsToValidate: (keyof FormSchema)[] =
-      selectedCountry === "Italia" ? italianFormFields : foreignFormFields;
-
-    const valid = await form.trigger(fieldsToValidate);
-
-    if (valid) {
+    if (deliveryInfosConfirmed) {
       onConfirmed();
+    } else {
+      const fieldsToValidate: (keyof FormSchema)[] =
+        selectedCountry === "Italia" ? italianFormFields : foreignFormFields;
+
+      const valid = await form.trigger(fieldsToValidate);
+
+      if (valid) {
+        const result = await updateOrderDraft(
+          orderDraftId,
+          items.map((i) => i.id),
+          form.getValues()
+        );
+
+        if (result.status === "error") {
+          toast("Si è verificato un errore");
+        } else {
+          onConfirmed();
+        }
+      }
     }
   }
 

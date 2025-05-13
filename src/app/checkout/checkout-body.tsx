@@ -127,6 +127,8 @@ export default function CheckOutPage({
               <h1 className="text-[40px] font-inter font-bold"> Checkout</h1>
               <div className="flex flex-col gap-8">
                 <MainDeliveryForm
+                  items={items}
+                  orderDraftId={orderDraft.id}
                   form={form}
                   deliveryInfosConfirmed={deliveryFormFilled}
                   onConfirmed={() => setDeliveryFormFilled(!deliveryFormFilled)}
