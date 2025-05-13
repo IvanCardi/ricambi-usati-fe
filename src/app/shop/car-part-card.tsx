@@ -9,7 +9,7 @@ import { useCart } from "../cart/cartContext";
 
 export function CarPartCard(carPart: CarPart) {
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { items, addToCart, removeFromCart } = useCart();
 
   return (
     <div className="flex flex-col w-full gap-14 bg-white">
@@ -51,14 +51,25 @@ export function CarPartCard(carPart: CarPart) {
             <span className="text-sm text-center font-inter font-semibold">
               {carPart.price}€
             </span>
-            <Button
-              className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
-              onClick={() => addToCart(carPart)}
-            >
-              <span className="text-[9px] text-white font-inter font-medium">
-                Aggiungi al carrello
-              </span>
-            </Button>
+            {items.find((item) => item.id === carPart.id) ? (
+              <Button
+                className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
+                onClick={() => removeFromCart(carPart.id)}
+              >
+                <span className="text-[9px] text-white font-inter font-medium">
+                  Rimuovi dal carrello
+                </span>
+              </Button>
+            ) : (
+              <Button
+                className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
+                onClick={() => addToCart(carPart)}
+              >
+                <span className="text-[9px] text-white font-inter font-medium">
+                  Aggiungi al carrello
+                </span>
+              </Button>
+            )}
           </div>
         </div>
       </div>
