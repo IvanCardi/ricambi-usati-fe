@@ -3,12 +3,15 @@ import { useRouter } from "next/navigation";
 import Button from "../components/button";
 import MainContainer from "../components/mainContainer";
 import { logout } from "./actions";
+import { useCart } from "../cart/cartContext";
 
 export default function Profilo() {
   const router = useRouter();
+  const { clearCart } = useCart();
 
   const onClick = () => {
     logout();
+    clearCart();
 
     router.push("/");
   };
