@@ -30,7 +30,7 @@ export default function ItemCard(item: CarPart & { disabled: boolean }) {
                 />
               ) : (
                 <Image
-                  className="w-full object-cover"
+                  className="object-cover"
                   src={noImagePlaceholder.src}
                   alt={`No image placeholder`}
                   height={48}

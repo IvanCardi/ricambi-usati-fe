@@ -51,7 +51,7 @@ export default function PurchaseSummary({
                   ) : (
                     <div className="flex w-[20%] justify-start items-center">
                       <Image
-                        className="w-full object-cover"
+                        className="object-cover"
                         src={noImagePlaceholder.src}
                         alt={`No image placeholder`}
                         height={48}

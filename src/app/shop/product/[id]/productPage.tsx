@@ -96,6 +96,7 @@ export default function ProductPage({
                         <div className="flex items-center justify-center w-full border-2 border-[#0BB489] rounded-sm">
                           {product.imageUrl ? (
                             <Image
+                              className="w-full object-cover"
                               src={product.imageUrl}
                               alt={product.name}
                               width={200}
