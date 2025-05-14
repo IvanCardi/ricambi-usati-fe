@@ -1,24 +1,47 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { checkProductsAvailability } from "@/lib/http/checkProductsAvailability";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import MainContainer from "../components/mainContainer";
+import { createOrUpadteOrderDraft } from "./actions";
 import { useCart } from "./cartContext";
 import ItemCard from "./item-card";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { createOrUpadteOrderDraft } from "./actions";
-import { toast } from "sonner";
-import { useState } from "react";
 
 export default function CartSummary() {
   const { items, isLoading } = useCart();
   const router = useRouter();
   const [unavailableProducts, setUnavailableProducts] = useState([]);
 
+  useEffect(() => {
+    checkProductsAvailability(items.map((i) => i.id)).then((res) => {
+      if (res.status === "error" && res.data) {
+        setUnavailableProducts(res.data.unavailableProducts);
+      }
+    });
+  }, []);
+
   if (isLoading) {
     return <p>Loading your cart...</p>;
   }
 
   const onCheckoutClick = async () => {
+    const checkResponse = await checkProductsAvailability(
+      items.map((i) => i.id)
+    );
+
+    if (checkResponse.status === "error") {
+      toast(checkResponse.message);
+
+      if (checkResponse.data) {
+        setUnavailableProducts(checkResponse.data.unavailableProducts);
+      }
+
+      return;
+    }
+
     const result = await createOrUpadteOrderDraft(
       items.map((i) => i.id),
       localStorage.getItem("orderId") as string | undefined
@@ -26,10 +49,6 @@ export default function CartSummary() {
 
     if (result.status === "error") {
       toast(result.message);
-
-      if (result.data) {
-        setUnavailableProducts(result.data.unavailableProducts);
-      }
     } else {
       localStorage.setItem("orderId", result.data?.id);
       router.push(`/checkout?orderId=${result.data?.id}`);
@@ -72,6 +91,7 @@ export default function CartSummary() {
           <div className="flex w-full">
             <Button
               type="button"
+              disabled={unavailableProducts.length > 0}
               className="w-full bg-[#0BB489] hover:bg-[#0BB489]/85 py-8 cursor-pointer"
               onClick={onCheckoutClick}
             >

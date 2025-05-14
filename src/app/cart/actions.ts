@@ -30,23 +30,16 @@ export async function createOrUpadteOrderDraft(
       credentials: "include",
     });
 
-    if (result.status !== 200) {
-      const body = await result.json();
+    const body = await result.json();
 
-      if (body.message === "UnavailableProducts") {
-        return {
-          status: "error",
-          message: "Alcuni prodotti non sono più disponibili",
-          data: { unavailableProducts: body.soldProducts },
-        };
-      }
+    if (result.status !== 200) {
       return {
         status: "error",
-        message: (await result.json()).message,
+        message: body.message,
       };
     }
 
-    return { status: "ok", data: { ...(await result.json()) } };
+    return { status: "ok", data: { ...body } };
   } catch (error) {
     return { status: "error", message: "Si è verificato un errore" };
   }

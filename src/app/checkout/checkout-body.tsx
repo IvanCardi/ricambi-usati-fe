@@ -1,20 +1,21 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { checkProductsAvailability } from "@/lib/http/checkProductsAvailability";
+import { OrderDraft } from "@/lib/models/orderDraft";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { useCart } from "../cart/cartContext";
 import MainContainer from "../components/mainContainer";
-import MainDeliveryForm from "./main-delivery-form";
-import PurchaseSummary from "./purchase-summary";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form } from "@/components/ui/form";
-import DeliveryOptions from "./delivery-options";
-import PaymentMethod from "./payment-methods";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { createOrder } from "./actions";
-import { OrderDraft } from "@/lib/models/orderDraft";
-import { useRouter } from "next/navigation";
+import DeliveryOptions from "./delivery-options";
+import MainDeliveryForm from "./main-delivery-form";
+import PaymentMethod from "./payment-methods";
+import PurchaseSummary from "./purchase-summary";
 
 export const deliveryOptions: { value: string; label: string }[] = [
   { value: "delivery", label: "Corriere espresso" },
@@ -80,7 +81,6 @@ export default function CheckOutPage({
 }: {
   orderDraft: OrderDraft;
 }) {
-  const router = useRouter();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -106,6 +106,16 @@ export default function CheckOutPage({
   const { items } = useCart();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const checkResponse = await checkProductsAvailability(
+      orderDraft.products.map((p) => p.id)
+    );
+
+    if (checkResponse.status === "error") {
+      toast(checkResponse.message);
+
+      return;
+    }
+
     const response = await createOrder(
       orderDraft.id,
       values.deliveryMethod,
@@ -113,11 +123,11 @@ export default function CheckOutPage({
     );
 
     if (response.status === "ok" && response.data.checkoutPaymentUrl) {
-      router.push(response.data.checkoutPaymentUrl);
+      window.location.href = response.data.checkoutPaymentUrl;
     }
 
     if (response.status === "error") {
-      console.error(response.message);
+      toast(response.message);
     }
   }
 

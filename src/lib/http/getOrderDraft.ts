@@ -1,3 +1,4 @@
+"use server"
 import { getAccessToken } from "../getAccessToken";
 import { OrderDraft } from "../models/orderDraft";
 
