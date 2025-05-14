@@ -15,6 +15,7 @@ import FormPassInput from "../components/form-pass-input";
 import { login } from "./actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useCart } from "../cart/cartContext";
 
 const formSchema = z.object({
   email: z.string().email("Inserire una mail corretta"),
@@ -23,6 +24,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const router = useRouter();
+  const { refreshUser } = useCart();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,6 +37,7 @@ export default function LoginForm() {
     const response = await login(values.email, values.password);
 
     if (response.status === "ok") {
+      await refreshUser();
       router.push("/");
     } else {
       if (response.message === "InvalidCredentials") {

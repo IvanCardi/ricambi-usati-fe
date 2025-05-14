@@ -15,12 +15,18 @@ export async function getLoggedUser(): Promise<
 
   if (token) {
     const secretKey = new TextEncoder().encode(ACCESS_SECRET);
-    const { payload } = await jwtVerify(token, secretKey);
 
-    return {
-      userId: payload.userId as string,
-      email: payload.email as string,
-    };
+    try {
+      const { payload } = await jwtVerify(token, secretKey);
+
+      return {
+        userId: payload.userId as string,
+        email: payload.email as string,
+      };
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   }
 
   return undefined;

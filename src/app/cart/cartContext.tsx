@@ -9,44 +9,78 @@ import React, {
 } from "react";
 import { CarPart } from "../shop/page";
 import { toast } from "sonner";
+import { getLoggedUser } from "@/lib/getLoggedUser";
 
 type CartContextType = {
   items: CarPart[];
   addToCart: (carPart: CarPart) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
+  refreshUser: () => Promise<void>;
   isLoading: boolean;
 };
+interface LocalStorageCart {
+  userId: string;
+  items: CarPart[];
+}
 
 const CartContext = createContext<CartContextType>({
   items: [],
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
+  refreshUser: async () => {},
   isLoading: true,
 });
 
-const CART_KEY = "my_cart";
+const CART_KEY = "ricambi_usati_carts";
 
 export function CartProvider(props: PropsWithChildren) {
+  const [userId, setUserId] = useState<string | "GUEST">("GUEST");
   const [cart, setCart] = useState<CarPart[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem(CART_KEY);
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-
-    setIsHydrated(true);
+    refreshUser();
     setIsLoading(false);
   }, []);
 
+  // Load cart based on userId
+
   useEffect(() => {
-    if (!isHydrated) return;
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  }, [cart, isHydrated]);
+    const savedCarts = localStorage.getItem(CART_KEY);
+    const carts: LocalStorageCart[] = savedCarts ? JSON.parse(savedCarts) : [];
+
+    const userCart = carts.find((c) => c.userId === userId);
+
+    if (userCart) {
+      setCart(userCart.items);
+    } else {
+      setCart([]);
+    }
+  }, [userId]);
+
+  //Sync cart with localStorage
+
+  useEffect(() => {
+    const savedCarts = localStorage.getItem(CART_KEY);
+    const carts: LocalStorageCart[] = savedCarts ? JSON.parse(savedCarts) : [];
+
+    const existingUserCartIndex = carts.findIndex((c) => c.userId === userId);
+
+    const updatedUserCart: LocalStorageCart = {
+      userId,
+      items: cart,
+    };
+
+    if (existingUserCartIndex !== -1) {
+      carts[existingUserCartIndex] = updatedUserCart;
+    } else {
+      carts.push(updatedUserCart);
+    }
+
+    localStorage.setItem(CART_KEY, JSON.stringify(carts));
+  }, [cart]);
 
   const addToCart = (carPart: CarPart) => {
     const cartItem = cart.find((item) => item.id === carPart.id);
@@ -75,7 +109,18 @@ export function CartProvider(props: PropsWithChildren) {
 
   const clearCart = () => {
     setCart([]);
+    setUserId("GUEST");
   };
+
+  async function refreshUser() {
+    try {
+      const user = await getLoggedUser();
+      setUserId(user?.userId ?? "GUEST");
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      setUserId("GUEST");
+    }
+  }
 
   return (
     <CartContext.Provider
@@ -84,6 +129,7 @@ export function CartProvider(props: PropsWithChildren) {
         addToCart,
         removeFromCart,
         clearCart,
+        refreshUser,
         isLoading,
       }}
     >

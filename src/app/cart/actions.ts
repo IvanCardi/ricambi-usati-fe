@@ -2,7 +2,6 @@
 "use server";
 
 import { getAccessToken } from "@/lib/getAccessToken";
-import { getLoggedUser } from "@/lib/getLoggedUser";
 import { ServerActionResponse } from "@/lib/serverActionResponse";
 
 export async function createOrUpadteOrderDraft(
