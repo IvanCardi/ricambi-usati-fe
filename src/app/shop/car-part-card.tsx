@@ -41,7 +41,7 @@ export function CarPartCard(carPart: CarPart) {
         <div className="flex max-h-[50%] py-2 justify-center overflow-y-scroll">
           <span
             onClick={() => router.push(`/shop/product/${carPart.id}`)}
-            className="cursor-pointer text-wrap text-base text-center font-inter font-semibold"
+            className="cursor-pointer text-wrap text-sm md:text-base text-center font-inter font-semibold"
           >
             {carPart.name}
           </span>
@@ -50,8 +50,8 @@ export function CarPartCard(carPart: CarPart) {
           <div className="w-10 h-[1px] bg-black" />
           {carPart.discountedPrice ? (
             <div className="flex w-fit justify-center items-center relative">
-              <div className="absolute -top-4 -left-[90%]">
-                <span className="text-xs text-center text-slate-600 line-through font-inter font-normal">
+              <div className="absolute -top-4 right-[90%]">
+                <span className="text-[10px] md:text-xs text-center text-slate-600 line-through font-inter font-normal">
                   {carPart.price.toFixed(2)}€
                 </span>
               </div>
