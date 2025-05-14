@@ -11,6 +11,7 @@ export type CarPart = {
   name: string;
   imageUrl: string;
   price: number;
+  discountedPrice?: number;
 };
 
 const getProducts = async (params: {

@@ -22,7 +22,7 @@ async function getServerSideProps(productId: string) {
 const getCarPart = async (id: string) => {
   const token = (await cookies())?.get("access_token")?.value;
 
-  const products = await fetch(`${process.env.BE_BASE_URL}/carParts/${id}`, {
+  const products = await fetch(`${process.env.BE_BASE_URL}/carPart/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -42,6 +42,7 @@ export default async function ProductDetailsPage({ params }: PageProps) {
         id: product.numbers[0],
         name: product.name,
         price: product.price,
+        discountedPrice: product.discountedPrice ?? undefined,
         imageUrl: product.imageUrl,
         brand: product.carBrand,
         category: product.category,
