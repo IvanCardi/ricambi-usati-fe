@@ -10,4 +10,20 @@ export type OrderDraft = {
   }[];
   totalProductsPrice: number;
   shippingCosts: number;
+  info?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    details?: string;
+    address: {
+      streetName: string;
+      streetName2?: string;
+      city?: string;
+      country: string;
+      province?: string;
+      administrativeArea?: string;
+      dependentLocality?: string;
+      postalCode?: string;
+    };
+  };
 };

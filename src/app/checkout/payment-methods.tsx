@@ -31,13 +31,13 @@ export default function PaymentMethod({
                   <div className="flex items-center gap-3">
                     <input
                       {...field}
-                      value={method}
+                      value={method.value}
                       type="radio"
                       className="scale-150"
-                      defaultChecked={method === field.value}
+                      defaultChecked={method.value === field.value}
                     />
                     <span className="text-base font-inter font-normal">
-                      {method}
+                      {method.label}
                     </span>
                   </div>
                 </FormControl>

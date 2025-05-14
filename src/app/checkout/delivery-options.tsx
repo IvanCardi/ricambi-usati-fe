@@ -29,21 +29,21 @@ export default function DeliveryOptions({
                   <div className="flex items-center gap-3">
                     <input
                       {...field}
-                      value={option}
+                      value={option.value}
                       type="radio"
                       className="scale-150"
-                      defaultChecked={option === field.value}
+                      defaultChecked={option.value === field.value}
                     />
                     <span className="text-base font-inter font-normal">
-                      {option === "Corriere espresso" ? (
+                      {option.value === "delivery" ? (
                         <>
-                          {option}{" "}
+                          {option.label}{" "}
                           <span className="text-base font-inter font-semibold">
                             (2-4 giorni lavorativi)
                           </span>
                         </>
                       ) : (
-                        option
+                        option.label
                       )}
                     </span>
                   </div>

@@ -12,19 +12,19 @@ import DeliveryOptions from "./delivery-options";
 import PaymentMethod from "./payment-methods";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { submitForm } from "./actions";
+import { createOrder } from "./actions";
 import { OrderDraft } from "@/lib/models/orderDraft";
+import { useRouter } from "next/navigation";
 
-export const deliveryOptions = [
-  "Corriere espresso",
-  "Ritiro di persona",
-] as const;
+export const deliveryOptions: { value: string; label: string }[] = [
+  { value: "delivery", label: "Corriere espresso" },
+  { value: "collection", label: "Ritiro di persona" },
+];
 
-export const paymentMethods = [
-  "Paga con carte",
-  "Paypal",
-  "Pagamento alla consegna",
-] as const;
+export const paymentMethods: { value: string; label: string }[] = [
+  { value: "online", label: "Paga ora" },
+  { value: "on delivery", label: "Pagamento alla consegna" },
+];
 
 const formSchema = z
   .object({
@@ -40,8 +40,8 @@ const formSchema = z
     postalCode: z.string().optional(),
     email: z.string().email({ message: "inserire un indirizzo mail valido" }),
     details: z.string().optional(),
-    deliveryMethod: z.enum(deliveryOptions),
-    paymentMethod: z.enum(paymentMethods),
+    deliveryMethod: z.enum(["delivery", "collection"]),
+    paymentMethod: z.enum(["online", "on delivery"]),
   })
   .superRefine((data, ctx) => {
     if (data.country === "Italia") {
@@ -80,34 +80,42 @@ export default function CheckOutPage({
 }: {
   orderDraft: OrderDraft;
 }) {
+  const router = useRouter();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      streetName: "",
-      streetName2: "",
-      country: "Italia",
-      city: "",
-      province: "",
-      postalCode: "",
-      email: "",
-      deliveryMethod: "Corriere espresso",
-      paymentMethod: "Paga con carte",
+      firstName: orderDraft.info?.firstName ?? "",
+      lastName: orderDraft.info?.lastName ?? "",
+      streetName: orderDraft.info?.address.streetName ?? "",
+      streetName2: orderDraft.info?.address.streetName2 ?? "",
+      country: orderDraft.info?.address.country ?? "Italia",
+      city: orderDraft.info?.address.city ?? "",
+      province: orderDraft.info?.address.province ?? "",
+      postalCode: orderDraft.info?.address.postalCode ?? "",
+      email: orderDraft.info?.email ?? "",
+      deliveryMethod: "delivery",
+      paymentMethod: "online",
+      dependentLocality: orderDraft.info?.address.dependentLocality ?? "",
+      administrativeArea: orderDraft.info?.address.administrativeArea ?? "",
+      details: orderDraft.info?.details ?? "",
     },
   });
-  const [deliveryFormFilled, setDeliveryFormFilled] = useState(false);
+  const [deliveryFormFilled, setDeliveryFormFilled] = useState(
+    orderDraft.info !== undefined
+  );
   const { items } = useCart();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const itemIds = items.map((i) => i.id);
-
-    const response = await submitForm(values, itemIds);
+    const response = await createOrder(
+      orderDraft.id,
+      values.deliveryMethod,
+      values.paymentMethod
+    );
 
     if (response.status === "ok" && response.data.checkoutPaymentUrl) {
-      sessionStorage.setItem("orderId", response.data.orderId);
-      window.location.href = response.data.checkoutPaymentUrl;
+      router.push(response.data.checkoutPaymentUrl);
     }
+
     if (response.status === "error") {
       console.error(response.message);
     }
