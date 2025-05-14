@@ -48,9 +48,22 @@ export function CarPartCard(carPart: CarPart) {
           </div>
           <div className="flex flex-col items-center justify-center gap-2 w-full">
             <div className="w-10 h-[1px] bg-black" />
-            <span className="text-sm text-center font-inter font-semibold">
-              {carPart.price}€
-            </span>
+            {carPart.discountedPrice ? (
+              <div className="flex w-fit justify-center items-center relative">
+                <div className="absolute -top-4 -left-[90%]">
+                  <span className="text-xs text-center text-slate-600 line-through font-inter font-normal">
+                    {carPart.price.toFixed(2)}€
+                  </span>
+                </div>
+                <span className="text-sm text-center font-inter font-semibold">
+                  {carPart.discountedPrice.toFixed(2)}€
+                </span>
+              </div>
+            ) : (
+              <span className="text-sm text-center font-inter font-semibold">
+                {carPart.price}€
+              </span>
+            )}
             {items.find((item) => item.id === carPart.id) ? (
               <Button
                 className="w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
