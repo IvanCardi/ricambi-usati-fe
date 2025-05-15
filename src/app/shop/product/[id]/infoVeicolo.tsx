@@ -1,7 +1,7 @@
 export interface Veicolo {
   name: string;
   image: string;
-  technicalInfos: { name: string; value: string }[];
+  technicalDetails: { label: string; value: string }[];
 }
 
 function capitalizeFirstLetter(val: string) {
@@ -24,10 +24,10 @@ export function InfoVeicolo(car: Veicolo) {
           Informazioni tecniche
         </h2>
         <div className="flex flex-col md:grid md:grid-cols-2 w-full gap-8">
-          {car.technicalInfos.map((info) => (
-            <div key={capitalizeFirstLetter(info.name)}>
+          {car.technicalDetails.map((info) => (
+            <div key={capitalizeFirstLetter(info.label)}>
               <h5 className="text-sm md:text-base font-poppins font-medium">
-                {info.name}
+                {info.label}
               </h5>
               <span className="text-sm md:text-base font-poppins font-light">
                 {info.value}

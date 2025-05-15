@@ -1,7 +1,7 @@
 "use client";
 
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RelatedProducts from "./relatedProducts";
 import MainContainer from "@/app/components/mainContainer";
 import Image from "next/image";
@@ -18,6 +18,13 @@ import FormCTA from "@/app/form/formCTA";
 import Device from "@/app/components/device";
 import { CarPart } from "../../page";
 import { useCart } from "@/app/cart/cartContext";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext1,
+  CarouselPrevious1,
+} from "@/components/ui/carousel";
 
 export interface CarPartDetailed extends CarPart {
   images: string[];
@@ -37,6 +44,10 @@ export default function ProductPage({
   product: CarPartDetailed;
   relatedProducts?: CarPart[];
 }) {
+  const [mainImage, setMainImage] = useState<string>(
+    product.imageUrl ?? noImagePlaceholder
+  );
+
   useEffect(() => {
     // Adding Schema.org structured data
     const jsonLd = {
@@ -94,15 +105,16 @@ export default function ProductPage({
                     <div className="flex flex-col w-[30%] gap-8 px-[2px]">
                       <div className="flex flex-col gap-[10px]">
                         <div className="flex items-center justify-center w-full border-2 border-[#0BB489] rounded-sm">
-                          {product.imageUrl ? (
-                            <Image
-                              className="w-full object-cover"
-                              src={product.imageUrl}
-                              alt={product.name}
-                              width={200}
-                              height={200}
-                              priority
-                            />
+                          {mainImage ? (
+                            <div className="relative w-[200px] h-[200px]">
+                              <Image
+                                className="object-cover"
+                                src={mainImage}
+                                alt={product.name}
+                                fill
+                                priority
+                              />
+                            </div>
                           ) : (
                             <Image
                               className="w-full object-cover"
@@ -113,25 +125,39 @@ export default function ProductPage({
                             />
                           )}
                         </div>
-                        <div className="grid grid-cols-3 items-center gap-4">
-                          {product.images.map((image, i) => (
-                            <Image
-                              key={i}
-                              src={image}
-                              alt={"mechanical item"}
-                              width={100}
-                              height={100}
-                              loading="lazy"
-                            />
-                          ))}
-                          <Image
-                            src={product.car.image}
-                            alt={"mechanical item"}
-                            width={100}
-                            height={100}
-                            loading="lazy"
-                          />
-                        </div>
+                        <Carousel
+                          opts={{
+                            align: "start",
+                          }}
+                          className="w-full max-w-sm"
+                        >
+                          <CarouselContent className="flex items-center">
+                            {product.images.map((image, i) => (
+                              <CarouselItem
+                                key={i}
+                                className="md:basis-1/2 lg:basis-1/3 cursor-pointer"
+                                onClick={() => setMainImage(image)}
+                              >
+                                <div key={i} className="flex p-2">
+                                  <Image
+                                    key={i}
+                                    src={image}
+                                    alt={"mechanical item"}
+                                    width={100}
+                                    height={100}
+                                    loading="lazy"
+                                  />
+                                </div>
+                              </CarouselItem>
+                            ))}
+                          </CarouselContent>
+                          {product.images.length > 3 && (
+                            <>
+                              <CarouselPrevious1 />
+                              <CarouselNext1 />
+                            </>
+                          )}
+                        </Carousel>
                       </div>
                       <div className="flex flex-col bg-[#0BB489] bg-opacity-10 p-4 gap-6">
                         <h3 className="text-xs font-poppins font-semibold">
