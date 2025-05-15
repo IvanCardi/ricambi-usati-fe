@@ -22,7 +22,7 @@ async function getServerSideProps(productId: string) {
 const getCarPart = async (id: string) => {
   const token = (await cookies())?.get("access_token")?.value;
 
-  const products = await fetch(`${process.env.BE_BASE_URL}/carPart/${id}`, {
+  const products = await fetch(`${process.env.BE_BASE_URL}/carParts/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

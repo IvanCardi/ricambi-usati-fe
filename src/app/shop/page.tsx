@@ -37,7 +37,7 @@ const getProducts = async (params: {
   }
 
   const products = await fetch(
-    `${process.env.BE_BASE_URL}/carParts?${queryParams}`,
+    `${process.env.BE_BASE_URL}/carParts/filtered?${queryParams}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -52,6 +52,7 @@ export default async function Shop({ searchParams }: PageProps) {
   const params = await searchParams;
   const { carParts, totalPages } = await getProducts(params);
 
+  console.log(carParts);
   return (
     <main className="flex flex-col w-full justify-center items-center">
       <div className="flex w-full justify-center py-14">
