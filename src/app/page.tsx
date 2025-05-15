@@ -1,8 +1,7 @@
-import Hero from "./(sections)/hero/hero";
 import DiventaPartner from "./(sections)/diventaPartner";
-import Ricambi from "./(sections)/ricambi/ricambi";
-import Recensioni from "./(sections)/recensioni";
+import Hero from "./(sections)/hero/hero";
 import Partners from "./(sections)/partners";
+import Ricambi from "./(sections)/ricambi/ricambi";
 
 export default function Home() {
   return (
@@ -10,7 +9,7 @@ export default function Home() {
       <Hero />
       <DiventaPartner />
       <Ricambi />
-      <Recensioni />
+      {/* <Recensioni /> */}
       <Partners />
     </main>
   );

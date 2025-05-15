@@ -1,9 +1,7 @@
+import Link from "next/link";
 import Button from "../components/button";
 import MainContainer from "../components/mainContainer";
 import LoginForm from "./login-form";
-import GoogleIcon from "../../../public/google.png";
-import Image from "next/image";
-import Link from "next/link";
 
 export default async function Login() {
   return (
@@ -26,7 +24,7 @@ export default async function Login() {
             </Button>
           </Link>
           <div className="h-[66px]"></div>
-          <Button
+          {/* <Button
             type="button"
             className="text-[#444444] font-medium text-[24px]/[24px] md:w-[60%] bg-white border-[#616161] border"
           >
@@ -34,7 +32,7 @@ export default async function Login() {
               <Image className="w-8" src={GoogleIcon} alt="Google Icon"></Image>
               <p>Sign in with Google</p>
             </div>
-          </Button>
+          </Button> */}
         </div>
         <div className="h-[20px]"></div>
       </MainContainer>
