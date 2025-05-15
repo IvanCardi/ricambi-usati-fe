@@ -54,17 +54,7 @@ export default async function ProductDetailsPage({ params }: PageProps) {
         car: {
           name: `${product.carBrand} ${product.carModel} ${product.carSetup} ${product.carYear}`,
           image: "/car.png",
-          technicalDetails: [
-            { label: "Trazione", value: "Trazione integrale" },
-            { label: "Carrozzeria", value: "Berlina" },
-            { label: "Carburannte", value: "Benzina" },
-            { label: "Motore", value: "Benzina" },
-            { label: "Potenza", value: "200 CV" },
-            { label: "Freno", value: "Freno a disco" },
-            { label: "No. di cilindri", value: "4" },
-            { label: "Catalizzatore", value: "Trivalente" },
-            { label: "No. di valvola", value: "5/3" },
-          ],
+          technicalDetails: product.technicalDetails,
         } as Veicolo,
       } as CarPartDetailed,
       relatedProducts: [
