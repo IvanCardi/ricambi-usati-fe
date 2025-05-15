@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SiteMap from "./siteMap";
 import logo from "../../../public/logo.svg";
+import acceptedPayments from "../../../public/card_payment_logos.png";
 
 export default function Footer() {
   return (
@@ -11,7 +12,7 @@ export default function Footer() {
         <div className="flex w-full justify-between">
           <Link href={"/"}>
             <Image
-              className="hidden md:block"
+              className="hidden md:flex"
               src={logo}
               objectFit="contain"
               alt="ricambi usati logo"
@@ -23,10 +24,12 @@ export default function Footer() {
             Mi-2071045 - R.A.E.E. IT19110P00005805 - Registro Pile e
             Accumulatori IT20070000012272
           </span>
-          <div className="hidden md:grid grid-cols-4 gap-5">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="bg-white h-8 w-10"></div>
-            ))}
+          <div className="hidden md:flex items-center w-1/6">
+            <Image
+              src={acceptedPayments}
+              className="object-contain"
+              alt="accepted payments card list"
+            />
           </div>
         </div>
       </div>
