@@ -184,16 +184,20 @@ export default function ProductPage({
                             <AccordionTrigger className="text-[9px] font-poppins font-light no-underline">
                               Elenco Veicoli
                             </AccordionTrigger>
-                            {product.compatibileVehicles.map((vehicle, i) => (
-                              <AccordionContent
-                                className="flex justify-start"
-                                key={i}
-                              >
-                                <span className="text-[9px] font-poppins font-light">
-                                  {vehicle}
-                                </span>
-                              </AccordionContent>
-                            ))}
+                            <AccordionContent>
+                              <div className="flex flex-col gap-2 pt-2">
+                                {product.compatibileVehicles.map(
+                                  (vehicle, i) => (
+                                    <span
+                                      key={i}
+                                      className="text-[9px] font-poppins font-light"
+                                    >
+                                      {vehicle}
+                                    </span>
+                                  )
+                                )}
+                              </div>
+                            </AccordionContent>
                           </AccordionItem>
                         </Accordion>
                       </div>

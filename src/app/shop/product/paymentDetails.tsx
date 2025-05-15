@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import acceptedPayments from "../../../../public/card_payment_logos.png";
 
 export default function PaymentDetails({
   onAddToCart,
@@ -36,10 +37,12 @@ export default function PaymentDetails({
           <span className="text-sm font-poppins font-normal">
             Metodi di pagamento accettati:
           </span>
-          <div className="hidden md:grid grid-cols-4 gap-5">
-            {Array.from({ length: 8 }).map((_, index) => (
-              <div key={index} className="bg-black h-8 w-10"></div>
-            ))}
+          <div className="flex items-center w-4/5">
+            <Image
+              src={acceptedPayments}
+              className="object-contain"
+              alt="accepted payments card list"
+            />
           </div>
         </div>
       </div>
