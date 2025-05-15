@@ -25,6 +25,7 @@ import {
   CarouselNext1,
   CarouselPrevious1,
 } from "@/components/ui/carousel";
+import ProductPageMobile from "./mobile/productPageMobile";
 
 export interface CarPartDetailed extends CarPart {
   images: string[];
@@ -77,7 +78,7 @@ export default function ProductPage({
     <Device>
       {({ isMobile }) =>
         isMobile ? (
-          <div></div>
+          <ProductPageMobile product={product} relatedProducts={[]} />
         ) : (
           <>
             <Head>
