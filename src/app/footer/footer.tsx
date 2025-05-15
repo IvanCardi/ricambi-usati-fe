@@ -24,7 +24,7 @@ export default function Footer() {
             Mi-2071045 - R.A.E.E. IT19110P00005805 - Registro Pile e
             Accumulatori IT20070000012272
           </span>
-          <div className="hidden md:flex items-center w-1/6">
+          <div className="hidden md:flex items-start w-1/6 pt-5">
             <Image
               src={acceptedPayments}
               className="object-contain"

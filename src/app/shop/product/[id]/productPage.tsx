@@ -78,7 +78,12 @@ export default function ProductPage({
     <Device>
       {({ isMobile }) =>
         isMobile ? (
-          <ProductPageMobile product={product} relatedProducts={[]} />
+          <ProductPageMobile
+            product={product}
+            relatedProducts={relatedProducts}
+            setImage={(img: string) => setMainImage(img)}
+            mainImg={mainImage ?? noImagePlaceholder}
+          />
         ) : (
           <>
             <Head>

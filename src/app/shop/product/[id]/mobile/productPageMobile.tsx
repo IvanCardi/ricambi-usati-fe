@@ -15,53 +15,78 @@ import FormCTA from "@/app/form/formCTA";
 import RelatedProducts from "../relatedProducts";
 import { CarPart } from "@/app/shop/page";
 import { useCart } from "@/app/cart/cartContext";
+import noImagePlaceholder from "../../../../../../public/no-image-placeholder.jpg";
 
 export default function ProductPageMobile({
   product,
   relatedProducts,
+  setImage,
+  mainImg,
 }: {
   product: CarPartDetailed;
   relatedProducts?: CarPart[];
+  setImage: (img: string) => void;
+  mainImg: string;
 }) {
   const { addToCart } = useCart();
 
   return (
     <>
       <MainContainer>
-        <div className="flex flex-col gap-28 pt-14">
+        <div className="flex flex-col gap-14 pt-14">
           <div className="flex w-full gap-4 md:gap-7">
-            <div className="flex flex-col w-[30%] gap-8 px-[2px]">
+            <div className="flex flex-col w-[45%] gap-4 md:gap-8 px-[2px]">
               <div className="flex flex-col gap-[10px]">
                 <div className="flex items-center justify-center w-full border-2 border-[#0BB489] rounded-sm">
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    width={200}
-                    height={200}
-                    priority
-                  />
+                  {mainImg ? (
+                    <div className="relative w-[150px] h-[150px]">
+                      <Image
+                        className="object-scale-down"
+                        src={mainImg}
+                        alt={product.name}
+                        fill
+                        priority
+                      />
+                    </div>
+                  ) : (
+                    <Image
+                      className="w-full object-cover"
+                      src={noImagePlaceholder.src}
+                      alt={`No image placeholder`}
+                      height={200}
+                      width={200}
+                    />
+                  )}
                 </div>
-                <div className="grid grid-cols-3 items-center gap-4">
+                <div className="flex flex-nowrap gap-3 overflow-x-auto">
                   {product.images.map((image, i) => (
                     <Image
                       key={i}
                       src={image}
                       alt={"mechanical item"}
-                      width={100}
-                      height={100}
+                      width={50}
+                      height={50}
                       loading="lazy"
+                      onClick={() => setImage(image)}
                     />
                   ))}
-                  <Image
-                    src={product.car.image}
-                    alt={"mechanical item"}
-                    width={100}
-                    height={100}
-                    loading="lazy"
+                </div>
+                <div className="flex w-full md:pt-14 px-[2px]">
+                  <PaymentDetails
+                    onAddToCart={() =>
+                      addToCart({
+                        id: product.id,
+                        imageUrl: product.imageUrl,
+                        name: product.name,
+                        price: product.price,
+                      })
+                    }
+                    price={product.price}
+                    warranty={product.warranty}
                   />
                 </div>
               </div>
-              <div className="flex flex-col bg-[#0BB489] bg-opacity-10 p-4 gap-6">
+              <div className="flex flex-col bg-[#0BB489] bg-opacity-10 p-2 gap-6">
                 <h3 className="text-xs font-poppins font-semibold">
                   Compatibilità
                 </h3>
@@ -77,7 +102,7 @@ export default function ProductPageMobile({
                   sull&apos;interoperabilità con il tuo veicolo.
                 </p>
                 <Accordion
-                  className="border bg-white border-black rounded-sm w-1/2 px-3 py-2"
+                  className="border bg-white border-black rounded-sm w-full px-3 py-2"
                   type="single"
                   collapsible
                 >
@@ -85,75 +110,63 @@ export default function ProductPageMobile({
                     <AccordionTrigger className="text-[9px] font-poppins font-light no-underline">
                       Elenco Veicoli
                     </AccordionTrigger>
-                    {product.compatibileVehicles.map((vehicle, i) => (
-                      <AccordionContent className="flex justify-start" key={i}>
-                        <span className="text-[9px] font-poppins font-light">
-                          {vehicle}
-                        </span>
-                      </AccordionContent>
-                    ))}
+                    <AccordionContent>
+                      <div className="flex flex-col gap-2 pt-2">
+                        {product.compatibileVehicles.map((vehicle, i) => (
+                          <span
+                            key={i}
+                            className="text-[9px] font-poppins font-light"
+                          >
+                            {vehicle}
+                          </span>
+                        ))}
+                      </div>
+                    </AccordionContent>
                   </AccordionItem>
                 </Accordion>
               </div>
-              <div className="flex flex-col gap-4">
-                <h2 className="text-lg md:text-2xl font-poppins font-semibold">
-                  Vorresti più informazioni?
-                </h2>
-                <div className="flex items-center gap-[1px]">
-                  <Image
-                    src="/phone_icon.svg"
-                    width={20}
-                    height={20}
-                    alt="Phone Icon"
-                  />
-                  <p className="text-base md:text-xl font-poppins font-light">
-                    Chiamaci al{" "}
-                    <span className="text-base md:text-xl font-poppins font-medium">
-                      +39 0444 636259
-                    </span>
-                  </p>
-                </div>
-                <p className="text-base md:text-xl font-poppins font-normal">
-                  Orario: lunedì - venerdì
-                  <br /> dalle 08:00 - 12:00 e 14:00 - 19:00
-                  <br /> sabato dalle 08:00 - 12:00
-                </p>
-              </div>
             </div>
-            <div className="flex w-[44%] px-[2px]">
+            <div className="flex w-[55%] px-[2px]">
               <div className="flex flex-col w-full  gap-11">
                 <div className="flex flex-col gap-8">
-                  <h1 className="text-3xl font-inter font-bold">
+                  <h1 className="text-xl font-inter font-bold">
                     {product.name}
                   </h1>
                   <div className="flex bg-[#0BB489] w-fit rounded-sm px-4 py-1">
-                    <h2 className="text-xs md:text-2xl text-white font-poppins font-light">
+                    <h2 className="text-[10px] text-white font-poppins font-light">
                       {product.id}
                     </h2>
                   </div>
                 </div>
                 <InfoVeicolo {...product.car} />
               </div>
-              <div className="hidden md:flex h-full pt-14">
-                <div className="h-1/2 w-[1px] bg-black"></div>
-              </div>
-            </div>
-            <div className="flex w-[26%] pt-14 px-[2px]">
-              <PaymentDetails
-                onAddToCart={() =>
-                  addToCart({
-                    id: product.id,
-                    imageUrl: product.imageUrl,
-                    name: product.name,
-                    price: product.price,
-                  })
-                }
-                price={product.price}
-                warranty={product.warranty}
-              />
             </div>
           </div>
-          <div className="flex justify-center w-full px-14">
+          <div className="flex flex-col items-center gap-4">
+            <h2 className="text-lg md:text-2xl font-poppins font-semibold">
+              Vorresti più informazioni?
+            </h2>
+            <div className="flex items-center gap-[1px]">
+              <Image
+                src="/phone_icon.svg"
+                width={20}
+                height={20}
+                alt="Phone Icon"
+              />
+              <p className="text-base md:text-xl font-poppins font-light">
+                Chiamaci al{" "}
+                <span className="text-base md:text-xl font-poppins font-medium">
+                  +39 0444 636259
+                </span>
+              </p>
+            </div>
+            <p className="text-base md:text-xl font-poppins font-normal">
+              Orario: lunedì - venerdì
+              <br /> dalle 08:00 - 12:00 e 14:00 - 19:00
+              <br /> sabato dalle 08:00 - 12:00
+            </p>
+          </div>
+          <div className="flex justify-center w-full">
             <div className="flex flex-col w-full border border-black gap-4 px-11 py-8">
               <h2 className="text-[27px] text-center text-[#0BB489] font-poppins font-semibold">
                 Informazioni sul ricambio
@@ -165,7 +178,7 @@ export default function ProductPageMobile({
           </div>
         </div>
       </MainContainer>
-      <div className="flex justify-center py-28">
+      <div className="flex justify-center py-14">
         <div className="flex flex-col justify-center items-center w-full bg-[#E4F7F2] gap-10 py-12 ">
           <h2 className="text-3xl text-center font-poppins font-semibold">
             Scopri altri ricambi compatibili con questa vettura
@@ -176,7 +189,7 @@ export default function ProductPageMobile({
           </span>
         </div>
       </div>
-      <div className="flex flex-col gap-28">
+      <div className="flex flex-col gap-14">
         {relatedProducts ? (
           <>
             <FormCTA />

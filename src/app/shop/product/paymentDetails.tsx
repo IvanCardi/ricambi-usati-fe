@@ -12,24 +12,24 @@ export default function PaymentDetails({
   warranty?: number;
 }) {
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-6">
+    <div className="flex flex-col w-full gap-4 md:gap-8">
+      <div className="flex flex-col gap-2 md:gap-6">
         {warranty && (
-          <h2 className="text-lg md:text-2xl text-[#0BB489] font-poppins font-medium">
+          <h2 className="text-base md:text-2xl text-[#0BB489] font-poppins font-medium">
             {warranty} mesi di garanzia
           </h2>
         )}
-        <span className="text-4xl md:text-5xl font-poppins font-semibold">
+        <span className="text-2xl md:text-5xl font-poppins font-semibold">
           {price} €
         </span>
         <span className="text-xs md:text-[15px] font-poppins font-semibold">
           La spedizione e l&apos;IVA sono incluse nel prezzo.
         </span>
         <Button
-          className="w-full md:w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
+          className="md:w-fit bg-[#0BB489] hover:bg-[#0BB489]/85"
           onClick={onAddToCart}
         >
-          <span className="text-sm md:text-base text-white font-inter font-medium">
+          <span className="text-xs md:text-base text-white font-inter font-medium">
             Aggiungi al carrello
           </span>
         </Button>

@@ -245,9 +245,7 @@ const CarouselPrevious1 = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <span className="text-6xl md:text-base font-inter font-extralight">
-        {"<"}
-      </span>
+      <span className="text-base font-inter font-extralight">{"<"}</span>
     </Button>
   );
 });
@@ -305,9 +303,7 @@ const CarouselNext1 = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <span className="text-6xl md:text-base font-inter font-extralight">
-        {">"}
-      </span>
+      <span className="text-base font-inter font-extralight">{">"}</span>
     </Button>
   );
 });

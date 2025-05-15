@@ -1,4 +1,3 @@
-import { CarPart } from "../../car-parts-list";
 import Device from "../../../components/device";
 import MainContainer from "@/app/components/mainContainer";
 import {
@@ -9,6 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { CarPartCard } from "../../car-part-card";
+import { CarPart } from "../../page";
 
 export default function RelatedProducts({ products }: { products: CarPart[] }) {
   return (
