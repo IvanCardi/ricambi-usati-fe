@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { checkPaymentStatus } from "./actions";
+import { useCart } from "../cart/cartContext";
 
 export default function CheckOrderStatus({ orderId }: { orderId: string }) {
   const [status, setStatus] = useState<
@@ -11,6 +12,7 @@ export default function CheckOrderStatus({ orderId }: { orderId: string }) {
   const [isProcessing, setIsProcessing] = useState(true);
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { clearCart, setOrderDraftId } = useCart();
 
   useEffect(() => {
     let isMounted = true;
@@ -28,6 +30,8 @@ export default function CheckOrderStatus({ orderId }: { orderId: string }) {
         if (status === "paid") {
           setIsProcessing(false);
           setStatus("Pagamento completato");
+          clearCart();
+          setOrderDraftId(undefined);
           timeoutRef.current = setTimeout(() => {
             router.push("/");
           }, 2000);

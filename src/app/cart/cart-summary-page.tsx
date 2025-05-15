@@ -11,7 +11,7 @@ import { useCart } from "./cartContext";
 import ItemCard from "./item-card";
 
 export default function CartSummary() {
-  const { items, isLoading } = useCart();
+  const { items, isLoading, setOrderDraftId, getOrderDraftId } = useCart();
   const router = useRouter();
   const [unavailableProducts, setUnavailableProducts] = useState([]);
 
@@ -42,15 +42,20 @@ export default function CartSummary() {
       return;
     }
 
+    const orderDraftId = getOrderDraftId();
+
     const result = await createOrUpadteOrderDraft(
       items.map((i) => i.id),
-      localStorage.getItem("orderId") as string | undefined
+      orderDraftId
     );
 
     if (result.status === "error") {
       toast(result.message);
     } else {
-      localStorage.setItem("orderId", result.data?.id);
+      if (!orderDraftId) {
+        setOrderDraftId(result.data?.id);
+      }
+      
       router.push(`/checkout?orderId=${result.data?.id}`);
     }
   };

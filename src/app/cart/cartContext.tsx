@@ -18,9 +18,12 @@ type CartContextType = {
   clearCart: () => void;
   refreshUser: () => Promise<void>;
   isLoading: boolean;
+  setOrderDraftId: (id: string | undefined) => void;
+  getOrderDraftId: () => string | undefined;
 };
 interface LocalStorageCart {
   userId: string;
+  orderDraftId: string | undefined;
   items: CarPart[];
 }
 
@@ -31,6 +34,8 @@ const CartContext = createContext<CartContextType>({
   clearCart: () => {},
   refreshUser: async () => {},
   isLoading: true,
+  setOrderDraftId: () => {},
+  getOrderDraftId: () => undefined,
 });
 
 const CART_KEY = "ricambi_usati_carts";
@@ -71,6 +76,7 @@ export function CartProvider(props: PropsWithChildren) {
     const updatedUserCart: LocalStorageCart = {
       userId,
       items: cart,
+      orderDraftId: carts[existingUserCartIndex]?.orderDraftId ?? undefined,
     };
 
     if (existingUserCartIndex !== -1) {
@@ -109,7 +115,36 @@ export function CartProvider(props: PropsWithChildren) {
 
   const clearCart = () => {
     setCart([]);
-    setUserId("GUEST");
+  };
+
+  const setOrderDraftId = (id: string | undefined) => {
+    const savedCarts = localStorage.getItem(CART_KEY);
+    const carts: LocalStorageCart[] = savedCarts ? JSON.parse(savedCarts) : [];
+
+    const existingUserCartIndex = carts.findIndex((c) => c.userId === userId);
+
+    if (existingUserCartIndex !== -1) {
+      carts[existingUserCartIndex] = {
+        userId,
+        items: cart,
+        orderDraftId: id,
+      };
+
+      localStorage.setItem(CART_KEY, JSON.stringify(carts));
+    }
+  };
+
+  const getOrderDraftId = () => {
+    const savedCarts = localStorage.getItem(CART_KEY);
+    const carts: LocalStorageCart[] = savedCarts ? JSON.parse(savedCarts) : [];
+
+    const existingUserCart = carts.find((c) => c.userId === userId);
+
+    if (existingUserCart) {
+      return existingUserCart.orderDraftId;
+    }
+
+    return undefined;
   };
 
   async function refreshUser() {
@@ -131,6 +166,8 @@ export function CartProvider(props: PropsWithChildren) {
         clearCart,
         refreshUser,
         isLoading,
+        setOrderDraftId,
+        getOrderDraftId,
       }}
     >
       {props.children}
