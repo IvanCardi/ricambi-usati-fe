@@ -37,6 +37,11 @@ export default function CheckOrderStatus({ orderId }: { orderId: string }) {
           }, 2000);
         } else if (status === "in payment") {
           timeoutRef.current = setTimeout(checkPayment, 2000);
+        } else {
+          setStatus("Pagamento fallito");
+          timeoutRef.current = setTimeout(() => {
+            router.push("/cart");
+          }, 2000);
         }
       }
     }

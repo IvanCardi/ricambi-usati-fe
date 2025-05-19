@@ -1,10 +1,9 @@
-import Image from "next/image";
+import cart from "@/../public/cart_distinctive_icon.svg";
 import mechanicalAccessories from "@/../public/mechanical_accessories.png";
+import medal from "@/../public/medal_icon.svg";
 import searchIcon from "@/../public/search_icon.svg";
 import shield from "@/../public/shield_icon.svg";
-import cart from "@/../public/cart_distinctive_icon.svg";
-import box from "@/../public/box_icon.svg";
-import medal from "@/../public/medal_icon.svg";
+import Image from "next/image";
 import { TrovaRicambi } from "./trovaRicambi";
 
 interface Distinctive {
@@ -25,11 +24,11 @@ const distinctives: Distinctive[] = [
     description: "Ricevi il tuo ordine in 1-3 giorni lavorativi",
     icon: cart,
   },
-  {
+  /* {
     title: "Consegna gratuita",
     description: "Per ordini superiori a 100€",
     icon: box,
-  },
+  }, */
   {
     title: "Qualità assicurata",
     description: "Ricambi auto di qualità ",
