@@ -84,7 +84,7 @@ export default function PurchaseSummary({
                   Costi di spedizione
                 </span>
                 <span className="text-base font-inter font-semibold">
-                  {deliveryMethod === "Ritiro di persona" ? (
+                  {deliveryMethod === "collection" ? (
                     "Gratuito"
                   ) : (
                     <span className="text-base font-inter font-semibold">

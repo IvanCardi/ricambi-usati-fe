@@ -38,7 +38,7 @@ const formSchema = z.object({
     .optional(),
   plate: z.string().optional(),
   details: z.string().optional(),
-  photos: z.array(z.instanceof(File)).optional(),
+  photos: z.array(z.any()).optional(),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   email: z.string().email("Inserire una mail corretta"),

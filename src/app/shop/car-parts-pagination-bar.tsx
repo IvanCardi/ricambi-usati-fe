@@ -1,9 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import { useState } from "react";
-import MainContainer from "../components/mainContainer";
 import { useRouter, useSearchParams } from "next/navigation";
+import MainContainer from "../components/mainContainer";
 
 export default function CarPartsPaginationBar({
   totalPages,
