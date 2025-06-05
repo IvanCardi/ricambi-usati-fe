@@ -5,6 +5,9 @@ import searchIcon from "@/../public/search_icon.svg";
 import shield from "@/../public/shield_icon.svg";
 import Image from "next/image";
 import { TrovaRicambi } from "./trovaRicambi";
+import { Brand } from "@/lib/models/brand";
+import { Model } from "@/lib/models/model";
+import { Version } from "@/lib/models/version";
 
 interface Distinctive {
   icon: string;
@@ -36,7 +39,15 @@ const distinctives: Distinctive[] = [
   },
 ];
 
-export default function HeroDesktop() {
+export default function HeroDesktop({
+  brands,
+  models,
+  versions,
+}: {
+  brands: Brand[];
+  models: Model[];
+  versions: Version[];
+}) {
   return (
     <div className="flex flex-col gap-28">
       <div className="flex flex-col gap-16 ">
@@ -89,7 +100,7 @@ export default function HeroDesktop() {
           ))}
         </div>
       </div>
-      <TrovaRicambi />
+      <TrovaRicambi brands={brands} models={models} versions={versions} />
     </div>
   );
 }

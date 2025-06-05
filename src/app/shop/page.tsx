@@ -5,6 +5,8 @@ import CarPartsList from "./car-parts-list";
 import CarPartsOrderers from "./car-part-orderers";
 import { PageProps } from "@/lib/pageProps";
 import CarPartsPaginationBar from "./car-parts-pagination-bar";
+import { getCategories } from "@/lib/http/getCategories";
+import { getBrandsModelsVersions } from "@/lib/http/getBrandsModelsVersions";
 
 export type CarPart = {
   id: string;
@@ -51,14 +53,19 @@ const getProducts = async (params: {
 export default async function Shop({ searchParams }: PageProps) {
   const params = await searchParams;
   const { carParts, totalPages } = await getProducts(params);
+  const categories = await getCategories();
+  const { brands, models, versions } = await getBrandsModelsVersions();
 
-  console.log(carParts);
   return (
     <main className="flex flex-col w-full justify-center items-center">
       <div className="flex w-full justify-center py-14">
         <span className="text-7xl font-inter font-bold">SHOP</span>
       </div>
       <CarPartsFilters
+        categories={categories}
+        brands={brands}
+        models={models}
+        versions={versions}
         initialBrand={params.brand as string}
         initialModel={params.model as string}
         initialSetup={params.setup as string}

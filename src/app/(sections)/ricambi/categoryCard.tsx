@@ -22,7 +22,7 @@ export default function CategoryCard({
   return (
     <div className="flex flex-col w-full gap-20 p-2 md:p-0">
       <div className="flex flex-col items-center md:items-start gap-10">
-        <span className="text-5xl text-[#0BB489] font-poppins font-medium ">
+        <span className="text-5xl text-[#0BB489] font-poppins font-medium capitalize">
           {name}
         </span>
         <div className="flex w-full gap-16 justify-center md:justify-start ">

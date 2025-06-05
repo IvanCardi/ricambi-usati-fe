@@ -1,4 +1,3 @@
-import * as React from "react";
 
 import {
   Select,
@@ -17,12 +16,12 @@ export default function SelectHero({
   value,
 }: {
   title: string;
-  options: string[];
+  options: { id: string; name: string }[];
   value?: string;
   onSelect?: (val: string) => void;
 }) {
   return (
-    <Select onValueChange={onSelect} key={options[0]} value={value}>
+    <Select onValueChange={onSelect} key={title} value={value}>
       <SelectTrigger>
         <SelectValue placeholder={title} />
       </SelectTrigger>
@@ -30,8 +29,8 @@ export default function SelectHero({
         <SelectGroup>
           <SelectLabel>{title}</SelectLabel>
           {options?.map((option) => (
-            <SelectItem key={option} value={option}>
-              {option}
+            <SelectItem key={option.id} value={option.id}>
+              {option.name}
             </SelectItem>
           ))}
         </SelectGroup>

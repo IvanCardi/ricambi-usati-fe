@@ -3,8 +3,19 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import SearchFilters from "@/app/components/searchFilters";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Brand } from "@/lib/models/brand";
+import { Model } from "@/lib/models/model";
+import { Version } from "@/lib/models/version";
 
-export function TrovaRicambi() {
+export function TrovaRicambi({
+  brands,
+  models,
+  versions,
+}: {
+  brands: Brand[];
+  models: Model[];
+  versions: Version[];
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -12,7 +23,9 @@ export function TrovaRicambi() {
     "VEICOLO"
   );
 
-  const [params, setParams] = useState<{ [key: string]: string }>({});
+  const [params, setParams] = useState<{ [key: string]: string | undefined }>(
+    {}
+  );
 
   useEffect(() => {
     setParams({});
@@ -22,7 +35,9 @@ export function TrovaRicambi() {
     const query = new URLSearchParams(searchParams.toString());
 
     for (const param in params) {
-      query.set(param, params[param]);
+      if (params[param]) {
+        query.set(param, params[param]);
+      }
     }
 
     query.set("page", "1");
@@ -63,6 +78,9 @@ export function TrovaRicambi() {
               onFilterSelection={(name, value) => {
                 setParams((curr) => ({ ...curr, [name]: value }));
               }}
+              brands={brands}
+              models={models}
+              versions={versions}
             />
           ) : (
             <div className="flex flex-col gap-2">

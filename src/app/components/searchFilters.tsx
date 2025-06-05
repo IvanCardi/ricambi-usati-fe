@@ -1,68 +1,27 @@
 "use client";
-import { useState } from "react";
-import SelectHero from "./select_hero";
+import PopoverSelection from "@/components/popover-selection";
 import { Slider } from "@/components/ui/slider";
+import { Brand } from "@/lib/models/brand";
+import { Model } from "@/lib/models/model";
+import { Version } from "@/lib/models/version";
+import { useState } from "react";
 import MainContainer from "./mainContainer";
-
-const cars = {
-  Ford: {
-    Focus: ["1.8 Diesel 115CV"],
-  },
-  BMW: {
-    "3 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M340i"],
-    "5 Series": ["Base", "Sport Line", "M Sport", "Luxury Line", "M550i"],
-    X3: ["Base", "xLine", "M Sport", "M40i", "X3 M Competition"],
-    X5: ["Base", "xLine", "M Sport", "X5 M50i", "X5 M Competition"],
-    i4: ["eDrive35", "eDrive40", "xDrive40", "M50", "M60"],
-  },
-  "Mercedes-Benz": {
-    "A-Class": ["Base", "Progressive", "AMG Line", "Premium", "AMG A45 S"],
-    "C-Class": ["Base", "Avantgarde", "AMG Line", "Night Edition", "AMG C63 S"],
-    "E-Class": ["Base", "Avantgarde", "AMG Line", "Exclusive", "AMG E63 S"],
-    GLC: ["Base", "Progressive", "AMG Line", "AMG GLC43", "AMG GLC63 S"],
-    "S-Class": ["Base", "Exclusive", "AMG Line", "Maybach", "AMG S63"],
-  },
-  Audi: {
-    A3: ["Base", "Business", "S line", "Black Edition", "RS3"],
-    A4: ["Base", "Business", "Advanced", "S line", "RS4 Avant"],
-    Q5: ["Base", "Business", "Advanced", "S line", "SQ5"],
-    A6: ["Base", "Business", "Advanced", "S line", "RS6 Avant"],
-    Q7: ["Base", "Business", "Advanced", "S line", "SQ7"],
-  },
-  Volkswagen: {
-    Golf: ["Base", "Life", "Style", "R-Line", "Golf R"],
-    Passat: ["Base", "Business", "Elegance", "R-Line", "GTE"],
-    Tiguan: ["Base", "Life", "Elegance", "R-Line", "Tiguan R"],
-    Polo: ["Base", "Life", "Style", "R-Line", "GTI"],
-    "T-Roc": ["Base", "Style", "Sport", "R-Line", "T-Roc R"],
-  },
-  Toyota: {
-    Yaris: ["Active", "Trend", "GR Sport", "Lounge", "GR Yaris"],
-    Corolla: ["Active", "Style", "GR Sport", "Lounge", "Touring Sports"],
-    RAV4: ["Active", "Style", "Lounge", "Adventure", "GR Sport"],
-    "C-HR": ["Active", "Style", "GR Sport", "Lounge", "Premiere Edition"],
-    "Land Cruiser": ["Active", "Lounge", "Executive", "Invincible", "GR Sport"],
-  },
-};
-
-type CarBrand = keyof typeof cars;
-type CarModel<Brand extends CarBrand> = keyof (typeof cars)[Brand];
-type CarSetUp<
-  Brand extends CarBrand,
-  Model extends CarModel<Brand>
-> = (typeof cars)[Brand][Model] extends string[]
-  ? (typeof cars)[Brand][Model][number]
-  : never;
 
 export default function SearchFilters({
   onFilterSelection,
+  brands,
+  models,
+  versions,
 }: {
-  onFilterSelection: (name: string, value: string) => void;
+  onFilterSelection: (name: string, value: string | undefined) => void;
+  brands: Brand[];
+  models: Model[];
+  versions: Version[];
 }) {
   const [selectedCar, setSelectedCar] = useState<{
-    brand?: CarBrand;
-    model?: CarModel<CarBrand>;
-    setUp?: CarSetUp<CarBrand, CarModel<CarBrand>>;
+    brand?: string;
+    model?: string;
+    setUp?: string;
   }>({});
   const [range, setRange] = useState<number[]>([
     2000,
@@ -72,48 +31,56 @@ export default function SearchFilters({
   return (
     <MainContainer>
       <div className="grid grid-cols-2 w-full md:flex justify-center items-center gap-5">
-        <SelectHero
-          title="Marca"
-          options={Object.keys(cars)}
+        <PopoverSelection
+          placeholder="Scegli la marca"
+          options={brands.sort((a, b) => a.name.localeCompare(b.name))}
+          value={selectedCar.brand}
           onSelect={(brand) => {
             setSelectedCar({
-              brand: brand as CarBrand,
+              brand,
             });
             onFilterSelection("brand", brand);
+            onFilterSelection("model", undefined);
+            onFilterSelection("setup", undefined);
           }}
-        ></SelectHero>
-        <SelectHero
-          title="Modello"
-          options={
-            selectedCar.brand
-              ? Object.keys(cars[selectedCar.brand as CarBrand])
-              : []
-          }
+        />
+        <PopoverSelection
+          placeholder="Scegli il modello"
+          options={models
+            .filter(
+              (m) => selectedCar.brand && m.brand_id === selectedCar.brand
+            )
+            .sort((a, b) => a.name.localeCompare(b.name))}
+          value={selectedCar.model}
           onSelect={(model) => {
             setSelectedCar((prev) => ({
               ...prev,
-              model: model as CarModel<CarBrand>,
+              model,
             }));
             onFilterSelection("model", model);
+            onFilterSelection("setup", undefined);
           }}
-        ></SelectHero>
-        <SelectHero
-          title="Allestimento"
-          options={
-            selectedCar.model
-              ? cars[selectedCar.brand as CarBrand][
-                  selectedCar.model as CarModel<CarBrand>
-                ]
-              : []
-          }
+        />
+        <PopoverSelection
+          placeholder="Scegli la versione"
+          options={versions
+            .filter(
+              (v) =>
+                selectedCar.brand &&
+                selectedCar.model &&
+                v.brand_id === selectedCar.brand &&
+                v.model_id === selectedCar.model
+            )
+            .sort((a, b) => a.name.localeCompare(b.name))}
+          value={selectedCar.setUp}
           onSelect={(setUp) => {
             setSelectedCar((prev) => ({
               ...prev,
-              setUp: setUp as CarSetUp<CarBrand, CarModel<CarBrand>>,
+              setUp,
             }));
             onFilterSelection("setup", setUp);
           }}
-        ></SelectHero>
+        />
         <div className="flex flex-col items-center w-full gap-2">
           <span
             className={`text-sm text-center font-inter font-medium text-white`}

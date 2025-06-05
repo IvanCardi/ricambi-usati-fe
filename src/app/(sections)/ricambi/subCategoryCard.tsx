@@ -32,7 +32,7 @@ export default function SubCategoryCard({
         width={168}
         height={170}
       />
-      <span className="text-sm text-black text-center font-inter font-medium">
+      <span className="text-sm text-black text-center font-inter font-medium capitalize">
         {subCategory.name}
       </span>
     </div>
